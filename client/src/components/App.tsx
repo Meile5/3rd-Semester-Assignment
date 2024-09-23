@@ -19,7 +19,7 @@ const App = () => {
 
     return (<>
 
-        <Navigation/>
+        {/*<Navigation/>*/}
         <Toaster position={"bottom-center"}/>
         <Routes>
             <Route path="/" element={<Home/>}/>
