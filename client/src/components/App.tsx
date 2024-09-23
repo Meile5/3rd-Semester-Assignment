@@ -6,6 +6,7 @@ import Navigation from "./Navigation.tsx";
 import {useAtom} from "jotai";
 import {ThemeAtom} from "../atoms/ThemeAtom.tsx";
 import Home from "./Home.tsx";
+import PaperList from "./PaperList.tsx";
 
 const App = () => {
 
@@ -22,6 +23,7 @@ const App = () => {
         <Toaster position={"bottom-center"}/>
         <Routes>
             <Route path="/" element={<Home/>}/>
+            <Route path="/papers" element={<PaperList/>}/>
         </Routes>
         <DevTools/>
 
