@@ -8,7 +8,7 @@ namespace xunittests.Repository_Tests;
 
 public class GetTotalNumberOfDoctorsTests
 {
-    private readonly PgCtxSetup<HospitalContext>         _setup = new PgCtxSetup<HospitalContext>(configureServices: services => services.AddScoped<IHospitalRepository, HospitalRepository>());
+    private readonly PgCtxSetup<PaperContext>         _setup = new PgCtxSetup<PaperContext>(configureServices: services => services.AddScoped<IHospitalRepository, HospitalRepository>());
 
 
     [Fact]

@@ -8,13 +8,13 @@ namespace xunittests.Repository_Tests;
 
 public class GetAllDoctorsWithDiagnosesMadeTests
 {
-    private readonly HospitalContext _db;
-    private readonly PgCtxSetup<HospitalContext> _setup;
+    private readonly PaperContext _db;
+    private readonly PgCtxSetup<PaperContext> _setup;
 
 
     public GetAllDoctorsWithDiagnosesMadeTests()
     {
-        _setup = new PgCtxSetup<HospitalContext>(configureServices: services => services.AddScoped<IHospitalRepository, HospitalRepository>());
+        _setup = new PgCtxSetup<PaperContext>(configureServices: services => services.AddScoped<IHospitalRepository, HospitalRepository>());
         _db = _setup.DbContextInstance;
     }
     

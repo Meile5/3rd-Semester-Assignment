@@ -9,7 +9,7 @@ namespace xunittests.Repository_Tests;
 
 public class GetAllDoctorsTest
 {
-    private readonly PgCtxSetup<HospitalContext> _setup = new();
+    private readonly PgCtxSetup<PaperContext> _setup = new();
     
     [Fact]
     public void GetAllDoctors_ReturnsAllDoctors()
@@ -31,7 +31,7 @@ public class GetAllDoctorsTest
 
 public class GetAllDoctorsTestWithServiceCollection(ITestOutputHelper outputHelper)
 {
-    private readonly PgCtxSetup<HospitalContext> _setup = new(configureServices: 
+    private readonly PgCtxSetup<PaperContext> _setup = new(configureServices: 
         services =>
         {
             services.AddTransient<HospitalRepository>();
