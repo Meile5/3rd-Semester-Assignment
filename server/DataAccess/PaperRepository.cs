@@ -15,6 +15,7 @@ public class PaperRepository : IPaperRepository
 
     public List<Paper> GetAllPapers()
     {
+        Console.WriteLine(_context.Papers.ToList());
         return _context.Papers.ToList();
     }
 }

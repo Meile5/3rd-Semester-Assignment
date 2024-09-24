@@ -9,7 +9,7 @@ export function useInitializeData() {
     
     
     useEffect(() => {
-        http.api.patientGetAllPatients().then((response) => {
+        http.api.paperGetAllPapers().then((response) => {
             setPatients(response.data);
         }).catch(e => {
             console.log(e)

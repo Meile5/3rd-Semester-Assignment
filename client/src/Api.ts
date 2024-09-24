@@ -9,90 +9,20 @@
  * ---------------------------------------------------------------
  */
 
-export interface Patient {
-  /** @format int32 */
-  id?: number;
-  name?: string;
-  /** @format date */
-  birthdate?: string;
-  gender?: boolean;
-  address?: string | null;
-  diagnoses?: Diagnosis[];
-  patientTreatments?: PatientTreatment[];
-}
-
-export interface Diagnosis {
-  /** @format int32 */
-  id?: number;
-  /** @format int32 */
-  patientId?: number;
-  /** @format int32 */
-  diseaseId?: number;
-  /** @format date-time */
-  diagnosisDate?: string | null;
-  /** @format int32 */
-  doctorId?: number;
-  disease?: Disease;
-  doctor?: Doctor;
-  patient?: Patient;
-}
-
-export interface Disease {
-  /** @format int32 */
-  id?: number;
-  name?: string;
-  severity?: string;
-  diagnoses?: Diagnosis[];
-}
-
-export interface Doctor {
-  /** @format int32 */
-  id?: number;
-  name?: string;
-  specialty?: string;
-  /** @format int32 */
-  yearsExperience?: number | null;
-  diagnoses?: Diagnosis[];
-}
-
-export interface PatientTreatment {
-  /** @format int32 */
-  id?: number;
-  /** @format int32 */
-  patientId?: number;
-  /** @format int32 */
-  treatmentId?: number;
-  /** @format date-time */
-  startDate?: string | null;
-  /** @format date-time */
-  endDate?: string | null;
-  patient?: Patient;
-  treatment?: Treatment;
-}
-
-export interface Treatment {
+export interface PaperDto {
   /** @format int32 */
   id?: number;
   name?: string;
   /** @format double */
-  cost?: number;
-  patientTreatments?: PatientTreatment[];
+  price?: number;
+  discontinued?: boolean;
+  properties?: PropertyDto[];
 }
 
-export interface CreatePatientDto {
-  name?: string;
-  /** @format date */
-  birthdate?: string;
-  gender?: boolean;
-  address?: string | null;
-}
-
-export interface UpdatePatientDto {
-  name?: string;
-  /** @format date */
-  birthdate?: string;
-  gender?: boolean;
-  address?: string | null;
+export interface PropertyDto {
+  /** @format int32 */
+  id?: number;
+  propertyName?: string;
 }
 
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
@@ -140,7 +70,7 @@ export class HttpClient<SecurityDataType = unknown> {
   private format?: ResponseType;
 
   constructor({ securityWorker, secure, format, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
-    this.instance = axios.create({ ...axiosConfig, baseURL: axiosConfig.baseURL || "http://localhost:5000" });
+    this.instance = axios.create({ ...axiosConfig, baseURL: axiosConfig.baseURL || "http://localhost:5555" });
     this.secure = secure;
     this.format = format;
     this.securityWorker = securityWorker;
@@ -232,52 +162,18 @@ export class HttpClient<SecurityDataType = unknown> {
 /**
  * @title My Title
  * @version 1.0.0
- * @baseUrl http://localhost:5000
+ * @baseUrl http://localhost:5555
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
   api = {
     /**
      * No description
      *
-     * @tags Patient
-     * @name PatientCreatePatient
-     * @request POST:/api/Patient
+     * @tags Paper
+     * @name PaperGetAllPapers
+     * @request GET:/api/Paper
      */
-    patientCreatePatient: (data: CreatePatientDto, params: RequestParams = {}) =>
-      this.request<Patient, any>({
-        path: `/api/Patient`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Patient
-     * @name PatientUpdatePatient
-     * @request PUT:/api/Patient
-     */
-    patientUpdatePatient: (data: UpdatePatientDto, params: RequestParams = {}) =>
-      this.request<Patient, any>({
-        path: `/api/Patient`,
-        method: "PUT",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Patient
-     * @name PatientGetAllPatients
-     * @request GET:/api/Patient
-     */
-    patientGetAllPatients: (
+    paperGetAllPapers: (
       query?: {
         /**
          * @format int32
@@ -292,8 +188,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<Patient[], any>({
-        path: `/api/Patient`,
+      this.request<PaperDto[], any>({
+        path: `/api/Paper`,
         method: "GET",
         query: query,
         format: "json",

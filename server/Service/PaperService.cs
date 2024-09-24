@@ -15,7 +15,7 @@ public interface IPaperService
 }
 
 public class PaperService(
-        ILogger<PaperService> logger,
+        //ILogger<PaperService> logger,
         IPaperRepository paperRepository,
         PaperContext context
         ) : IPaperService

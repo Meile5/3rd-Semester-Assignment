@@ -1,5 +1,7 @@
 using System.Text.Json;
 using API.Middleware;
+using DataAccess;
+using DataAccess.Interfaces;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -12,8 +14,19 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        builder.Services.Configure<AppOptions>(builder.Configuration.GetSection("AppOptions"));
+
+        builder.Services.AddDbContext<PaperContext>(( serviceProvider, options)=>
+        {
+            var appOptions = serviceProvider.GetRequiredService<IOptions<AppOptions>>().Value;
+            Console.WriteLine(appOptions.DbConnectionString);
+            options.UseNpgsql(appOptions.DbConnectionString);
+        });
+
+              builder.Services.AddScoped<IPaperService, PaperService>();
+
     
-        
+        builder.Services.AddScoped<IPaperRepository, PaperRepository > ();
         builder.Services.AddControllers();
         builder.Services.AddOpenApiDocument();
 
@@ -34,9 +47,10 @@ public class Program
         app.UseCors(config => config.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
         app.UseMiddleware<RequestResponseLoggingMiddleware>();
 
-        app.UseEndpoints(endpoints => endpoints.MapControllers());
+        //app.UseEndpoints(endpoints => endpoints.MapControllers());
 
-        
+        app.MapControllers();
+
 
         app.Run();
     }

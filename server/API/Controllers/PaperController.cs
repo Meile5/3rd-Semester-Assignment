@@ -8,7 +8,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PaperController : ControllerBase // Corrected to "PaperController"
+    public class PaperController : ControllerBase 
     {
         private readonly IPaperService _service;
         private readonly IOptionsMonitor<AppOptions> _options;
@@ -21,9 +21,9 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("")]
-        public ActionResult<List<PaperDto>> GetAllPapers(int limit = 10, int startAt = 0) // Update method signature
+        public ActionResult<List<PaperDto>> GetAllPapers(int limit = 10, int startAt = 0) 
         {
-            var papers = _service.GetAllPapers(limit, startAt); // Fetch papers
+            var papers = _service.GetAllPapers(limit, startAt);
             return Ok(papers); // Return DTOs
         }
     }

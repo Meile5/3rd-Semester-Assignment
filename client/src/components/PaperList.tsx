@@ -3,13 +3,18 @@ import {useAtom} from "jotai";
 import {useNavigate} from "react-router-dom";
 // @ts-ignore
 import image1 from "../resources/images/image1.jpeg";
+import React, {useEffect, useState} from 'react';
+import {http} from "../http";
+import { AxiosResponse } from "axios";
+import {PaperDto} from "../Api.ts";
 
 
 
 export default function PaperList() {
-
-    const [papers] = useAtom(PapersAtom);
+    
     const navigate = useNavigate();
+    const [papers, setProducts] = useAtom(PapersAtom);
+
 
     return (<>
         <div>
