@@ -6,7 +6,7 @@ namespace ApiInterationTests;
 
 public class DiagnosisTests
 {
-    private readonly PgCtxSetup<HospitalContext> _pgCtxSetup = new();
+    private readonly PgCtxSetup<PaperContext> _pgCtxSetup = new();
     private readonly ITestOutputHelper _outputHelper;
 
     public DiagnosisTests(ITestOutputHelper outputHelper)
