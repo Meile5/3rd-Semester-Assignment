@@ -4,7 +4,6 @@ using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Service;
-using Service.Validators;
 
 namespace API;
 

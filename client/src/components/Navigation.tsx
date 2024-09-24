@@ -7,7 +7,7 @@ export default function Navigation() {
 
             </div>
             <div className="flex-none">
-                <ThemeSwitcher />
+                {/*<ThemeSwitcher />*/}
             </div>
         </div>
     );

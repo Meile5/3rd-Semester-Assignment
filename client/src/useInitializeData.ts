@@ -1,11 +1,11 @@
 import {useAtom} from "jotai";
-import {PatientsAtom} from "./atoms/PatientsAtom.tsx";
+import {PapersAtom} from "./atoms/PapersAtom.tsx";
 import {useEffect} from "react";
 import {http} from "./http.ts";
 
 export function useInitializeData() {
     
-    const [, setPatients] = useAtom(PatientsAtom);
+    const [, setPatients] = useAtom(PapersAtom);
     
     
     useEffect(() => {
