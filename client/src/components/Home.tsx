@@ -3,6 +3,8 @@ import { useAtom } from "jotai";
 import { PapersAtom } from "../atoms/PapersAtom.tsx";
 import { useInitializeData } from "../useInitializeData.ts";
 import { useNavigate } from "react-router-dom";
+//import {ShieldExclamationIcon, UserCircleIcon} from '@heroicons/react/24/outline';
+
 // @ts-ignore
 import image2 from '../resources/images/image2.jpg';
 import Footer from "./Footer.tsx";
