@@ -18,18 +18,6 @@ export default function PaperList() {
 
     return (<>
         <div>
-            <div className="flex ml-9">
-                <button className="btn btn-outline btn-black" onClick={() => navigate('/')}>
-                    Back
-                </button>
-            </div>
-
-            <div>
-                <div className="flex items-center justify-between p-5">
-                    <h1 className="menu-title text-5xl">Papers</h1>
-                </div>
-            </div>
-
             {papers.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ml-10 mt-10">
                     {papers.map((paper) => (
@@ -44,19 +32,27 @@ export default function PaperList() {
                                 <div
                                     className="absolute inset-8 bg-white flex flex-col justify-between items-start p-5">
                                     <h2 className="card-title mb-6">{paper.name}</h2>
-                                    <p className="mb-8">Some description</p>
-                                    <ul className="list-disc list-inside mb-4">
-                                        <li>Property 1</li>
-                                        <li>Property 2</li>
-                                        <li>Property 3</li>
-                                    </ul>
+                                    <p className="mb-8">Properties</p>
+                                    {/* Dynamically rendering properties */}
+                                    {paper.properties && paper.properties.length > 0 ? (
+                                        <ul className="list-disc list-inside mb-4">
+                                            {paper.properties.map((property, index) => (
+                                                <li key={index}>
+                                                    {property.propertyName}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    ) : (
+                                        <p>No properties available.</p>
+                                    )}
+                                    <p className="text-lg font-semibold mb-4">€{paper.price}</p>
                                     <div className="w-full mt-auto">
                                         <button
                                             className="btn btn-outline btn-black w-full p-2"
                                             onClick={() => navigate("/papers/" + paper.id)}
                                             key={paper.id}
                                         >
-                                            Open Details
+                                            Add to Cart
                                         </button>
                                     </div>
                                 </div>
