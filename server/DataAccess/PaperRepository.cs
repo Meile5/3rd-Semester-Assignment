@@ -16,6 +16,11 @@ public class PaperRepository : IPaperRepository
     public List<Paper> GetAllPapers()
     {
         Console.WriteLine(_context.Papers.ToList());
-        return _context.Papers.ToList();
+        //  load related Properties for each Paper
+        var papers = _context.Papers
+            .Include(p => p.Properties) 
+            .ToList();
+    
+        return papers;
     }
 }
