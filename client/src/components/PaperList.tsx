@@ -48,7 +48,7 @@ export default function PaperList() {
                                     <p className="text-lg font-semibold mb-4">€{paper.price}</p>
                                     <div className="w-full mt-auto">
                                         <button
-                                            className="btn btn-outline btn-black w-full p-2"
+                                            className="btn btn-outline btn-black w-full p-2 rounded-md hover:bg-black hover:text-white transition-colors"
                                             onClick={() => navigate("/papers/" + paper.id)}
                                             key={paper.id}
                                         >

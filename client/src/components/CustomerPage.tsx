@@ -3,31 +3,33 @@ import React from 'react';
 import { useAtom } from 'jotai';
 import { PapersAtom } from '../atoms/PapersAtom';
 import PaperList from './PaperList';
-import {useNavigate} from "react-router-dom"; 
+import {useNavigate} from "react-router-dom";
+import Header from './CustomerHeader';
 
+// @ts-ignore
+import book from '../resources/images/book.jpg';
 
 const CustomerPage: React.FC = () => {
-    const [papers] = useAtom(PapersAtom); 
     const navigate = useNavigate();
 
     return (
-        <div>
-            <div className="flex ml-9">
-                <button className="btn btn-outline btn-black" onClick={() => navigate('/')}>
-                    Back
-                </button>
-            </div>
+        <div className="m-0 p-0">
+            <Header />
 
-            <div>
-                <div className="flex items-center justify-between p-5">
-                    <h1 className="menu-title text-5xl">Papers</h1>
-                </div>
+            {/* Top image with negative margin to ensure no gap */}
+            <div className="relative -mt-2">
+                <img
+                    src={book}
+                    alt="Nordic Paper"
+                    className="w-full h-auto max-h-[55vh] object-cover m-0 p-0"
+                />
             </div>
 
             {/* Papers List */}
-            <PaperList/>
+            <PaperList />
         </div>
     );
-};
 
-export default CustomerPage;
+}
+
+    export default CustomerPage;
