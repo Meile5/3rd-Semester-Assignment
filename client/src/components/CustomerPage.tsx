@@ -5,6 +5,7 @@ import { PapersAtom } from '../atoms/PapersAtom';
 import PaperList from './PaperList';
 import {useNavigate} from "react-router-dom";
 import Header from './CustomerHeader';
+import SearchTab from './SearchingTab';
 
 // @ts-ignore
 import book from '../resources/images/book.jpg';
@@ -24,6 +25,9 @@ const CustomerPage: React.FC = () => {
                     className="w-full h-auto max-h-[55vh] object-cover m-0 p-0"
                 />
             </div>
+
+            {/* Row for FilterComponent, Sorting and Search + Order History*/}
+            <SearchTab />
 
             {/* Papers List */}
             <PaperList />
