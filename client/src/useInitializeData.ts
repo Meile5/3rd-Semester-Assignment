@@ -5,12 +5,12 @@ import {http} from "./http.ts";
 
 export function useInitializeData() {
     
-    const [, setPatients] = useAtom(PapersAtom);
+    const [, setPapers] = useAtom(PapersAtom);
     
     
     useEffect(() => {
         http.api.paperGetAllPapers().then((response) => {
-            setPatients(response.data);
+            setPapers(response.data);
         }).catch(e => {
             console.log(e)
         })

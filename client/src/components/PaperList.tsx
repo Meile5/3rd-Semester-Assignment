@@ -7,13 +7,30 @@ import React, {useEffect, useState} from 'react';
 import {http} from "../http";
 import { AxiosResponse } from "axios";
 import {PaperDto} from "../Api.ts";
+import {CartAtom} from '../atoms/CartAtom'
 
 
 
 export default function PaperList() {
-    
     const navigate = useNavigate();
     const [papers, setProducts] = useAtom(PapersAtom);
+    const [cartItems, setCartItems] = useAtom(CartAtom);
+
+    const handleAddToCart = (paper: PaperDto) => {
+        setCartItems((currentItems) => {
+            const existingItem = currentItems.find(item => item.id === paper.id);
+
+            if (existingItem) {
+                // Update the quantity if the item is already in the cart
+                return currentItems.map(item =>
+                    item.id === paper.id ? { ...item, quantity: item.quantity + 1 } : item
+                );
+            }
+
+            // Add new item to the cart
+            return [...currentItems, { paperId: paper.id, name: paper.name, quantity: 1, price: paper.price }];
+        });
+    };
 
 
     return (<>
@@ -49,8 +66,7 @@ export default function PaperList() {
                                     <div className="w-full mt-auto">
                                         <button
                                             className="btn btn-outline btn-black w-full p-2 rounded-md hover:bg-black hover:text-white transition-colors"
-                                            onClick={() => navigate("/papers/" + paper.id)}
-                                            key={paper.id}
+                                            onClick={() => handleAddToCart(paper)}
                                         >
                                             Add to Cart
                                         </button>
