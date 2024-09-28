@@ -1,5 +1,5 @@
 ﻿
-import React from 'react';
+import React, {useState} from 'react';
 import { useAtom } from 'jotai';
 import { PapersAtom } from '../atoms/PapersAtom';
 import PaperList from './PaperList';
@@ -9,9 +9,19 @@ import SearchTab from './SearchingTab';
 
 // @ts-ignore
 import book from '../resources/images/book.jpg';
+import OrderHistory from "./OrderHistory.tsx";
 
 const CustomerPage: React.FC = () => {
     const navigate = useNavigate();
+    const [showOrderHistory, setShowOrderHistory] = useState(false); // Track order history view
+
+    const showOrderHistoryHandler = () => {
+        setShowOrderHistory(true); // Show order history
+    };
+
+    const backToPapersHandler = () => {
+        setShowOrderHistory(false); // Return to paper list
+    };
 
     return (
         <div className="m-0 p-0">
@@ -26,11 +36,15 @@ const CustomerPage: React.FC = () => {
                 />
             </div>
 
-            {/* Row for FilterComponent, Sorting and Search + Order History*/}
-            <SearchTab />
+            {/* SearchTab with buttons for Order History and Back */}
+            <SearchTab
+                showOrderHistory={showOrderHistory}
+                onShowOrderHistory={showOrderHistoryHandler}
+                onBack={backToPapersHandler}
+            />
 
-            {/* Papers List */}
-            <PaperList />
+            {/* Conditionally render PaperList or OrderHistory */}
+            {!showOrderHistory ? <PaperList /> : <OrderHistory />}
         </div>
     );
 
