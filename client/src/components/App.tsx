@@ -6,6 +6,8 @@ import {useAtom} from "jotai";
 import {ThemeAtom} from "../atoms/ThemeAtom.tsx";
 import Home from "./Home.tsx";
 import CustomerPage from "./CustomerPage.tsx";
+import CustomerHeader from "./CustomerHeader.tsx";
+import CheckoutPage from "./CheckoutPage.tsx";
 
 
 const App = () => {
@@ -17,13 +19,28 @@ const App = () => {
         document.documentElement.setAttribute('data-theme', theme);
     }, [theme])
 
+  
+
     return (<>
 
         {/*<Navigation/>*/}
         <Toaster position={"bottom-center"}/>
         <Routes>
             <Route path="/" element={<Home/>}/>
-            <Route path="/papers" element={<CustomerPage/>}/>
+            <Route path="/papers" element={
+                <>
+                    <CustomerHeader />  
+                    <CustomerPage />    
+                </>
+            }
+            />
+            <Route path="/checkout" element={
+                <>
+                    <CustomerHeader />  
+                    <CheckoutPage />   
+                </>
+            }
+            />
         </Routes>
         <DevTools/>
 
