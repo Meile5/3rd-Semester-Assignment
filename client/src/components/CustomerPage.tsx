@@ -14,8 +14,6 @@ const CustomerPage: React.FC = () => {
 
     return (
         <div className="m-0 p-0">
-            <Header />
-
             {/* Top image with negative margin to ensure no gap */}
             <div className="relative -mt-2">
                 <img
@@ -24,8 +22,6 @@ const CustomerPage: React.FC = () => {
                     className="w-full h-auto max-h-[55vh] object-cover m-0 p-0"
                 />
             </div>
-
-            {/* Papers List */}
             <PaperList />
         </div>
     );
