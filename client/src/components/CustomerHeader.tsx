@@ -23,7 +23,7 @@ const Header: React.FC = () => {
     const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
     return (
         <div>
-            <header className='flex justify-between items-center h-20 mb-5 p-4 bg-white shadow'>
+            <header className='flex justify-between items-center h-20  bg-white shadow'>
                 <Link to="/" className='flex-grow text-center'>
                     <button className="">
                         <img
