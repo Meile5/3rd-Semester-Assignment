@@ -11,6 +11,7 @@ namespace Service;
 public interface IPaperService
 {
     public List<PaperDto> GetAllPapers(int limit, int startAt);
+    public List<Order> GetAllOrders();
     
 }
 
@@ -31,5 +32,10 @@ public List<PaperDto> GetAllPapers(int limit, int startAt)
             .ToList();
     }
 
-   
+    public List<Order> GetAllOrders()
+    {
+        var orders = paperRepository.GetAllOrders();
+        return orders.OrderBy(o => o.Id)
+            .ToList();
+    }
 }

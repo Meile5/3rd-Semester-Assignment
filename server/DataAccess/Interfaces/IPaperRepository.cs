@@ -6,5 +6,7 @@ public interface IPaperRepository
 {
   
      List<Paper> GetAllPapers();
+     
+     List<Order> GetAllOrders();
     
 }
