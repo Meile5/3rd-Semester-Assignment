@@ -1,13 +1,13 @@
-
 import React from 'react';
-import { useAtom } from 'jotai';
-
 
 const SearchComponent: React.FC = () => {
-
     return (
-        <input type="text" placeholder="Search" className="input input-bordered w-full max-w-xs"/>);
-
+        <input
+            type="text"
+            placeholder="Search"
+            className="input input-bordered w-32 h-8"
+        />
+    );
 }
 
 export default SearchComponent;

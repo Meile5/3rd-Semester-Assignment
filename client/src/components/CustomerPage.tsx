@@ -25,7 +25,6 @@ const CustomerPage: React.FC = () => {
 
     return (
         <div className="m-0 p-0">
-            <Header />
 
             {/* Top image with negative margin to ensure no gap */}
             <div className="relative -mt-2">
@@ -35,16 +34,7 @@ const CustomerPage: React.FC = () => {
                     className="w-full h-auto max-h-[55vh] object-cover m-0 p-0"
                 />
             </div>
-
-            {/* SearchTab with buttons for Order History and Back */}
-            <SearchTab
-                showOrderHistory={showOrderHistory}
-                onShowOrderHistory={showOrderHistoryHandler}
-                onBack={backToPapersHandler}
-            />
-
-            {/* Conditionally render PaperList or OrderHistory */}
-            {!showOrderHistory ? <PaperList /> : <OrderHistory />}
+            <PaperList/>
         </div>
     );
 
