@@ -1,76 +1,34 @@
 ﻿import React from "react";
-import  {useAtom} from "jotai";
-import {CartAtom} from '../atoms/CartAtom'
+import { Link } from "react-router-dom";
+import CartTabBase from './CartTabBase'; // Import the new CartTabBase component
 
-const CartTab: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose}) => {
-    const [cartItems, setCartItems] = useAtom(CartAtom);
-
-    const handleIncreaseQuantity = (itemId: number | undefined) => {
-        setCartItems((currentItems) =>
-            currentItems.map(item =>
-                item.id === itemId
-                    ? { ...item, quantity: item.quantity + 1 }
-                    : item
-            )
-        );
-    };
-
-    const handleDecreaseQuantity = (itemId: number | undefined) => {
-        setCartItems((currentItems) =>
-            currentItems.map(item =>
-                item.id === itemId && item.quantity > 1
-                    ? { ...item, quantity: item.quantity - 1 }
-                    : item
-            )
-        );
-    };
-
-    const handleRemoveItem = (itemId: number | undefined) => {
-        setCartItems((currentItems) =>
-            currentItems.filter(item => item.id !== itemId)
-        );
-    };
-
+const CartTab: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
     return (
         <div className={`fixed right-0 top-0 h-full w-1/3 bg-white shadow-lg p-4 transition-transform duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
-             style={{ zIndex: 1000 }} // Ensure it stays on top of other content
+             style={{
+                 top: "5.7rem",
+                 height: "auto",
+                 maxHeight: "80vh",
+                 width: "22vw",
+                 zIndex: 1000 // Ensure it stays on top of other content
+             }}
         >
-            <h2 className="text-xl font-bold mb-4">Your Cart</h2>
-            {cartItems.length === 0 ? (
-                <p>Your cart is empty.</p>
-            ) : (
-                <ul>
-                    {cartItems.map(item => (
-                        <li key={item.id} className="flex justify-between items-center mb-4">
-                            <div>
-                                <h3 className="font-semibold">{item.name}</h3>
-                                <p>Price: €{item.price}</p>
-                                <p>Quantity: {item.quantity}</p>
-                            </div>
-                            <div className="flex items-center">
-                                <button
-                                    onClick={() => handleDecreaseQuantity(item.id)}
-                                    className="btn btn-outline mx-1"
-                                >
-                                    -
-                                </button>
-                                <button
-                                    onClick={() => handleIncreaseQuantity(item.id)}
-                                    className="btn btn-outline mx-1"
-                                >
-                                    +
-                                </button>
-                                <button
-                                    onClick={() => handleRemoveItem(item.id)}
-                                    className="btn btn-outline mx-1"
-                                >
-                                    Remove
-                                </button>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            )}
+            <h2 className="text-xl font-bold mb-4 text-black">Your Cart</h2>
+            <div className="flex flex-col h-full">
+                <div className="flex-grow overflow-y-auto"> 
+                    <CartTabBase /> 
+                </div>
+                <div className="mt-4 border-t pt-6"> 
+                    <div className="flex justify-center">
+                        <Link
+                            to="/checkout"
+                            className="w-full bg-black text-white py-2 rounded-none border border-transparent hover:bg-white hover:text-black hover:border-black transition-colors duration-300 text-center"
+                        >
+                            Checkout
+                        </Link>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

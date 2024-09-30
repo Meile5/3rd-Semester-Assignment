@@ -28,7 +28,7 @@ export default function PaperList() {
             }
 
             // Add new item to the cart
-            return [...currentItems, { paperId: paper.id, name: paper.name, quantity: 1, price: paper.price }];
+            return [...currentItems, { id: paper.id, name: paper.name, quantity: 1, price: paper.price }];
         });
     };
 
