@@ -26,5 +26,13 @@ namespace API.Controllers
             var papers = _service.GetAllPapers(limit, startAt);
             return Ok(papers); // Return DTOs
         }
+        
+        [HttpGet]
+        [Route("orders")]
+        public ActionResult<List<PaperDto>> GetAllOrders() 
+        {
+            var orders = _service.GetAllOrders();
+            return Ok(orders); 
+        }
     }
 }

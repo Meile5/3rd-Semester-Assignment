@@ -15,12 +15,19 @@ public class PaperRepository : IPaperRepository
 
     public List<Paper> GetAllPapers()
     {
-        Console.WriteLine(_context.Papers.ToList());
         //  load related Properties for each Paper
         var papers = _context.Papers
             .Include(p => p.Properties) 
             .ToList();
     
         return papers;
+    }
+
+    public List<Order> GetAllOrders()
+    {
+        var orders = _context.Orders
+            .Include(o => o.OrderEntries)
+            .ToList();
+        return orders;
     }
 }
