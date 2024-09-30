@@ -28,10 +28,10 @@ namespace API.Controllers
         }
         
         [HttpGet]
-        [Route("orders")]
-        public ActionResult<List<PaperDto>> GetAllOrders() 
+        [Route("orders-history")]
+        public ActionResult<List<Order>> GetCustomerOrders(int id) 
         {
-            var orders = _service.GetAllOrders();
+            var orders = _service.GetCustomerOrders(id);
             return Ok(orders); 
         }
     }

@@ -1,5 +1,5 @@
 ﻿import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { CartAtom } from '../atoms/CartAtom';
 import CartTab from './CartTab';
@@ -13,6 +13,8 @@ import logo from '../resources/images/logo.png';
 const Header: React.FC = () => {
     const [cartItems] = useAtom(CartAtom);
     const [isCartOpen, setCartOpen] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleMouseEnter = () => setCartOpen(true);
     const handleMouseLeave = () => setCartOpen(false);
@@ -38,8 +40,18 @@ const Header: React.FC = () => {
                 <div className="flex justify-between items-center h-12 px-4 -mt-8 mb-2">
                     {/* Left Side: Products and Order History */}
                     <div className="flex space-x-2 items-center">
-                        <button className="btn-black rounded-lg">Products</button>
-                        <button className="btn-black rounded-lg">Order History</button>
+                        <Link
+                            to="/papers"
+                            className="bg-black text-white py-2 rounded-none border border-transparent hover:bg-white hover:text-black hover:border-black transition-colors duration-300 text-center whitespace-nowrap pr-1 pl-1"
+                        >
+                            Products
+                        </Link>
+                        <Link
+                            to="/order-history"
+                            className="bg-black text-white py-2 rounded-none border border-transparent hover:bg-white hover:text-black hover:border-black transition-colors duration-300 text-center whitespace-nowrap pr-1 pl-1"
+                        >
+                            Order History
+                        </Link>
                     </div>
 
                     {/* Right Side: Filter, Sort, Search, Shopping Cart */}
