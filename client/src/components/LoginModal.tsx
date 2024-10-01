@@ -60,19 +60,26 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                         required
                         className="input input-bordered w-full mb-2"
                     />
-                    <div className="flex justify-end">
+
+                    {/* Flex container to align buttons on the same line */}
+                    <div className="flex justify-between mt-4">
                         <button
                             type="submit"
                             className="bg-black text-white py-2 rounded-none border border-transparent hover:bg-white hover:text-black hover:border-black transition-colors duration-300 text-center whitespace-nowrap pr-1 pl-1"
                         >
                             Login
                         </button>
+                        <button
+                            type="button"
+                            className="bg-black text-white py-2 rounded-none border border-transparent hover:bg-white hover:text-black hover:border-black transition-colors duration-300 text-center whitespace-nowrap pr-1 pl-1"
+                            onClick={onClose}
+                        >
+                            Close
+                        </button>
                     </div>
                 </form>
-                <button className="btn btn-secondary mt-4" onClick={onClose}>
-                    Close
-                </button>
             </div>
         </div>
+
     );
 }

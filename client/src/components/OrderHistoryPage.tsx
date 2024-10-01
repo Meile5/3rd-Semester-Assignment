@@ -24,22 +24,25 @@ const OrderHistoryPage: React.FC = () => {
                 <h1 className="text-2xl font-bold">Order History</h1>
             </header>
 
-            {orders.length === 0 ? (
+            {Array.isArray(orders) && orders.length === 0 ? (
                 <p>No orders found</p>
             ) : (
-                orders.map((order, index) => (
-                    <div onClick={e => setistoggled(index)} key={order.id} className="collapse collapse-arrow bg-base-200 mb-4">
-                        <input type="radio" name="my-accordion-2" checked={istoggled == index} defaultChecked={index === 0}/>
+                Array.isArray(orders) && orders.map((order, index) => (
+                    <div onClick={e => setistoggled(index)} key={order.id}
+                         className="collapse collapse-arrow bg-base-200 mb-4">
+                        <input type="radio" name="my-accordion-2" checked={istoggled == index}
+                               defaultChecked={index === 0}/>
                         <div className="collapse-title text-xl font-medium">
                             {/* Order info separated by a pipe */}
                             {`Order #${order.id} | Order Date: ${order.orderDate} | Delivery Date: ${order.deliveryDate} | Status: ${order.status} | Total: $${order.totalAmount}`}
                         </div>
                         <div className="collapse-content">
-                            <h3 className="text-lg font-semibold">Ordered Products:</h3>
+                            <h3 className="text-lg font-semibold">Products:</h3>
                             <ul className="list-disc ml-5">
                                 {order.orderEntries?.map(orderEntry => (
                                     <li key={orderEntry.id}>
-                                        {orderEntry.product?.name} - Quantity: {orderEntry.quantity} - Price: ${orderEntry.product?.price}
+                                        {orderEntry.product?.name} Quantity: {orderEntry.quantity} | Price:
+                                        ${orderEntry.product?.price}
                                     </li>
                                 ))}
                             </ul>
