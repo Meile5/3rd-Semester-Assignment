@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {http} from "../http.ts";
 import {useAtom} from "jotai/index";
 import {LoggedCustomerAtom} from "../atoms/LoggedCustomerAtom.tsx";
@@ -8,7 +8,7 @@ const OrderHistoryPage: React.FC = () => {
 
     const [loggedCustomer] = useAtom(LoggedCustomerAtom);
     const [orders, setOrders] = useAtom(OrderHistoryAtom);
-
+    const [istoggled, setistoggled] = useState(0);
     useEffect(() => {
         http.api.paperGetCustomerOrders({ id: loggedCustomer.id }).then((response) => {
             setOrders(response.data);
@@ -28,8 +28,8 @@ const OrderHistoryPage: React.FC = () => {
                 <p>No orders found</p>
             ) : (
                 orders.map((order, index) => (
-                    <div key={order.id} className="collapse collapse-arrow bg-base-200 mb-4">
-                        <input type="radio" name="my-accordion-2" defaultChecked={index === 0}/>
+                    <div onClick={e => setistoggled(index)} key={order.id} className="collapse collapse-arrow bg-base-200 mb-4">
+                        <input type="radio" name="my-accordion-2" checked={istoggled == index} defaultChecked={index === 0}/>
                         <div className="collapse-title text-xl font-medium">
                             {/* Order info separated by a pipe */}
                             {`Order #${order.id} | Order Date: ${order.orderDate} | Delivery Date: ${order.deliveryDate} | Status: ${order.status} | Total: $${order.totalAmount}`}
