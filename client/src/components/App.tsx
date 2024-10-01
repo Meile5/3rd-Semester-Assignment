@@ -8,6 +8,8 @@ import Home from "./Home.tsx";
 import CustomerPage from "./CustomerPage.tsx";
 import CustomerHeader from "./CustomerHeader.tsx";
 import CheckoutPage from "./CheckoutPage.tsx";
+import OrderHistoryPage from "./OrderHistoryPage.tsx";
+import Footer from "./Footer.tsx";
 
 
 const App = () => {
@@ -29,19 +31,27 @@ const App = () => {
             <Route path="/" element={<Home/>}/>
             <Route path="/papers" element={
                 <>
-                    <CustomerHeader />  
-                    <CustomerPage />    
+                    <CustomerHeader />
+                    <CustomerPage />
                 </>
             }
             />
             <Route path="/checkout" element={
                 <>
-                    <CustomerHeader />  
-                    <CheckoutPage />   
+                    <CustomerHeader />
+                    <CheckoutPage />
+                </>
+            }
+            />
+            <Route path="/order-history" element={
+                <>
+                    <CustomerHeader />
+                    <OrderHistoryPage />
                 </>
             }
             />
         </Routes>
+        <Footer/>
         <DevTools/>
 
     </>)

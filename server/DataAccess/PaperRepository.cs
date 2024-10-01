@@ -23,11 +23,12 @@ public class PaperRepository : IPaperRepository
         return papers;
     }
 
-    public List<Order> GetAllOrders()
+    public List<Order> GetCustomerOrders(int customerId)
     {
         var orders = _context.Orders
-            .Include(o => o.OrderEntries)
+            .Where(o => o.CustomerId == customerId)
             .ToList();
+    
         return orders;
     }
 }

@@ -7,6 +7,6 @@ public interface IPaperRepository
   
      List<Paper> GetAllPapers();
      
-     List<Order> GetAllOrders();
+     List<Order> GetCustomerOrders(int id);
     
 }

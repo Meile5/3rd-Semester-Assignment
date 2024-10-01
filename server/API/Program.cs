@@ -33,7 +33,6 @@ public class Program
         var app = builder.Build();
 
         var options = app.Services.GetRequiredService<IOptions<AppOptions>>().Value;
-        Console.WriteLine("APP OPTIONS: " + JsonSerializer.Serialize(options));
 
         app.UseHttpsRedirection();
 
