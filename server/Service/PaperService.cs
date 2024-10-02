@@ -1,4 +1,5 @@
 ﻿
+using System.Runtime.InteropServices.JavaScript;
 using DataAccess;
 using DataAccess.Interfaces;
 using DataAccess.Models;
@@ -12,7 +13,7 @@ public interface IPaperService
 {
     public List<PaperDto> GetAllPapers(int limit, int startAt);
     public List<Order> GetAllOrders();
-    public Task CreateOrder(CreateOrderRequest request);
+    public Task<OrderResponseDto> CreateOrder(CreateOrderDto createOrderDto);
 
 }
 
@@ -39,30 +40,27 @@ public List<PaperDto> GetAllPapers(int limit, int startAt)
         return orders.OrderBy(o => o.Id)
             .ToList();
     }
-    
-    public async Task CreateOrder(CreateOrderRequest request)
+
+    public async Task<OrderResponseDto> CreateOrder(CreateOrderDto createOrderDto)
     {
-        var order = request.Order.ToOrder();
-        await paperRepository.InsertOrderAsync(order);
+        var order = createOrderDto.ToOrder();
         
-        var orderEntryEntities = request.OrderEntries.Select(entryDto =>
-        {
-            var orderEntry = entryDto.ToOrderEntry();
-            orderEntry.OrderId = order.Id; 
-            return orderEntry;
-        }).ToList();
+        var insertedOrder = await paperRepository.InsertOrderAsync(order);
+
+      
+        var orderResponseDto = OrderResponseDto.FromOrder(insertedOrder);
+
+        return orderResponseDto;
+
+        /*
+         foreach (var entry in orderEntryEntities)
+         {
+
+                 await paperRepository.DeductProductQuantityAsync(entry.ProductId, entry.Quantity);
 
 
-        await paperRepository.AddOrderEntriesAsync(orderEntryEntities);
-
-        // Deduct product quantities
-        foreach (var entry in orderEntryEntities)
-        {
-           
-                await paperRepository.DeductProductQuantityAsync(entry.ProductId, entry.Quantity);
-            
-           
-        }
+         }
+     }*/
     }
-    
+
 }

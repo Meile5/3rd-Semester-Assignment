@@ -25,12 +25,7 @@ export interface PropertyDto {
   propertyName?: string;
 }
 
-export interface CreateOrderRequest {
-  order?: OrderDto;
-  orderEntries?: OrderEntryDto[];
-}
-
-export interface OrderDto {
+export interface OrderResponseDto {
   /** @format int32 */
   id?: number;
   /** @format date */
@@ -39,11 +34,34 @@ export interface OrderDto {
   totalAmount?: number;
   /** @format int32 */
   customerId?: number | null;
+  status?: string;
+  /** @format date-time */
+  orderDate?: string;
+  orderEntries?: OrderResponseEntryDto[];
 }
 
-export interface OrderEntryDto {
+export interface OrderResponseEntryDto {
   /** @format int32 */
   id?: number;
+  /** @format int32 */
+  quantity?: number;
+  /** @format int32 */
+  productId?: number;
+  /** @format int32 */
+  orderId?: number | null;
+}
+
+export interface CreateOrderDto {
+  /** @format date */
+  deliveryDate?: string | null;
+  /** @format double */
+  totalAmount?: number;
+  /** @format int32 */
+  customerId?: number | null;
+  orderEntries?: CreateOrderEntryDto[];
+}
+
+export interface CreateOrderEntryDto {
   /** @format int32 */
   quantity?: number;
   /** @format int32 */
@@ -230,12 +248,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name PaperCreateOrder
      * @request POST:/api/Paper
      */
-    paperCreateOrder: (data: CreateOrderRequest, params: RequestParams = {}) =>
-      this.request<File, any>({
+    paperCreateOrder: (data: CreateOrderDto, params: RequestParams = {}) =>
+      this.request<OrderResponseDto, any>({
         path: `/api/Paper`,
         method: "POST",
         body: data,
         type: ContentType.Json,
+        format: "json",
         ...params,
       }),
 

@@ -4,7 +4,7 @@ import { CartAtom } from '../atoms/CartAtom';
 import { LoggedCustomerAtom } from '../atoms/LoggedCustomerAtom';
 import CartTabBase from './CartTabBase';
 import {http} from "../http.ts";
-import {CreateOrderRequest, OrderDto, OrderEntryDto} from '../Api.ts'
+import { CreateOrderDto} from '../Api.ts'
 
 const CheckoutPage = () => {
     const [loggedCustomer, setLoggedCustomer] = useAtom(LoggedCustomerAtom);
@@ -28,32 +28,20 @@ const CheckoutPage = () => {
 
     const handleSubmit = async (e) => {
         console.log("heloo")
-        const orderData: OrderDto = {
+        const orderData: CreateOrderDto = {
             customerId: loggedCustomer.id,
             deliveryDate: deliveryDate,
             totalAmount: total_amount,
+            orderEntries: cartItems.map(item => ({
+                productId: item.id,
+                quantity: item.quantity,
+            })),
+            
         };
-
-        const orderEntriesData: OrderEntryDto[] = cartItems.map(item => {
-
-
-           var object: OrderEntryDto = {
-
-               productId: item.id,
-               quantity: item.quantity
-           }
-           return object;
-        });
-
-        const requestData:  CreateOrderRequest = {
-            orderEntries: orderEntriesData,
-
-            order: orderData
-        };
-
+        
         try {
-            console.log(requestData)
-            const response = await http.api.paperCreateOrder(requestData);
+            console.log(orderData)
+            const response = await http.api.paperCreateOrder(orderData);
             console.log('Order submitted successfully:', response.data);
            
         } catch (error) {

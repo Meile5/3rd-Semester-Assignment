@@ -10,10 +10,9 @@ public interface IPaperRepository
      List<Order> GetAllOrders();
 
      Task<Order> InsertOrderAsync(Order order);
+     
 
-     Task AddOrderEntriesAsync(List<OrderEntry> orderEntries);
-
-     Task DeductProductQuantityAsync(int productId, int quantity);
+    // Task DeductProductQuantityAsync(int productId, int quantity);
 
 
 }

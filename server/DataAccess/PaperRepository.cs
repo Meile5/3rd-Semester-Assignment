@@ -38,13 +38,9 @@ public class PaperRepository : IPaperRepository
         return order;  
     }
 
-    public async Task AddOrderEntriesAsync(List<OrderEntry> orderEntries)
-    {
-        _context.OrderEntries.AddRange(orderEntries);
-        await _context.SaveChangesAsync(); 
-    }
+   
 
-    public async Task DeductProductQuantityAsync(int productId, int quantity)
+   /* public async Task DeductProductQuantityAsync(int productId, int quantity)
     {
         var product = await _context.Papers.FindAsync(productId);
         if (product != null && product.Stock >= quantity)
@@ -56,5 +52,5 @@ public class PaperRepository : IPaperRepository
         {
             throw new Exception("Insufficient stock for product ID: " + productId);
         }
-    }
+    }*/
 }
