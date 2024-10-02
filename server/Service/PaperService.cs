@@ -1,5 +1,4 @@
 ﻿
-using System.Runtime.InteropServices.JavaScript;
 using DataAccess;
 using DataAccess.Interfaces;
 using DataAccess.Models;
@@ -12,9 +11,11 @@ namespace Service;
 public interface IPaperService
 {
     public List<PaperDto> GetAllPapers(int limit, int startAt);
-    public List<Order> GetAllOrders();
+    //public List<Order> GetAllOrders();
     public Task<OrderResponseDto> CreateOrder(CreateOrderDto createOrderDto);
 
+    public List<Order> GetCustomerOrders(int id);
+    
 }
 
 public class PaperService(
@@ -34,10 +35,10 @@ public List<PaperDto> GetAllPapers(int limit, int startAt)
             .ToList();
     }
 
-    public List<Order> GetAllOrders()
+    public List<Order> GetCustomerOrders(int id)
     {
-        var orders = paperRepository.GetAllOrders();
-        return orders.OrderBy(o => o.Id)
+        var orders = paperRepository.GetCustomerOrders(id);
+        return orders.OrderBy(o => o.OrderDate)
             .ToList();
     }
 

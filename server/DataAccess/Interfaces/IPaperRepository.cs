@@ -15,4 +15,6 @@ public interface IPaperRepository
     // Task DeductProductQuantityAsync(int productId, int quantity);
 
 
+     List<Order> GetCustomerOrders(int id);
+    
 }
