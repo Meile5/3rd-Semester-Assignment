@@ -19,14 +19,11 @@ export default function PaperList() {
     const limit = 10;
 
     // Fetch papers with start and limit index
-    const fetchPapers = async (startAt: number) => {
-        try {
-            const response = await http.api.paperGetAllPapers({ limit, startAt }).then();
-            setPapers((prevPapers) => [...prevPapers, ...response.data]);  // Append new papers
-            console.log(startAt);
-        } catch (e) {
-            console.log(e);
-        }
+    const fetchPapers = (startAt: number) => {
+         http.api.paperGetAllPapers({ limit, startAt })
+            .then((response) => {
+                setPapers((prevPapers) => [...prevPapers, ...response.data]);  // Append new papers
+            });
     };
 
     useInitializeData();
