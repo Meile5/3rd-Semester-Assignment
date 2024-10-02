@@ -19,7 +19,7 @@ const OrderHistoryPage: React.FC = () => {
 
 
     return (
-        <div className="pt-10 pl-10 pr-10 pb-10">
+        <div className="pt-10 pl-52 pr-52 pb-10">
             <header className="mb-6">
                 <h1 className="text-2xl font-bold">Order History</h1>
             </header>

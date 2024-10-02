@@ -13,47 +13,43 @@ import Footer from "./Footer.tsx";
 
 
 const App = () => {
-
     const [theme, setTheme] = useAtom(ThemeAtom);
 
     useEffect(() => {
         localStorage.setItem('theme', theme);
         document.documentElement.setAttribute('data-theme', theme);
-    }, [theme])
+    }, [theme]);
 
-  
+    return (
+        <div className="flex flex-col min-h-screen"> {/* Ensures the full viewport height */}
+            <Toaster position={"bottom-center"} />
+            <div className="flex-grow"> {/* Takes up remaining space */}
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/papers" element={
+                        <>
+                            <CustomerHeader />
+                            <CustomerPage />
+                        </>
+                    } />
+                    <Route path="/checkout" element={
+                        <>
+                            <CustomerHeader />
+                            <CheckoutPage />
+                        </>
+                    } />
+                    <Route path="/order-history" element={
+                        <>
+                            <CustomerHeader />
+                            <OrderHistoryPage />
+                        </>
+                    } />
+                </Routes>
+            </div>
+            <Footer /> {/* Footer stays at the bottom */}
+            <DevTools />
+        </div>
+    );
+};
 
-    return (<>
-
-        {/*<Navigation/>*/}
-        <Toaster position={"bottom-center"}/>
-        <Routes>
-            <Route path="/" element={<Home/>}/>
-            <Route path="/papers" element={
-                <>
-                    <CustomerHeader />
-                    <CustomerPage />
-                </>
-            }
-            />
-            <Route path="/checkout" element={
-                <>
-                    <CustomerHeader />
-                    <CheckoutPage />
-                </>
-            }
-            />
-            <Route path="/order-history" element={
-                <>
-                    <CustomerHeader />
-                    <OrderHistoryPage />
-                </>
-            }
-            />
-        </Routes>
-        <Footer/>
-        <DevTools/>
-
-    </>)
-}
 export default App;
