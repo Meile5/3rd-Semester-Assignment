@@ -197,8 +197,8 @@ export class HttpClient<SecurityDataType = unknown> {
     const query = rawQuery || {};
     const keys = Object.keys(query).filter((key) => "undefined" !== typeof query[key]);
     return keys
-      .map((key) => (Array.isArray(query[key]) ? this.addArrayQueryParam(query, key) : this.addQueryParam(query, key)))
-      .join("&");
+        .map((key) => (Array.isArray(query[key]) ? this.addArrayQueryParam(query, key) : this.addQueryParam(query, key)))
+        .join("&");
   }
 
   protected addQueryParams(rawQuery?: QueryParamsType): string {
@@ -208,21 +208,21 @@ export class HttpClient<SecurityDataType = unknown> {
 
   private contentFormatters: Record<ContentType, (input: any) => any> = {
     [ContentType.Json]: (input: any) =>
-      input !== null && (typeof input === "object" || typeof input === "string") ? JSON.stringify(input) : input,
+        input !== null && (typeof input === "object" || typeof input === "string") ? JSON.stringify(input) : input,
     [ContentType.Text]: (input: any) => (input !== null && typeof input !== "string" ? JSON.stringify(input) : input),
     [ContentType.FormData]: (input: any) =>
-      Object.keys(input || {}).reduce((formData, key) => {
-        const property = input[key];
-        formData.append(
-          key,
-          property instanceof Blob
-            ? property
-            : typeof property === "object" && property !== null
-              ? JSON.stringify(property)
-              : `${property}`,
-        );
-        return formData;
-      }, new FormData()),
+        Object.keys(input || {}).reduce((formData, key) => {
+          const property = input[key];
+          formData.append(
+              key,
+              property instanceof Blob
+                  ? property
+                  : typeof property === "object" && property !== null
+                      ? JSON.stringify(property)
+                      : `${property}`,
+          );
+          return formData;
+        }, new FormData()),
     [ContentType.UrlEncoded]: (input: any) => this.toQueryString(input),
   };
 
@@ -263,21 +263,21 @@ export class HttpClient<SecurityDataType = unknown> {
   };
 
   public request = async <T = any, E = any>({
-    body,
-    secure,
-    path,
-    type,
-    query,
-    format,
-    baseUrl,
-    cancelToken,
-    ...params
-  }: FullRequestParams): Promise<HttpResponse<T, E>> => {
+                                              body,
+                                              secure,
+                                              path,
+                                              type,
+                                              query,
+                                              format,
+                                              baseUrl,
+                                              cancelToken,
+                                              ...params
+                                            }: FullRequestParams): Promise<HttpResponse<T, E>> => {
     const secureParams =
-      ((typeof secure === "boolean" ? secure : this.baseApiParams.secure) &&
-        this.securityWorker &&
-        (await this.securityWorker(this.securityData))) ||
-      {};
+        ((typeof secure === "boolean" ? secure : this.baseApiParams.secure) &&
+            this.securityWorker &&
+            (await this.securityWorker(this.securityData))) ||
+        {};
     const requestParams = this.mergeRequestParams(params, secureParams);
     const queryString = query && this.toQueryString(query);
     const payloadFormatter = this.contentFormatters[type || ContentType.Json];
@@ -297,20 +297,20 @@ export class HttpClient<SecurityDataType = unknown> {
       r.error = null as unknown as E;
 
       const data = !responseFormat
-        ? r
-        : await response[responseFormat]()
-            .then((data) => {
-              if (r.ok) {
-                r.data = data;
-              } else {
-                r.error = data;
-              }
-              return r;
-            })
-            .catch((e) => {
-              r.error = e;
-              return r;
-            });
+          ? r
+          : await response[responseFormat]()
+              .then((data) => {
+                if (r.ok) {
+                  r.data = data;
+                } else {
+                  r.error = data;
+                }
+                return r;
+              })
+              .catch((e) => {
+                r.error = e;
+                return r;
+              });
 
       if (cancelToken) {
         this.abortControllers.delete(cancelToken);
@@ -334,30 +334,45 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags Paper
      * @name PaperGetAllPapers
-     * @request GET:/api/Paper
+     * @request GET:/api/Paper/papers
      */
     paperGetAllPapers: (
-      query?: {
-        /**
-         * @format int32
-         * @default 10
-         */
-        limit?: number;
-        /**
-         * @format int32
-         * @default 0
-         */
-        startAt?: number;
-      },
-      params: RequestParams = {},
+        query?: {
+          /**
+           * @format int32
+           * @default 10
+           */
+          limit?: number;
+          /**
+           * @format int32
+           * @default 0
+           */
+          startAt?: number;
+        },
+        params: RequestParams = {},
     ) =>
-      this.request<PaperDto[], any>({
-        path: `/api/Paper`,
-        method: "GET",
-        query: query,
-        format: "json",
-        ...params,
-      }),
+        this.request<PaperDto[], any>({
+          path: `/api/Paper/papers`,
+          method: "GET",
+          query: query,
+          format: "json",
+          ...params,
+        }),
+
+    /**
+     * No description
+     *
+     * @tags Paper
+     * @name PaperGetTotalPapersCount
+     * @request GET:/api/Paper
+     */
+    paperGetTotalPapersCount: (params: RequestParams = {}) =>
+        this.request<number, any>({
+          path: `/api/Paper`,
+          method: "GET",
+          format: "json",
+          ...params,
+        }),
 
     /**
      * No description
@@ -367,18 +382,18 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/api/Paper/orders-history
      */
     paperGetCustomerOrders: (
-      query?: {
-        /** @format int32 */
-        id?: number;
-      },
-      params: RequestParams = {},
+        query?: {
+          /** @format int32 */
+          id?: number;
+        },
+        params: RequestParams = {},
     ) =>
-      this.request<Order[], any>({
-        path: `/api/Paper/orders-history`,
-        method: "GET",
-        query: query,
-        format: "json",
-        ...params,
-      }),
+        this.request<Order[], any>({
+          path: `/api/Paper/orders-history`,
+          method: "GET",
+          query: query,
+          format: "json",
+          ...params,
+        }),
   };
 }

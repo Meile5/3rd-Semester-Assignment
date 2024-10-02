@@ -12,7 +12,8 @@ public interface IPaperService
 {
     public List<PaperDto> GetAllPapers(int limit, int startAt);
     public List<Order> GetCustomerOrders(int id);
-    
+    public int GetTotalPapersCount();
+
 }
 
 public class PaperService(
@@ -30,6 +31,11 @@ public List<PaperDto> GetAllPapers(int limit, int startAt)
             .Take(limit) // Take the limit
             .Select(PaperDto.FromEntity) // Map to DTO
             .ToList();
+    }
+
+    public int GetTotalPapersCount() 
+    {
+        return paperRepository.GetTotalPapersCount();
     }
 
     public List<Order> GetCustomerOrders(int id)

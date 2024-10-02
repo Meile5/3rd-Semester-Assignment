@@ -20,11 +20,19 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("")]
+        [Route("papers")]
         public ActionResult<List<PaperDto>> GetAllPapers(int limit = 10, int startAt = 0) 
         {
             var papers = _service.GetAllPapers(limit, startAt);
             return Ok(papers); // Return DTOs
+        }
+        
+        [HttpGet]
+        [Route("")]
+        public ActionResult<int> GetTotalPapersCount() 
+        {
+            var totalCount = _service.GetTotalPapersCount();
+            return Ok(totalCount);
         }
         
         [HttpGet]

@@ -22,12 +22,19 @@ public class PaperRepository : IPaperRepository
     
         return papers;
     }
+    
+    public int GetTotalPapersCount()
+    {
+        return _context.Papers.Count(); // Get total count of papers
+    }
 
     public List<Order> GetCustomerOrders(int customerId)
     {
+        // load order history of the customer by id, including order entries and products (papers)
         var orders = _context.Orders
             .Where(o => o.CustomerId == customerId)
-            .Include(orderEntry => orderEntry.OrderEntries)
+            .Include(order => order.OrderEntries)
+            .ThenInclude(orderEntry => orderEntry.Product) 
             .ToList();
 
         return orders;

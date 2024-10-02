@@ -42,13 +42,13 @@ const Header: React.FC = () => {
                     <div className="flex space-x-2 items-center">
                         <Link
                             to="/papers"
-                            className="bg-black text-white py-2 rounded-none border border-transparent hover:bg-white hover:text-black hover:border-black transition-colors duration-300 text-center whitespace-nowrap pr-1 pl-1"
+                            className="text-black border-b-2 border-transparent hover:border-black transition-all duration-300 text-center whitespace-nowrap pr-1 pl-1"
                         >
                             Products
                         </Link>
                         <Link
                             to="/order-history"
-                            className="bg-black text-white py-2 rounded-none border border-transparent hover:bg-white hover:text-black hover:border-black transition-colors duration-300 text-center whitespace-nowrap pr-1 pl-1"
+                            className="text-black border-b-2 border-transparent hover:border-black transition-all duration-300 text-center whitespace-nowrap pr-1 pl-1"
                         >
                             Order History
                         </Link>
