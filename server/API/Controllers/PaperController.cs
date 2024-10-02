@@ -24,7 +24,7 @@ namespace API.Controllers
         public ActionResult<List<PaperDto>> GetAllPapers(int limit = 10, int startAt = 0) 
         {
             var papers = _service.GetAllPapers(limit, startAt);
-            return Ok(papers); // Return DTOs
+            return Ok(papers); 
         }
         
         [HttpGet]
@@ -42,5 +42,15 @@ namespace API.Controllers
             var orders = _service.GetCustomerOrders(id);
             return Ok(orders); 
         }
+        
+        [HttpPost]
+        [Route("")]
+        public async Task<ActionResult<OrderResponseDto>> CreateOrder([FromBody] CreateOrderDto dto)
+       {
+          var result = await _service.CreateOrder(dto);
+          return Ok(result);
+          
+       }
+
     }
 }
