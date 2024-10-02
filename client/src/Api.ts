@@ -25,6 +25,33 @@ export interface PropertyDto {
   propertyName?: string;
 }
 
+export interface CreateOrderRequest {
+  order?: OrderDto;
+  orderEntries?: OrderEntryDto[];
+}
+
+export interface OrderDto {
+  /** @format int32 */
+  id?: number;
+  /** @format date */
+  deliveryDate?: string | null;
+  /** @format double */
+  totalAmount?: number;
+  /** @format int32 */
+  customerId?: number | null;
+}
+
+export interface OrderEntryDto {
+  /** @format int32 */
+  id?: number;
+  /** @format int32 */
+  quantity?: number;
+  /** @format int32 */
+  productId?: number;
+  /** @format int32 */
+  orderId?: number;
+}
+
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
 import axios from "axios";
 
@@ -192,6 +219,37 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/api/Paper`,
         method: "GET",
         query: query,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Paper
+     * @name PaperCreateOrder
+     * @request POST:/api/Paper
+     */
+    paperCreateOrder: (data: CreateOrderRequest, params: RequestParams = {}) =>
+      this.request<File, any>({
+        path: `/api/Paper`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Paper
+     * @name PaperGetAllOrders
+     * @request GET:/api/Paper/orders
+     */
+    paperGetAllOrders: (params: RequestParams = {}) =>
+      this.request<PaperDto[], any>({
+        path: `/api/Paper/orders`,
+        method: "GET",
         format: "json",
         ...params,
       }),

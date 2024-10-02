@@ -34,5 +34,18 @@ namespace API.Controllers
             var orders = _service.GetAllOrders();
             return Ok(orders); 
         }
+        
+        [HttpPost]
+        [Route("")]
+        public async Task<ActionResult> CreateOrder([FromBody] CreateOrderRequest request)
+    {
+   //      if (request == null || request.OrderEntries == null || !request.OrderEntries.Any())
+  //  {
+  //      return BadRequest("Order data is required.");
+  //  }
+        await _service.CreateOrder(request);
+        return Created("", new { message = "Order and entries saved successfully." });
+     }
+
     }
 }
