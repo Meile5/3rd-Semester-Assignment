@@ -11,6 +11,9 @@ namespace Service;
 public interface IPaperService
 {
     public List<PaperDto> GetAllPapers(int limit, int startAt);
+    //public List<Order> GetAllOrders();
+    public Task<OrderResponseDto> CreateOrder(CreateOrderDto createOrderDto);
+
     public List<Order> GetCustomerOrders(int id);
     
 }
@@ -38,4 +41,27 @@ public List<PaperDto> GetAllPapers(int limit, int startAt)
         return orders.OrderBy(o => o.OrderDate)
             .ToList();
     }
+
+    public async Task<OrderResponseDto> CreateOrder(CreateOrderDto createOrderDto)
+    {
+        var order = createOrderDto.ToOrder();
+        
+        var insertedOrder = await paperRepository.InsertOrderAsync(order);
+
+      
+        var orderResponseDto = OrderResponseDto.FromOrder(insertedOrder);
+
+        return orderResponseDto;
+
+        /*
+         foreach (var entry in orderEntryEntities)
+         {
+
+                 await paperRepository.DeductProductQuantityAsync(entry.ProductId, entry.Quantity);
+
+
+         }
+     }*/
+    }
+
 }

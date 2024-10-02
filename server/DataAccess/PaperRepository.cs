@@ -31,4 +31,27 @@ public class PaperRepository : IPaperRepository
     
         return orders;
     }
+    
+    public async Task<Order> InsertOrderAsync(Order order)
+    {
+        _context.Orders.Add(order);
+        await _context.SaveChangesAsync();  
+        return order;  
+    }
+
+   
+
+   /* public async Task DeductProductQuantityAsync(int productId, int quantity)
+    {
+        var product = await _context.Papers.FindAsync(productId);
+        if (product != null && product.Stock >= quantity)
+        {
+            product.Stock -= quantity;
+            await _context.SaveChangesAsync(); 
+        }
+        else
+        {
+            throw new Exception("Insufficient stock for product ID: " + productId);
+        }
+    }*/
 }

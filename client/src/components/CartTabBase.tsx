@@ -7,7 +7,7 @@ const CartTabBase: React.FC<{ isOpen?: boolean; onClose?: () => void }> = ({ isO
 
     // Calculate the total amount with a fallback for undefined price
     const totalAmount = cartItems.reduce((sum, item) => sum + (item.price ?? 0) * item.quantity, 0);
-
+   
     const handleIncreaseQuantity = (itemId: number | undefined) => {
         setCartItems((currentItems) =>
             currentItems.map(item =>
@@ -33,6 +33,8 @@ const CartTabBase: React.FC<{ isOpen?: boolean; onClose?: () => void }> = ({ isO
             currentItems.filter(item => item.id !== itemId)
         );
     };
+
+  
 
     return (
         <div className="flex flex-col h-full">
@@ -81,5 +83,6 @@ const CartTabBase: React.FC<{ isOpen?: boolean; onClose?: () => void }> = ({ isO
             </div>
     );
 };
+
 
 export default CartTabBase;
