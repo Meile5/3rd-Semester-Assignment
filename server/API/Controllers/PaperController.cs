@@ -20,7 +20,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("")]
+        [Route("papers")]
         public ActionResult<List<PaperDto>> GetAllPapers(int limit = 10, int startAt = 0) 
         {
             var papers = _service.GetAllPapers(limit, startAt);
@@ -28,8 +28,16 @@ namespace API.Controllers
         }
         
         [HttpGet]
+        [Route("")]
+        public ActionResult<int> GetTotalPapersCount() 
+        {
+            var totalCount = _service.GetTotalPapersCount();
+            return Ok(totalCount);
+        }
+        
+        [HttpGet]
         [Route("orders-history")]
-        public ActionResult<List<Order>> GetCustomerOrders(int id) 
+        public ActionResult<List<OrderDto>> GetCustomerOrders(int id) 
         {
             var orders = _service.GetCustomerOrders(id);
             return Ok(orders); 
