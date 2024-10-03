@@ -28,6 +28,11 @@ public class PaperRepository : IPaperRepository
         return _context.Papers.Count(); // Get total count of papers
     }
 
+    public List<Order> GetAllOrders()
+    {
+        throw new NotImplementedException();
+    }
+
     public List<Order> GetCustomerOrders(int customerId)
     {
         // load order history of the customer by id, including order entries and products (papers)
@@ -49,7 +54,7 @@ public class PaperRepository : IPaperRepository
 
    
 
-   /* public async Task DeductProductQuantityAsync(int productId, int quantity)
+    public async Task DeductProductQuantityAsync(int productId, int quantity)
     {
         var product = await _context.Papers.FindAsync(productId);
         if (product != null && product.Stock >= quantity)
@@ -61,5 +66,5 @@ public class PaperRepository : IPaperRepository
         {
             throw new Exception("Insufficient stock for product ID: " + productId);
         }
-    }*/
+    }
 }

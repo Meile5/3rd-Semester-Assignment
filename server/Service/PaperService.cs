@@ -54,21 +54,19 @@ public List<PaperDto> GetAllPapers(int limit, int startAt)
         var order = createOrderDto.ToOrder();
         
         var insertedOrder = await paperRepository.InsertOrderAsync(order);
+        foreach (var entry in createOrderDto.OrderEntries)
+        {
+            await paperRepository.DeductProductQuantityAsync(entry.ProductId, entry.Quantity);
 
+        }
       
         var orderResponseDto = OrderResponseDto.FromOrder(insertedOrder);
 
         return orderResponseDto;
 
-        /*
-         foreach (var entry in orderEntryEntities)
-         {
-
-                 await paperRepository.DeductProductQuantityAsync(entry.ProductId, entry.Quantity);
-
-
-         }
-     }*/
+        
+        
+     
     }
 
 }

@@ -1,12 +1,12 @@
 ﻿import React from "react";
 import { Link } from "react-router-dom";
-import CartTabBase from './CartTabBase'; // Import the new CartTabBase component
+import CartTabBase from './CartTabBase'; 
 
 const CartTab: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
     return (
         <div className={`fixed right-0 top-0 h-full w-1/3 bg-white shadow-lg p-4 transition-transform duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
              style={{
-                 top: "5.7rem",
+                 top: "5.1rem",
                  height: "auto",
                  maxHeight: "80vh",
                  width: "22vw",

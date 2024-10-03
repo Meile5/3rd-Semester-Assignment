@@ -27,7 +27,7 @@ const CheckoutPage = () => {
     };
 
     const handleSubmit = async (e) => {
-        console.log("heloo")
+     
         const orderData: CreateOrderDto = {
             customerId: loggedCustomer.id,
             deliveryDate: deliveryDate,
@@ -50,7 +50,7 @@ const CheckoutPage = () => {
     };
     const total_amount = cartItems.reduce((sum, item) => sum + (item.price ?? 0) * item.quantity, 0);
     return (
-        <div className="flex h-screen  h-[calc(100vh-80px)] ">
+        <div className="flex h-screen h-[calc(100vh-80px)] ">
             <form onSubmit={handleSubmit} className="w-full">
                 {/* Customer Information Section */}
                 <div className="flex flex-col items-center w-1/2">
