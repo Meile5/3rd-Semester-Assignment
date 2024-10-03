@@ -6,8 +6,6 @@ public interface IPaperRepository
 {
   
      List<Paper> GetAllPapers();
-     
-     List<Order> GetAllOrders();
 
      Task<Order> InsertOrderAsync(Order order);
      
@@ -16,5 +14,7 @@ public interface IPaperRepository
 
 
      List<Order> GetCustomerOrders(int id);
-    
+
+     int GetTotalPapersCount();
+
 }

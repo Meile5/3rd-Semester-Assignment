@@ -1,20 +1,46 @@
 import {PapersAtom} from "../atoms/PapersAtom.tsx"
 import {useAtom} from "jotai";
-import {useNavigate} from "react-router-dom";
 // @ts-ignore
 import image1 from "../resources/images/image1.jpeg";
 import React, {useEffect, useState} from 'react';
 import {http} from "../http";
-import { AxiosResponse } from "axios";
 import {PaperDto} from "../Api.ts";
 import {CartAtom} from '../atoms/CartAtom'
+import {TotalCountAtom} from "../atoms/TotalCountAtom.tsx";
+import {useInitializeData} from "../useInitializeData.ts";
 
 
 
 export default function PaperList() {
-    const navigate = useNavigate();
-    const [papers, setProducts] = useAtom(PapersAtom);
+    const [papers, setPapers] = useAtom(PapersAtom);
+    const [totalCount] = useAtom(TotalCountAtom);
     const [cartItems, setCartItems] = useAtom(CartAtom);
+    const [startAt, setStartAt] = useState(0);
+    const limit = 10;
+
+    // Fetch papers with start and limit index
+    const fetchPapers = (startAt: number) => {
+         http.api.paperGetAllPapers({ limit, startAt })
+            .then((response) => {
+                setPapers((prevPapers) => [...prevPapers, ...response.data]);  // Append new papers
+            });
+    };
+
+    useInitializeData();
+
+    useEffect(() => {
+        // Reset papers and startAt when the component mounts
+        setPapers([]);  // Clear the previous papers list
+        setStartAt(0);  // Reset the starting index
+    }, []);  // This effect runs once when the component mounts
+
+    useEffect(() => {
+        fetchPapers(startAt);  // Fetch papers based on startAt
+    }, [startAt]);  // Re-fetch papers when startAt changes
+
+    const handleLoadMore = () => {
+        setStartAt((prevStartAt) => prevStartAt + limit);
+    };
 
     const handleAddToCart = (paper: PaperDto) => {
         setCartItems((currentItems) => {
@@ -32,25 +58,22 @@ export default function PaperList() {
         });
     };
 
-
-    return (<>
+    return (
         <div>
             {papers.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ml-10 mt-10">
                     {papers.map((paper) => (
                         <div key={paper.id}>
                             <div
-                                className="card w-96 h-96 shadow-xl relative bg-cover bg-center"
+                                className="card w-96 h-96 shadow-xl relative bg-cover bg-center mb-6"
                                 style={{
                                     backgroundImage: `url(${image1})`,
                                 }}
                             >
-                                {/* White box containing the paper details */}
                                 <div
                                     className="absolute inset-8 bg-white flex flex-col justify-between items-start p-5">
                                     <h2 className="card-title mb-6">{paper.name}</h2>
                                     <p className="mb-8">Properties</p>
-                                    {/* Dynamically rendering properties */}
                                     {paper.properties && paper.properties.length > 0 ? (
                                         <ul className="list-disc list-inside mb-4">
                                             {paper.properties.map((property, index) => (
@@ -62,7 +85,7 @@ export default function PaperList() {
                                     ) : (
                                         <p>No properties available.</p>
                                     )}
-                                    <p className="text-lg font-semibold mb-4">€{paper.price}</p>
+                                    <p className="text-lg font-semibold mb-4">{paper.price} €</p>
                                     <div className="w-full mt-auto">
                                         <button
                                             className="btn btn-outline btn-black w-full p-2 rounded-md hover:bg-black hover:text-white transition-colors"
@@ -77,6 +100,12 @@ export default function PaperList() {
                     ))}
                 </div>
             )}
+            <div className="flex flex-col items-center mt-6">
+                <button onClick={handleLoadMore} className="text-black border-b-2 border-transparent hover:border-black transition-all duration-300 mb-4">
+                    Load More
+                </button>
+                <p>{papers.length} of {totalCount}</p>
+            </div>
         </div>
-    </>)
+    );
 }
