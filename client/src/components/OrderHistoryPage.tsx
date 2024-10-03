@@ -34,15 +34,27 @@ const OrderHistoryPage: React.FC = () => {
                         <input type="radio" name="my-accordion-2" checked={isToggled == index}/>
                         <div className="collapse-title text-xl font-medium">
                             {/* Order info separated by a pipe */}
-                            {`Order #${order.id} | Order Date: ${order.orderDate} | Delivery Date: ${order.deliveryDate} | Status: ${order.status} | Total: ${order.totalAmount} dkk`}
+                            <span>Order #{order.id}</span>
+                            <span className="mx-5">|</span>
+                            <span>Order Date: {order.orderDate ? new Date(order.orderDate).toISOString().split('T')[0] : 'N/A'}</span>
+                            <span className="mx-5">|</span>
+                            <span>Delivery Date: {order.deliveryDate}</span>
+                            <span className="mx-5">|</span>
+                            <span>Status: {order.status}</span>
+                            <span className="mx-5">|</span>
+                            <span>Total: {order.totalAmount} €</span>
                         </div>
                         <div className="collapse-content">
                             <h3 className="text-lg font-semibold">Products:</h3>
                             <ul className="list-disc ml-5">
                                 {order.orderEntries?.map(orderEntry => (
-                                    <li key={orderEntry.id}>
-                                        {orderEntry.product?.name} | Quantity: {orderEntry.quantity} |
-                                        Price: {orderEntry.product?.price} dkk
+                                    <li key={orderEntry.id}
+                                        className="mb-2"> {/* Optional spacing between list items */}
+                                        <span>{orderEntry.product?.name}</span>
+                                        <span className="mx-4">|</span>
+                                        <span>Quantity: {orderEntry.quantity}</span>
+                                        <span className="mx-4">|</span>
+                                        <span>Price: {orderEntry.product?.price} €</span>
                                     </li>
                                 ))}
                             </ul>

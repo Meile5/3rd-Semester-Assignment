@@ -6,8 +6,6 @@ public interface IPaperRepository
 {
   
      List<Paper> GetAllPapers();
-     
-     List<Order> GetAllOrders();
 
      Task<Order> InsertOrderAsync(Order order);
      

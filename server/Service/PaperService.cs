@@ -14,7 +14,7 @@ public interface IPaperService
     //public List<Order> GetAllOrders();
     public Task<OrderResponseDto> CreateOrder(CreateOrderDto createOrderDto);
 
-    public List<Order> GetCustomerOrders(int id);
+    public List<OrderDto> GetCustomerOrders(int id);
     public int GetTotalPapersCount();
 
 }
@@ -41,10 +41,11 @@ public List<PaperDto> GetAllPapers(int limit, int startAt)
         return paperRepository.GetTotalPapersCount();
     }
 
-    public List<Order> GetCustomerOrders(int id)
+    public List<OrderDto> GetCustomerOrders(int id)
     {
         var orders = paperRepository.GetCustomerOrders(id);
         return orders.OrderBy(o => o.OrderDate)
+            .Select(OrderDto.FromEntity)
             .ToList();
     }
 

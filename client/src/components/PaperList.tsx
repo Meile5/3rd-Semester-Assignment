@@ -29,8 +29,14 @@ export default function PaperList() {
     useInitializeData();
 
     useEffect(() => {
-        fetchPapers(startAt);
-    }, [startAt]);
+        // Reset papers and startAt when the component mounts
+        setPapers([]);  // Clear the previous papers list
+        setStartAt(0);  // Reset the starting index
+    }, []);  // This effect runs once when the component mounts
+
+    useEffect(() => {
+        fetchPapers(startAt);  // Fetch papers based on startAt
+    }, [startAt]);  // Re-fetch papers when startAt changes
 
     const handleLoadMore = () => {
         setStartAt((prevStartAt) => prevStartAt + limit);
@@ -79,7 +85,7 @@ export default function PaperList() {
                                     ) : (
                                         <p>No properties available.</p>
                                     )}
-                                    <p className="text-lg font-semibold mb-4">{paper.price} dkk</p>
+                                    <p className="text-lg font-semibold mb-4">{paper.price} €</p>
                                     <div className="w-full mt-auto">
                                         <button
                                             className="btn btn-outline btn-black w-full p-2 rounded-md hover:bg-black hover:text-white transition-colors"

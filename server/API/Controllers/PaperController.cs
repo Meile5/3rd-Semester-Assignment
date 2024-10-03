@@ -37,7 +37,7 @@ namespace API.Controllers
         
         [HttpGet]
         [Route("orders-history")]
-        public ActionResult<List<Order>> GetCustomerOrders(int id) 
+        public ActionResult<List<OrderDto>> GetCustomerOrders(int id) 
         {
             var orders = _service.GetCustomerOrders(id);
             return Ok(orders); 
