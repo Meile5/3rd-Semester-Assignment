@@ -25,6 +25,93 @@ export interface PropertyDto {
   propertyName?: string;
 }
 
+export interface Order {
+  /** @format int32 */
+  id?: number;
+  /** @format date-time */
+  orderDate?: string;
+  /** @format date */
+  deliveryDate?: string | null;
+  /**
+   * @minLength 0
+   * @maxLength 50
+   */
+  status?: string;
+  /** @format double */
+  totalAmount?: number;
+  /** @format int32 */
+  customerId?: number | null;
+  customer?: Customer | null;
+  orderEntries?: OrderEntry[];
+}
+
+export interface Customer {
+  /** @format int32 */
+  id?: number;
+  /**
+   * @minLength 0
+   * @maxLength 255
+   */
+  name?: string;
+  /**
+   * @minLength 0
+   * @maxLength 255
+   */
+  address?: string | null;
+  /**
+   * @minLength 0
+   * @maxLength 50
+   */
+  phone?: string | null;
+  /**
+   * @minLength 0
+   * @maxLength 255
+   */
+  email?: string | null;
+  orders?: Order[];
+}
+
+export interface OrderEntry {
+  /** @format int32 */
+  id?: number;
+  /** @format int32 */
+  quantity?: number;
+  /** @format int32 */
+  productId?: number;
+  /** @format int32 */
+  orderId?: number | null;
+  order?: Order | null;
+  product?: Paper | null;
+}
+
+export interface Paper {
+  /** @format int32 */
+  id?: number;
+  /**
+   * @minLength 0
+   * @maxLength 255
+   */
+  name?: string;
+  discontinued?: boolean;
+  /** @format int32 */
+  stock?: number;
+  /** @format double */
+  price?: number;
+  orderEntries?: OrderEntry[];
+  properties?: Property[];
+}
+
+export interface Property {
+  /** @format int32 */
+  id?: number;
+  /**
+   * @minLength 0
+   * @maxLength 255
+   */
+  propertyName?: string;
+  papers?: Paper[];
+}
+
 export interface OrderResponseDto {
   /** @format int32 */
   id?: number;
@@ -262,13 +349,20 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Paper
-     * @name PaperGetAllOrders
-     * @request GET:/api/Paper/orders
+     * @name PaperGetCustomerOrders
+     * @request GET:/api/Paper/orders-history
      */
-    paperGetAllOrders: (params: RequestParams = {}) =>
-      this.request<PaperDto[], any>({
-        path: `/api/Paper/orders`,
+    paperGetCustomerOrders: (
+      query?: {
+        /** @format int32 */
+        id?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<Order[], any>({
+        path: `/api/Paper/orders-history`,
         method: "GET",
+        query: query,
         format: "json",
         ...params,
       }),
