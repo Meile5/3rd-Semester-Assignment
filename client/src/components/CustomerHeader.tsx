@@ -86,7 +86,7 @@ const Header: React.FC = () => {
                                     />
                                 </svg>
                                 {totalQuantity > 0 && (
-                                    <span className="absolute top-2/3 right-1/2 bg-red-500 text-white text-sm w-5 h-5 rounded-full flex justify-center items-center">
+                                    <span className="absolute top-2/3 right-1/2 bg-red-500 text-white text-sm w-4 h-4 rounded-full flex justify-center items-center">
                                         {totalQuantity}
                                     </span>
                                 )}
