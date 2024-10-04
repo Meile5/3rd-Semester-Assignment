@@ -6,12 +6,16 @@ import CartTabBase from './CartTabBase';
 import {http} from "../http.ts";
 import { CreateOrderDto} from '../Api.ts'
 import { OrderHistoryAtom } from '../atoms/OrderHistoryAtom.tsx';
+import toast from "react-hot-toast";
+import {useNavigate} from 'react-router-dom';
 
 const CheckoutPage = () => {
     const [loggedCustomer, setLoggedCustomer] = useAtom(LoggedCustomerAtom);
     const [cartItems] = useAtom(CartAtom);
     const [deliveryDate, setDeliveryDate] = useState('');
     const [History, setHistory] = useAtom(OrderHistoryAtom);
+
+    const navigate = useNavigate();
 
     // Dynamically updating the corresponding field in the atom
     const handleChange = (e) => {
@@ -44,9 +48,11 @@ const CheckoutPage = () => {
         try {
             
             const response = await http.api.paperCreateOrder(orderData);
-            if(response.status === 201) {
+            if(response) {
                 setHistory((prevHistory) => [...prevHistory, response.data]);
             }
+            toast.success('Thank you for ordering');
+            navigate("/papers")
            
         } catch (error) {
             console.error('Error submitting order:', error);
@@ -163,9 +169,10 @@ const CheckoutPage = () => {
                         <CartTabBase/>
                         <button
                             className="w-full bg-black text-white py-2 rounded-none border border-transparent hover:bg-white hover:text-black hover:border-black transition-colors duration-300 text-center"
-                        >
+                            type="submit"
+                        >   
                             Submit Order
-
+                      
                         </button>
                     </div>
                 </div>

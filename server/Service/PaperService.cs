@@ -2,6 +2,7 @@
 using DataAccess;
 using DataAccess.Interfaces;
 using DataAccess.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 
@@ -20,7 +21,7 @@ public interface IPaperService
 }
 
 public class PaperService(
-        //ILogger<PaperService> logger,
+        ILogger<PaperService> logger,
         IPaperRepository paperRepository,
         PaperContext context
         ) : IPaperService
@@ -51,22 +52,30 @@ public List<PaperDto> GetAllPapers(int limit, int startAt)
 
     public async Task<OrderResponseDto> CreateOrder(CreateOrderDto createOrderDto)
     {
-        var order = createOrderDto.ToOrder();
         
-        var insertedOrder = await paperRepository.InsertOrderAsync(order);
-        foreach (var entry in createOrderDto.OrderEntries)
+        var order = createOrderDto.ToOrder(); 
+        
+        using (var transaction = await context.Database.BeginTransactionAsync())
         {
-            await paperRepository.DeductProductQuantityAsync(entry.ProductId, entry.Quantity);
-
+            try
+            {
+                var insertedOrder = await paperRepository.InsertOrderAsync(order);
+                
+                foreach (var entry in createOrderDto.OrderEntries)
+                {
+                    await paperRepository.DeductProductQuantityAsync(entry.ProductId, entry.Quantity);
+                }
+                await transaction.CommitAsync();
+                return OrderResponseDto.FromOrder(insertedOrder);
+            }
+            catch (Exception ex)
+            {
+                // Rollback the transaction if any error occurs
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
-      
-        var orderResponseDto = OrderResponseDto.FromOrder(insertedOrder);
-
-        return orderResponseDto;
-
         
-        
-     
     }
 
 }
