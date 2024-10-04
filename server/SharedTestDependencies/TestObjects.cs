@@ -6,52 +6,32 @@ namespace SharedTestDependencies;
 public class TestObjects
 {
     
-    public static Patient GetPatient()
+    public static Order CreateOrder()
     {
-        return new Faker<Patient>()
-            .RuleFor(p => p.Name, f => f.Name.FullName())
-            .RuleFor(p => p.Address, f => f.Address.FullAddress())
-            .RuleFor(p => p.Birthdate, f => f.Date.PastDateOnly())
-            .RuleFor(p => p.Gender, f => true);
+        return new Faker<Order>()
+            .RuleFor(o => o.CustomerId, f => f.Random.Int(1,100))
+            .RuleFor(o => o.OrderDate, f => DateTime.UtcNow)
+            .RuleFor(o => o.DeliveryDate, f => DateOnly.FromDateTime(f.Date.Future()))
+            .RuleFor(o => o.TotalAmount, f => f.Random.Double(10, 1000))
+            .RuleFor(o => o.OrderEntries, f => new Faker<OrderEntry>()
+                .RuleFor(oe => oe.ProductId, f => f.Random.Int(1, 50)) 
+                .RuleFor(oe => oe.Quantity, f => f.Random.Int(50, 100)) 
+                .Generate(2)); 
     }
     
-    public static Doctor GetDoctor()
+    public static Paper CreatePaper()
     {
-        return new Faker<Doctor>()
-            .RuleFor(d => d.YearsExperience, f => f.Random.Int(1, 20))
-            .RuleFor(d => d.Specialty, f => f.Lorem.Word())
-            .RuleFor(d => d.Name, f => f.Name.FullName());
-    }
+        return new Faker <Paper>()
+            .RuleFor(p => p.Id, f => f.Random.Int(1,100))
+            .RuleFor(p => p.Name, f => f.Commerce.ProductName()) 
+            .RuleFor(p => p.Stock, f => f.Random.Int(0, 100)) 
+            .RuleFor(p => p.Price, f => f.Random.Double(1.0, 100.0)) 
+            .RuleFor(p => p.Properties, f => new Faker<Property>()
+                    .RuleFor(p => p.Id, f => f.Random.Int(1,100))
+                    .RuleFor(p => p.PropertyName, f => f.Commerce.Color()) // Generate a fake property name
+                    .Generate(3)
+            );
 
-    public static Disease GetDisease()
-    {
-        return new Faker<Disease>()
-            .RuleFor(d => d.Severity, f => f.Lorem.Word())
-            .RuleFor(d => d.Name, f => f.Lorem.Word());
     }
     
-    public static Diagnosis GetDiagnosis(Doctor doctor, Patient patient, Disease disease)
-    {
-        return new Faker<Diagnosis>()
-            .RuleFor(d => d.DiagnosisDate, f => DateTime.UtcNow)
-            .RuleFor(d => d.Disease, f => disease)
-            .RuleFor(d => d.Doctor, f => doctor)
-            .RuleFor(d => d.Patient, f => patient);
-    }
-    
-    public static Treatment GetTreatment()
-    {
-        return new Faker<Treatment>()
-            .RuleFor(t => t.Name, f => f.Lorem.Word())
-            .RuleFor(t => t.Cost, f => new Random().NextDouble());
-    }
-
-    public static PatientTreatment GetPatientTreatment(Patient patient, Treatment treatment)
-    {
-        return new Faker<PatientTreatment>()
-            .RuleFor(pt => pt.StartDate, f => DateTime.UtcNow)
-            .RuleFor(pt => pt.EndDate, f => DateTime.UtcNow)
-            .RuleFor(pt => pt.Patient, f => patient)
-            .RuleFor(pt => pt.Treatment, f => treatment);
-    }
 }
