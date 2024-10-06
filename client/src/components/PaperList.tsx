@@ -8,10 +8,12 @@ import {PaperDto} from "../Api.ts";
 import {CartAtom} from '../atoms/CartAtom'
 import {TotalCountAtom} from "../atoms/TotalCountAtom.tsx";
 import {useInitializeData} from "../useInitializeData.ts";
+import { SharedPapersAtom } from "../atoms/SharedPapersAtom.tsx";
 
 
 
 export default function PaperList() {
+    const [sharedPapers, setSharedPapers] = useAtom(SharedPapersAtom);
     const [papers, setPapers] = useAtom(PapersAtom);
     const [totalCount] = useAtom(TotalCountAtom);
     const [cartItems, setCartItems] = useAtom(CartAtom);
@@ -22,7 +24,8 @@ export default function PaperList() {
     const fetchPapers = (startAt: number) => {
          http.api.paperGetAllPapers({ limit, startAt })
             .then((response) => {
-                setPapers((prevPapers) => [...prevPapers, ...response.data]);  // Append new papers
+                setPapers((prevPapers) => [...prevPapers, ...response.data]);
+                setSharedPapers((prevSharedPapers) => [...prevSharedPapers, ...response.data]); 
             });
     };
 
@@ -31,6 +34,7 @@ export default function PaperList() {
     useEffect(() => {
         // Reset papers and startAt when the component mounts
         setPapers([]);  // Clear the previous papers list
+        setSharedPapers([]);
         setStartAt(0);  // Reset the starting index
     }, []);  // This effect runs once when the component mounts
 
@@ -60,9 +64,9 @@ export default function PaperList() {
 
     return (
         <div>
-            {papers.length > 0 && (
+            {sharedPapers.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ml-10 mt-10">
-                    {papers.map((paper) => (
+                    {sharedPapers.map((paper) => (
                         <div key={paper.id}>
                             <div
                                 className="card w-96 h-96 shadow-xl relative bg-cover bg-center mb-6"
