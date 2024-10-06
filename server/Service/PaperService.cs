@@ -19,6 +19,7 @@ public interface IPaperService
 
     public List<OrderDto> GetCustomerOrders(int id);
     public int GetTotalPapersCount();
+    public Task<List<PaperDto>> SearchItemsAsync(string query);
 
 }
 
@@ -90,6 +91,20 @@ public List<PaperDto> GetAllPapers(int limit, int startAt)
                 throw;
             }
         }
+        
+    }
+    
+    public async Task<List<PaperDto>> SearchItemsAsync(string query)
+    {
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            return new List<PaperDto>(); 
+        }
+        
+        var results = await paperRepository.SearchItemsAsync(query);
+
+       
+        return results.Select(PaperDto.FromEntity).ToList();
         
     }
 

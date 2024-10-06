@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
-import { useNavigate } from "react-router-dom";
-import { UserCircleIcon } from "@heroicons/react/24/outline";
+import {useNavigate} from "react-router-dom";
+import {UserCircleIcon} from "@heroicons/react/24/outline";
 import LoginModal from "./LoginModal.tsx"; // Import the login modal
-import { useAtom } from "jotai";
-import { LoggedCustomerAtom } from "../atoms/LoggedCustomerAtom.tsx";
+import {useAtom} from "jotai";
+import {LoggedCustomerAtom} from "../atoms/LoggedCustomerAtom.tsx";
+
 
 // @ts-ignore
 import image2 from "../resources/images/image2.jpg";
@@ -44,7 +45,7 @@ export default function Home() {
             <div className="flex mt-20 justify-evenly mb-32">
                 <div className="card bg-base-100 w-96 shadow-xl">
                     <figure className="px-10 pt-10">
-                        <UserCircleIcon className="w-20 h-20 text-gray-500" /> {/* Admin Icon */}
+                        <UserCircleIcon className="w-20 h-20 text-gray-500"/> {/* Admin Icon */}
                     </figure>
                     <div className="card-body items-center text-center">
                         <h2 className="card-title">Admin</h2>
@@ -56,7 +57,7 @@ export default function Home() {
                     onClick={handleCustomerClick} // Open modal on click
                 >
                     <figure className="px-10 pt-10">
-                        <UserCircleIcon className="w-20 h-20 text-gray-500" /> {/* Customer Icon */}
+                        <UserCircleIcon className="w-20 h-20 text-gray-500"/> {/* Customer Icon */}
                     </figure>
                     <div className="card-body items-center text-center">
                         <h2 className="card-title">Customer</h2>
@@ -65,7 +66,7 @@ export default function Home() {
             </div>
 
             {/* Render the login modal */}
-            <LoginModal isOpen={isModalOpen} onClose={closeModal} />
+            <LoginModal isOpen={isModalOpen} onClose={closeModal}/>
 
         </div>
     );

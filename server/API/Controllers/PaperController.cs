@@ -1,5 +1,6 @@
 using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Service;
 
@@ -66,6 +67,18 @@ namespace API.Controllers
           return Ok(result);
           
        }
+        [HttpGet]
+        [Route("search")]
+        public async Task<ActionResult <List<PaperDto>> > SearchItems([FromQuery] string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return BadRequest("Search query cannot be empty.");
+            }
+            var results = await _service.SearchItemsAsync(query);
+
+            return Ok(results);
+        }
 
     }
 }
