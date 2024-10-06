@@ -321,5 +321,26 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         format: "json",
         ...params,
       }),
+
+    /**
+     * No description
+     *
+     * @tags Paper
+     * @name PaperSearchItems
+     * @request GET:/api/Paper/search
+     */
+    paperSearchItems: (
+      query?: {
+        query?: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<PaperDto[], any>({
+        path: `/api/Paper/search`,
+        method: "GET",
+        query: query,
+        format: "json",
+        ...params,
+      }),
   };
 }

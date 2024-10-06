@@ -54,7 +54,7 @@ namespace API.Controllers
        }
         [HttpGet]
         [Route("search")]
-        public async Task<IActionResult> SearchItems([FromQuery] string query)
+        public async Task<ActionResult <List<PaperDto>> > SearchItems([FromQuery] string query)
         {
             if (string.IsNullOrWhiteSpace(query))
             {
