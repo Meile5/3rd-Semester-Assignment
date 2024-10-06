@@ -28,6 +28,21 @@ namespace API.Controllers
         }
         
         [HttpGet]
+        [Route("filtered-papers")]
+        public ActionResult<List<PaperDto>> GetFilteredPapers(
+            int limit = 10, 
+            int startAt = 0, 
+            string? sortField = null, 
+            string? sortOrder = null, 
+            string? priceRange = null, 
+            string? propertieSelected = null)
+        {
+            var papers = _service.GetFilteredPapers(limit, startAt, sortField, sortOrder, priceRange, propertieSelected);
+            return Ok(papers);
+        }
+
+        
+        [HttpGet]
         [Route("")]
         public ActionResult<int> GetTotalPapersCount() 
         {

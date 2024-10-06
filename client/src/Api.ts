@@ -10,285 +10,301 @@
  */
 
 export interface PaperDto {
-  /** @format int32 */
-  id?: number;
-  name?: string;
-  /** @format double */
-  price?: number;
-  discontinued?: boolean;
-  properties?: PropertyDto[];
+    /** @format int32 */
+    id?: number;
+    name?: string;
+    /** @format double */
+    price?: number;
+    discontinued?: boolean;
+    properties?: PropertyDto[];
 }
 
 export interface PropertyDto {
-  /** @format int32 */
-  id?: number;
-  propertyName?: string;
+    /** @format int32 */
+    id?: number;
+    propertyName?: string;
 }
 
-export interface Order {
-  /** @format int32 */
-  id?: number;
-  /** @format date-time */
-  orderDate?: string;
-  /** @format date */
-  deliveryDate?: string | null;
-  /**
-   * @minLength 0
-   * @maxLength 50
-   */
-  status?: string;
-  /** @format double */
-  totalAmount?: number;
-  /** @format int32 */
-  customerId?: number | null;
-  customer?: Customer | null;
-  orderEntries?: OrderEntry[];
+export interface OrderDto {
+    /** @format int32 */
+    id?: number;
+    /** @format date */
+    deliveryDate?: string | null;
+    /** @format double */
+    totalAmount?: number;
+    /** @format int32 */
+    customerId?: number | null;
+    status?: string;
+    /** @format date-time */
+    orderDate?: string;
+    orderEntries?: OrderEntryDto[];
 }
 
-export interface Customer {
-  /** @format int32 */
-  id?: number;
-  /**
-   * @minLength 0
-   * @maxLength 255
-   */
-  name?: string;
-  /**
-   * @minLength 0
-   * @maxLength 255
-   */
-  address?: string | null;
-  /**
-   * @minLength 0
-   * @maxLength 50
-   */
-  phone?: string | null;
-  /**
-   * @minLength 0
-   * @maxLength 255
-   */
-  email?: string | null;
-  orders?: Order[];
-}
-
-export interface OrderEntry {
-  /** @format int32 */
-  id?: number;
-  /** @format int32 */
-  quantity?: number;
-  /** @format int32 */
-  productId?: number;
-  /** @format int32 */
-  orderId?: number | null;
-  order?: Order | null;
-  product?: Paper | null;
-}
-
-export interface Paper {
-  /** @format int32 */
-  id?: number;
-  /**
-   * @minLength 0
-   * @maxLength 255
-   */
-  name?: string;
-  discontinued?: boolean;
-  /** @format int32 */
-  stock?: number;
-  /** @format double */
-  price?: number;
-  orderEntries?: OrderEntry[];
-  properties?: Property[];
-}
-
-export interface Property {
-  /** @format int32 */
-  id?: number;
-  /**
-   * @minLength 0
-   * @maxLength 255
-   */
-  propertyName?: string;
-  papers?: Paper[];
+export interface OrderEntryDto {
+    /** @format int32 */
+    id?: number;
+    /** @format int32 */
+    quantity?: number;
+    /** @format int32 */
+    productId?: number;
+    /** @format int32 */
+    orderId?: number | null;
+    product?: PaperDto | null;
 }
 
 export interface OrderResponseDto {
-  /** @format int32 */
-  id?: number;
-  /** @format date */
-  deliveryDate?: string | null;
-  /** @format double */
-  totalAmount?: number;
-  /** @format int32 */
-  customerId?: number | null;
-  status?: string;
-  /** @format date-time */
-  orderDate?: string;
-  orderEntries?: OrderResponseEntryDto[];
+    /** @format int32 */
+    id?: number;
+    /** @format date */
+    deliveryDate?: string | null;
+    /** @format double */
+    totalAmount?: number;
+    /** @format int32 */
+    customerId?: number | null;
+    status?: string;
+    /** @format date-time */
+    orderDate?: string;
+    orderEntries?: OrderResponseEntryDto[];
 }
 
 export interface OrderResponseEntryDto {
-  /** @format int32 */
-  id?: number;
-  /** @format int32 */
-  quantity?: number;
-  /** @format int32 */
-  productId?: number;
-  /** @format int32 */
-  orderId?: number | null;
+    /** @format int32 */
+    id?: number;
+    /** @format int32 */
+    quantity?: number;
+    /** @format int32 */
+    productId?: number;
+    /** @format int32 */
+    orderId?: number | null;
 }
 
 export interface CreateOrderDto {
-  /** @format date */
-  deliveryDate?: string | null;
-  /** @format double */
-  totalAmount?: number;
-  /** @format int32 */
-  customerId?: number | null;
-  orderEntries?: CreateOrderEntryDto[];
+    /** @format date */
+    deliveryDate?: string | null;
+    /** @format double */
+    totalAmount?: number;
+    /** @format int32 */
+    customerId?: number | null;
+    orderEntries?: CreateOrderEntryDto[];
 }
 
 export interface CreateOrderEntryDto {
-  /** @format int32 */
-  quantity?: number;
-  /** @format int32 */
-  productId?: number;
-  /** @format int32 */
-  orderId?: number;
+    /** @format int32 */
+    quantity?: number;
+    /** @format int32 */
+    productId?: number;
+    /** @format int32 */
+    orderId?: number;
 }
 
-import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
-import axios from "axios";
-
 export type QueryParamsType = Record<string | number, any>;
+export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
 
-export interface FullRequestParams extends Omit<AxiosRequestConfig, "data" | "params" | "url" | "responseType"> {
-  /** set parameter to `true` for call `securityWorker` for this request */
-  secure?: boolean;
-  /** request path */
-  path: string;
-  /** content type of request body */
-  type?: ContentType;
-  /** query params */
-  query?: QueryParamsType;
-  /** format of response (i.e. response.json() -> format: "json") */
-  format?: ResponseType;
-  /** request body */
-  body?: unknown;
+export interface FullRequestParams extends Omit<RequestInit, "body"> {
+    /** set parameter to `true` for call `securityWorker` for this request */
+    secure?: boolean;
+    /** request path */
+    path: string;
+    /** content type of request body */
+    type?: ContentType;
+    /** query params */
+    query?: QueryParamsType;
+    /** format of response (i.e. response.json() -> format: "json") */
+    format?: ResponseFormat;
+    /** request body */
+    body?: unknown;
+    /** base url */
+    baseUrl?: string;
+    /** request cancellation token */
+    cancelToken?: CancelToken;
 }
 
 export type RequestParams = Omit<FullRequestParams, "body" | "method" | "query" | "path">;
 
-export interface ApiConfig<SecurityDataType = unknown> extends Omit<AxiosRequestConfig, "data" | "cancelToken"> {
-  securityWorker?: (
-    securityData: SecurityDataType | null,
-  ) => Promise<AxiosRequestConfig | void> | AxiosRequestConfig | void;
-  secure?: boolean;
-  format?: ResponseType;
+export interface ApiConfig<SecurityDataType = unknown> {
+    baseUrl?: string;
+    baseApiParams?: Omit<RequestParams, "baseUrl" | "cancelToken" | "signal">;
+    securityWorker?: (securityData: SecurityDataType | null) => Promise<RequestParams | void> | RequestParams | void;
+    customFetch?: typeof fetch;
 }
 
+export interface HttpResponse<D extends unknown, E extends unknown = unknown> extends Response {
+    data: D;
+    error: E;
+}
+
+type CancelToken = Symbol | string | number;
+
 export enum ContentType {
-  Json = "application/json",
-  FormData = "multipart/form-data",
-  UrlEncoded = "application/x-www-form-urlencoded",
-  Text = "text/plain",
+    Json = "application/json",
+    FormData = "multipart/form-data",
+    UrlEncoded = "application/x-www-form-urlencoded",
+    Text = "text/plain",
 }
 
 export class HttpClient<SecurityDataType = unknown> {
-  public instance: AxiosInstance;
-  private securityData: SecurityDataType | null = null;
-  private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"];
-  private secure?: boolean;
-  private format?: ResponseType;
+    public baseUrl: string = "http://localhost:5555";
+    private securityData: SecurityDataType | null = null;
+    private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"];
+    private abortControllers = new Map<CancelToken, AbortController>();
+    private customFetch = (...fetchParams: Parameters<typeof fetch>) => fetch(...fetchParams);
 
-  constructor({ securityWorker, secure, format, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
-    this.instance = axios.create({ ...axiosConfig, baseURL: axiosConfig.baseURL || "http://localhost:5555" });
-    this.secure = secure;
-    this.format = format;
-    this.securityWorker = securityWorker;
-  }
-
-  public setSecurityData = (data: SecurityDataType | null) => {
-    this.securityData = data;
-  };
-
-  protected mergeRequestParams(params1: AxiosRequestConfig, params2?: AxiosRequestConfig): AxiosRequestConfig {
-    const method = params1.method || (params2 && params2.method);
-
-    return {
-      ...this.instance.defaults,
-      ...params1,
-      ...(params2 || {}),
-      headers: {
-        ...((method && this.instance.defaults.headers[method.toLowerCase() as keyof HeadersDefaults]) || {}),
-        ...(params1.headers || {}),
-        ...((params2 && params2.headers) || {}),
-      },
+    private baseApiParams: RequestParams = {
+        credentials: "same-origin",
+        headers: {},
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
     };
-  }
 
-  protected stringifyFormItem(formItem: unknown) {
-    if (typeof formItem === "object" && formItem !== null) {
-      return JSON.stringify(formItem);
-    } else {
-      return `${formItem}`;
-    }
-  }
-
-  protected createFormData(input: Record<string, unknown>): FormData {
-    if (input instanceof FormData) {
-      return input;
-    }
-    return Object.keys(input || {}).reduce((formData, key) => {
-      const property = input[key];
-      const propertyContent: any[] = property instanceof Array ? property : [property];
-
-      for (const formItem of propertyContent) {
-        const isFileType = formItem instanceof Blob || formItem instanceof File;
-        formData.append(key, isFileType ? formItem : this.stringifyFormItem(formItem));
-      }
-
-      return formData;
-    }, new FormData());
-  }
-
-  public request = async <T = any, _E = any>({
-    secure,
-    path,
-    type,
-    query,
-    format,
-    body,
-    ...params
-  }: FullRequestParams): Promise<AxiosResponse<T>> => {
-    const secureParams =
-      ((typeof secure === "boolean" ? secure : this.secure) &&
-        this.securityWorker &&
-        (await this.securityWorker(this.securityData))) ||
-      {};
-    const requestParams = this.mergeRequestParams(params, secureParams);
-    const responseFormat = format || this.format || undefined;
-
-    if (type === ContentType.FormData && body && body !== null && typeof body === "object") {
-      body = this.createFormData(body as Record<string, unknown>);
+    constructor(apiConfig: ApiConfig<SecurityDataType> = {}) {
+        Object.assign(this, apiConfig);
     }
 
-    if (type === ContentType.Text && body && body !== null && typeof body !== "string") {
-      body = JSON.stringify(body);
+    public setSecurityData = (data: SecurityDataType | null) => {
+        this.securityData = data;
+    };
+
+    protected encodeQueryParam(key: string, value: any) {
+        const encodedKey = encodeURIComponent(key);
+        return `${encodedKey}=${encodeURIComponent(typeof value === "number" ? value : `${value}`)}`;
     }
 
-    return this.instance.request({
-      ...requestParams,
-      headers: {
-        ...(requestParams.headers || {}),
-        ...(type ? { "Content-Type": type } : {}),
-      },
-      params: query,
-      responseType: responseFormat,
-      data: body,
-      url: path,
-    });
-  };
+    protected addQueryParam(query: QueryParamsType, key: string) {
+        return this.encodeQueryParam(key, query[key]);
+    }
+
+    protected addArrayQueryParam(query: QueryParamsType, key: string) {
+        const value = query[key];
+        return value.map((v: any) => this.encodeQueryParam(key, v)).join("&");
+    }
+
+    protected toQueryString(rawQuery?: QueryParamsType): string {
+        const query = rawQuery || {};
+        const keys = Object.keys(query).filter((key) => "undefined" !== typeof query[key]);
+        return keys
+            .map((key) => (Array.isArray(query[key]) ? this.addArrayQueryParam(query, key) : this.addQueryParam(query, key)))
+            .join("&");
+    }
+
+    protected addQueryParams(rawQuery?: QueryParamsType): string {
+        const queryString = this.toQueryString(rawQuery);
+        return queryString ? `?${queryString}` : "";
+    }
+
+    private contentFormatters: Record<ContentType, (input: any) => any> = {
+        [ContentType.Json]: (input: any) =>
+            input !== null && (typeof input === "object" || typeof input === "string") ? JSON.stringify(input) : input,
+        [ContentType.Text]: (input: any) => (input !== null && typeof input !== "string" ? JSON.stringify(input) : input),
+        [ContentType.FormData]: (input: any) =>
+            Object.keys(input || {}).reduce((formData, key) => {
+                const property = input[key];
+                formData.append(
+                    key,
+                    property instanceof Blob
+                        ? property
+                        : typeof property === "object" && property !== null
+                            ? JSON.stringify(property)
+                            : `${property}`,
+                );
+                return formData;
+            }, new FormData()),
+        [ContentType.UrlEncoded]: (input: any) => this.toQueryString(input),
+    };
+
+    protected mergeRequestParams(params1: RequestParams, params2?: RequestParams): RequestParams {
+        return {
+            ...this.baseApiParams,
+            ...params1,
+            ...(params2 || {}),
+            headers: {
+                ...(this.baseApiParams.headers || {}),
+                ...(params1.headers || {}),
+                ...((params2 && params2.headers) || {}),
+            },
+        };
+    }
+
+    protected createAbortSignal = (cancelToken: CancelToken): AbortSignal | undefined => {
+        if (this.abortControllers.has(cancelToken)) {
+            const abortController = this.abortControllers.get(cancelToken);
+            if (abortController) {
+                return abortController.signal;
+            }
+            return void 0;
+        }
+
+        const abortController = new AbortController();
+        this.abortControllers.set(cancelToken, abortController);
+        return abortController.signal;
+    };
+
+    public abortRequest = (cancelToken: CancelToken) => {
+        const abortController = this.abortControllers.get(cancelToken);
+
+        if (abortController) {
+            abortController.abort();
+            this.abortControllers.delete(cancelToken);
+        }
+    };
+
+    public request = async <T = any, E = any>({
+                                                  body,
+                                                  secure,
+                                                  path,
+                                                  type,
+                                                  query,
+                                                  format,
+                                                  baseUrl,
+                                                  cancelToken,
+                                                  ...params
+                                              }: FullRequestParams): Promise<HttpResponse<T, E>> => {
+        const secureParams =
+            ((typeof secure === "boolean" ? secure : this.baseApiParams.secure) &&
+                this.securityWorker &&
+                (await this.securityWorker(this.securityData))) ||
+            {};
+        const requestParams = this.mergeRequestParams(params, secureParams);
+        const queryString = query && this.toQueryString(query);
+        const payloadFormatter = this.contentFormatters[type || ContentType.Json];
+        const responseFormat = format || requestParams.format;
+
+        return this.customFetch(`${baseUrl || this.baseUrl || ""}${path}${queryString ? `?${queryString}` : ""}`, {
+            ...requestParams,
+            headers: {
+                ...(requestParams.headers || {}),
+                ...(type && type !== ContentType.FormData ? { "Content-Type": type } : {}),
+            },
+            signal: (cancelToken ? this.createAbortSignal(cancelToken) : requestParams.signal) || null,
+            body: typeof body === "undefined" || body === null ? null : payloadFormatter(body),
+        }).then(async (response) => {
+            const r = response.clone() as HttpResponse<T, E>;
+            r.data = null as unknown as T;
+            r.error = null as unknown as E;
+
+            const data = !responseFormat
+                ? r
+                : await response[responseFormat]()
+                    .then((data) => {
+                        if (r.ok) {
+                            r.data = data;
+                        } else {
+                            r.error = data;
+                        }
+                        return r;
+                    })
+                    .catch((e) => {
+                        r.error = e;
+                        return r;
+                    });
+
+            if (cancelToken) {
+                this.abortControllers.delete(cancelToken);
+            }
+
+            if (!response.ok) throw data;
+            return data;
+        });
+    };
 }
 
 /**
@@ -297,74 +313,123 @@ export class HttpClient<SecurityDataType = unknown> {
  * @baseUrl http://localhost:5555
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
-  api = {
-    /**
-     * No description
-     *
-     * @tags Paper
-     * @name PaperGetAllPapers
-     * @request GET:/api/Paper
-     */
-    paperGetAllPapers: (
-      query?: {
+    api = {
         /**
-         * @format int32
-         * @default 10
+         * No description
+         *
+         * @tags Paper
+         * @name PaperGetAllPapers
+         * @request GET:/api/Paper/papers
          */
-        limit?: number;
+        paperGetAllPapers: (
+            query?: {
+                /**
+                 * @format int32
+                 * @default 10
+                 */
+                limit?: number;
+                /**
+                 * @format int32
+                 * @default 0
+                 */
+                startAt?: number;
+            },
+            params: RequestParams = {},
+        ) =>
+            this.request<PaperDto[], any>({
+                path: `/api/Paper/papers`,
+                method: "GET",
+                query: query,
+                format: "json",
+                ...params,
+            }),
+
         /**
-         * @format int32
-         * @default 0
+         * No description
+         *
+         * @tags Paper
+         * @name PaperGetFilteredPapers
+         * @request GET:/api/Paper/filtered-papers
          */
-        startAt?: number;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<PaperDto[], any>({
-        path: `/api/Paper`,
-        method: "GET",
-        query: query,
-        format: "json",
-        ...params,
-      }),
+        paperGetFilteredPapers: (
+            query?: {
+                /**
+                 * @format int32
+                 * @default 10
+                 */
+                limit?: number;
+                /**
+                 * @format int32
+                 * @default 0
+                 */
+                startAt?: number;
+                sortField?: string | null;
+                sortOrder?: string | null;
+                priceRange?: string | null;
+                propertieSelected?: string | null;
+            },
+            params: RequestParams = {},
+        ) =>
+            this.request<PaperDto[], any>({
+                path: `/api/Paper/filtered-papers`,
+                method: "GET",
+                query: query,
+                format: "json",
+                ...params,
+            }),
 
-    /**
-     * No description
-     *
-     * @tags Paper
-     * @name PaperCreateOrder
-     * @request POST:/api/Paper
-     */
-    paperCreateOrder: (data: CreateOrderDto, params: RequestParams = {}) =>
-      this.request<OrderResponseDto, any>({
-        path: `/api/Paper`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
+        /**
+         * No description
+         *
+         * @tags Paper
+         * @name PaperGetTotalPapersCount
+         * @request GET:/api/Paper
+         */
+        paperGetTotalPapersCount: (params: RequestParams = {}) =>
+            this.request<number, any>({
+                path: `/api/Paper`,
+                method: "GET",
+                format: "json",
+                ...params,
+            }),
 
-    /**
-     * No description
-     *
-     * @tags Paper
-     * @name PaperGetCustomerOrders
-     * @request GET:/api/Paper/orders-history
-     */
-    paperGetCustomerOrders: (
-      query?: {
-        /** @format int32 */
-        id?: number;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<Order[], any>({
-        path: `/api/Paper/orders-history`,
-        method: "GET",
-        query: query,
-        format: "json",
-        ...params,
-      }),
-  };
+        /**
+         * No description
+         *
+         * @tags Paper
+         * @name PaperCreateOrder
+         * @request POST:/api/Paper
+         */
+        paperCreateOrder: (data: CreateOrderDto, params: RequestParams = {}) =>
+            this.request<OrderResponseDto, any>({
+                path: `/api/Paper`,
+                method: "POST",
+                body: data,
+                type: ContentType.Json,
+                format: "json",
+                ...params,
+            }),
+
+        /**
+         * No description
+         *
+         * @tags Paper
+         * @name PaperGetCustomerOrders
+         * @request GET:/api/Paper/orders-history
+         */
+        paperGetCustomerOrders: (
+            query?: {
+                /** @format int32 */
+                id?: number;
+            },
+            params: RequestParams = {},
+        ) =>
+            this.request<OrderDto[], any>({
+                path: `/api/Paper/orders-history`,
+                method: "GET",
+                query: query,
+                format: "json",
+                ...params,
+            }),
+    };
 }

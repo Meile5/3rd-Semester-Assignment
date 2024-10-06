@@ -7,6 +7,7 @@ import {http} from "../http";
 import {PaperDto} from "../Api.ts";
 import {CartAtom} from '../atoms/CartAtom'
 import {TotalCountAtom} from "../atoms/TotalCountAtom.tsx";
+import {SelectedPriceRangeAtom, SelectedPropertyAtom, SortFieldAtom, SortOrderAtom} from "../atoms/FilterSortAtoms.tsx";
 import {useInitializeData} from "../useInitializeData.ts";
 
 
@@ -18,25 +19,36 @@ export default function PaperList() {
     const [startAt, setStartAt] = useState(0);
     const limit = 10;
 
-    // Fetch papers with start and limit index
-    const fetchPapers = (startAt: number) => {
-         http.api.paperGetAllPapers({ limit, startAt })
-            .then((response) => {
-                setPapers((prevPapers) => [...prevPapers, ...response.data]);  // Append new papers
-            });
-    };
+    const [selectedProperty] = useAtom(SelectedPropertyAtom);
+    const [selectedPriceRange] = useAtom(SelectedPriceRangeAtom);
+    const [sortField] = useAtom(SortFieldAtom);
+    const [sortOrder] = useAtom(SortOrderAtom);
 
-    useInitializeData();
+    // Fetch papers with start and limit index, filtered and sorted if provided criteria
+    const fetchFilteredPapers = () => {
+        const query = {
+            limit,
+            startAt,
+            sortField,
+            sortOrder,
+            selectedPriceRange,
+            selectedProperty,
+        };
+
+        http.api.paperGetFilteredPapers(query).then((response) => {
+            setPapers((prevPapers) => [...prevPapers, ...response.data]); // Append new papers
+        });
+    };
 
     useEffect(() => {
         // Reset papers and startAt when the component mounts
         setPapers([]);  // Clear the previous papers list
         setStartAt(0);  // Reset the starting index
-    }, []);  // This effect runs once when the component mounts
+    }, [sortField, sortOrder]);  // This effect runs once when the component mounts
 
     useEffect(() => {
-        fetchPapers(startAt);  // Fetch papers based on startAt
-    }, [startAt]);  // Re-fetch papers when startAt changes
+        fetchFilteredPapers();  // Fetch papers based on filters and pagination
+    }, [startAt, selectedProperty, selectedPriceRange, sortField, sortOrder]); // Re-fetch papers when filters, sort, or startAt change
 
     const handleLoadMore = () => {
         setStartAt((prevStartAt) => prevStartAt + limit);
@@ -57,6 +69,8 @@ export default function PaperList() {
             return [...currentItems, { id: paper.id, name: paper.name, quantity: 1, price: paper.price }];
         });
     };
+
+    useInitializeData();
 
     return (
         <div>

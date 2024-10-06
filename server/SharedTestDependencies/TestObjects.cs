@@ -34,4 +34,24 @@ public class TestObjects
 
     }
     
+    public static Customer CreateCustomer() 
+    {
+        return new Faker<Customer>()
+            .RuleFor(c => c.Id, f => f.Random.Int(1, 1000))
+            .RuleFor(c => c.Name, f => f.Name.FullName())
+            .RuleFor(c => c.Address, f => f.Address.StreetAddress())
+            .RuleFor(c => c.Phone, f => f.Phone.PhoneNumber())
+            .RuleFor(c => c.Email, f => f.Internet.Email())
+            .RuleFor(c => c.Orders, f => new List<Order>());  
+    }
+    
+    public static List<OrderEntry> CreateOrderEntries(int count)
+    {
+        return new Faker<OrderEntry>()
+            .RuleFor(oe => oe.ProductId, f => f.Random.Int(1, 50)) // Random Product ID
+            .RuleFor(oe => oe.Quantity, f => f.Random.Int(50, 100)) // Random Quantity
+            .RuleFor(oe => oe.OrderId, f => f.Random.Int(1, 100)) // Random Order ID (Optional)
+            .RuleFor(oe => oe.Product, f => TestObjects.CreatePaper()) // Generate a fake Paper (Product)
+            .Generate(count); // Generate 'count' number of OrderEntries
+    }
 }
