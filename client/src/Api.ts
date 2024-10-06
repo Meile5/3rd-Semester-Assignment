@@ -25,53 +25,22 @@ export interface PropertyDto {
   propertyName?: string;
 }
 
-export interface Order {
+export interface OrderDto {
   /** @format int32 */
   id?: number;
-  /** @format date-time */
-  orderDate?: string;
   /** @format date */
   deliveryDate?: string | null;
-  /**
-   * @minLength 0
-   * @maxLength 50
-   */
-  status?: string;
   /** @format double */
   totalAmount?: number;
   /** @format int32 */
   customerId?: number | null;
-  customer?: Customer | null;
-  orderEntries?: OrderEntry[];
+  status?: string;
+  /** @format date-time */
+  orderDate?: string;
+  orderEntries?: OrderEntryDto[];
 }
 
-export interface Customer {
-  /** @format int32 */
-  id?: number;
-  /**
-   * @minLength 0
-   * @maxLength 255
-   */
-  name?: string;
-  /**
-   * @minLength 0
-   * @maxLength 255
-   */
-  address?: string | null;
-  /**
-   * @minLength 0
-   * @maxLength 50
-   */
-  phone?: string | null;
-  /**
-   * @minLength 0
-   * @maxLength 255
-   */
-  email?: string | null;
-  orders?: Order[];
-}
-
-export interface OrderEntry {
+export interface OrderEntryDto {
   /** @format int32 */
   id?: number;
   /** @format int32 */
@@ -80,36 +49,7 @@ export interface OrderEntry {
   productId?: number;
   /** @format int32 */
   orderId?: number | null;
-  order?: Order | null;
-  product?: Paper | null;
-}
-
-export interface Paper {
-  /** @format int32 */
-  id?: number;
-  /**
-   * @minLength 0
-   * @maxLength 255
-   */
-  name?: string;
-  discontinued?: boolean;
-  /** @format int32 */
-  stock?: number;
-  /** @format double */
-  price?: number;
-  orderEntries?: OrderEntry[];
-  properties?: Property[];
-}
-
-export interface Property {
-  /** @format int32 */
-  id?: number;
-  /**
-   * @minLength 0
-   * @maxLength 255
-   */
-  propertyName?: string;
-  papers?: Paper[];
+  product?: PaperDto | null;
 }
 
 export interface OrderResponseDto {
@@ -303,7 +243,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags Paper
      * @name PaperGetAllPapers
-     * @request GET:/api/Paper
+     * @request GET:/api/Paper/papers
      */
     paperGetAllPapers: (
       query?: {
@@ -321,9 +261,24 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<PaperDto[], any>({
-        path: `/api/Paper`,
+        path: `/api/Paper/papers`,
         method: "GET",
         query: query,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Paper
+     * @name PaperGetTotalPapersCount
+     * @request GET:/api/Paper
+     */
+    paperGetTotalPapersCount: (params: RequestParams = {}) =>
+      this.request<number, any>({
+        path: `/api/Paper`,
+        method: "GET",
         format: "json",
         ...params,
       }),
@@ -359,7 +314,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<Order[], any>({
+      this.request<OrderDto[], any>({
         path: `/api/Paper/orders-history`,
         method: "GET",
         query: query,

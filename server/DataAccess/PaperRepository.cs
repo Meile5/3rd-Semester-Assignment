@@ -67,4 +67,13 @@ public class PaperRepository : IPaperRepository
             throw new Exception("Insufficient stock for product ID: " + productId);
         }
     }
+
+    public async Task<List<Paper>> SearchItemsAsync(string query)
+    {
+        var results = await _context.Papers
+            .Where(item => item.Name.Contains(query))
+            .Take(5) 
+            .ToListAsync();
+        return results;
+    }
 }
