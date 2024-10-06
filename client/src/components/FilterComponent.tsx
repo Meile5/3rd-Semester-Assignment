@@ -24,7 +24,6 @@ const FilterComponent: React.FC = () => {
         http.api.paperGetProperties().then((response) => {
             setAvailableProperties(response.data); // Set properties to populate the filter options
         });
-
          */
 
         document.addEventListener('mousedown', handleClickOutside);

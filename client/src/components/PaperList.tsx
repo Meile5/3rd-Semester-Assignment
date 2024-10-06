@@ -37,9 +37,6 @@ export default function PaperList() {
             selectedProperty,
         };
 
-        http.api.paperGetFilteredPapers(query).then((response) => {
-            setPapers((prevPapers) => [...prevPapers, ...response.data]); // Append new papers
-        });
     };
 
     // Fetch papers with start and limit index
