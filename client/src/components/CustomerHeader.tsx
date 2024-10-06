@@ -4,7 +4,7 @@ import { useAtom } from 'jotai';
 import { CartAtom } from '../atoms/CartAtom';
 import CartTab from './CartTab';
 import Filter from './FilterComponent';
-import Search from './SearchComponent';
+import Search from './../sharedComponents/SearchComponent';
 import Sort from './SortComponent';
 import '../resources/styles/Buttons.css';
 // @ts-ignore
