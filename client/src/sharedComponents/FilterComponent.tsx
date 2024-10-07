@@ -106,20 +106,31 @@ const FilterComponent: React.FC = () => {
 
     return (
         <div ref={dropdownRef} className="relative">
+            <div className="flex items-center">
                 {isFilterActive && (
-                    <button
-                        className="mr-2 text-red-500 hover:text-red-700"
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="size-5 cursor-pointer mr-2"
                         onClick={handleBackToList}
                     >
-                        Clear
-                    </button>
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M9 15L3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+                        />
+                    </svg>
                 )}
-            <button
-                className="text-black border-b-2 border-transparent hover:border-black transition-all duration-300 cursor-pointer"
-                onClick={toggleDropdown}
-            >
-                Filter
-            </button>
+                <button
+                    className="text-black border-b-2 border-transparent hover:border-black transition-all duration-300 cursor-pointer"
+                    onClick={toggleDropdown}
+                >
+                    Filter
+                </button>
+            </div>
             {isOpen && (
                 <ul className="menu dropdown-content absolute bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
                     {availableProperties.length > 0 && (

@@ -18,6 +18,7 @@ public class TestObjects
                 .RuleFor(oe => oe.Quantity, f => f.Random.Int(50, 100)) 
                 .Generate(2)); 
     }
+    
     public static CreateOrderDto CreateOrderDto()
     {
         return new Faker<CreateOrderDto>()
@@ -56,13 +57,21 @@ public class TestObjects
             .RuleFor(c => c.Orders, f => new List<Order>());  
     }
     
-    public static List<OrderEntry> CreateOrderEntries(int count)
+    public static OrderEntry CreateOrderEntries(Paper paper, Order order)
     {
         return new Faker<OrderEntry>()
-            .RuleFor(oe => oe.ProductId, f => f.Random.Int(1, 50)) // Random Product ID
-            .RuleFor(oe => oe.Quantity, f => f.Random.Int(50, 100)) // Random Quantity
-            .RuleFor(oe => oe.OrderId, f => f.Random.Int(1, 100)) // Random Order ID (Optional)
-            .RuleFor(oe => oe.Product, f => TestObjects.CreatePaper()) // Generate a fake Paper (Product)
-            .Generate(count); // Generate 'count' number of OrderEntries
+            .RuleFor(oe => oe.ProductId, f => paper.Id) 
+            .RuleFor(oe => oe.Quantity, f => f.Random.Int(1, 30)) 
+            .RuleFor(oe => oe.OrderId, f => order.Id); 
+    }
+    
+    public static Order CreateOrderHistory(Customer customer)
+    {
+        return new Faker<Order>()
+            .RuleFor(o => o.Id, f => f.Random.Int(1, 1000))
+            .RuleFor(o => o.CustomerId, f => customer.Id)
+            .RuleFor(o => o.OrderDate, f => DateTime.UtcNow)
+            .RuleFor(o => o.DeliveryDate, f => DateOnly.FromDateTime(f.Date.Future()))
+            .RuleFor(o => o.TotalAmount, f => f.Random.Double(10, 1000));
     }
 }
