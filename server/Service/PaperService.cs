@@ -2,9 +2,10 @@
 using DataAccess;
 using DataAccess.Interfaces;
 using DataAccess.Models;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-
+using Service.Validators;
 
 
 namespace Service;
@@ -27,6 +28,7 @@ public interface IPaperService
 public class PaperService(
         ILogger<PaperService> logger,
         IPaperRepository paperRepository,
+        IValidator<CreateOrderDto> createOrderValidator,
         PaperContext context
         ) : IPaperService
 {
@@ -41,7 +43,8 @@ public List<PaperDto> GetAllPapers(int limit, int startAt)
             .ToList();
     }
 
-    public List<PaperDto> GetFilteredPapers(int limit, int startAt, string? sortField, string? sortOrder, string? priceRange, string? propertieSelected)
+    public List<PaperDto> GetFilteredPapers(int limit, int startAt, 
+        string? sortField, string? sortOrder, string? priceRange, string? propertieSelected)
     {
         var papers = paperRepository.GetFilteredPapers(sortField, sortOrder, priceRange, propertieSelected);
     

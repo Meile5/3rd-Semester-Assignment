@@ -1,26 +1,19 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AControllerBase_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003FLibrary_003FApplication_0020Support_003FJetBrains_003FRider2024_002E2_003Fresharper_002Dhost_003FSourcesCache_003F1b445ceb1c5ab1d07b7b55412b10a5e21169ec87228ca8ad8a18a6982f3278_003FControllerBase_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1b776bb2_002D2451_002D4faf_002Da429_002D9ecf5f132c0a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from CreateOrderTest.cs #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;ProjectFile&gt;D9796C3A-02D6-4A3A-AF25-47C1FBD3998D/f:CreateOrderTest.cs&lt;/ProjectFile&gt;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=32e37fee_002Dc8a2_002D42c9_002Dbbac_002Dd8c03851e968/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from CreateOrderTest.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;ProjectFile&gt;D9796C3A-02D6-4A3A-AF25-47C1FBD3998D/f:CreateOrderTest.cs&lt;/ProjectFile&gt;
-&lt;/SessionState&gt;</s:String>
+	
+	
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9bc1f72f_002Ddc7c_002D468a_002Db7de_002D9763475220f3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="CreateOrder_ReturnsOrder" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;Or&gt;
     &lt;TestAncestor&gt;
       &lt;TestId&gt;xUnit::D9796C3A-02D6-4A3A-AF25-47C1FBD3998D::net8.0::xunittests.CreateOrderTest.CreateOrder_ReturnsOrder&lt;/TestId&gt;
       &lt;TestId&gt;xUnit::D9796C3A-02D6-4A3A-AF25-47C1FBD3998D::net8.0::xunittests.CustomerOrderHistoryTest.GetCustomerOrders_ReturnsOrdersWithEntriesAndProducts&lt;/TestId&gt;
       &lt;TestId&gt;xUnit::D9796C3A-02D6-4A3A-AF25-47C1FBD3998D::net8.0::xunittests.CustomerOrderHistoryTest&lt;/TestId&gt;
+      &lt;TestId&gt;xUnit::6DACD84D-4D18-4594-B5C4-411A8ADC4299::net8.0::ServiceTests.ManualStubbing.ManualStubPaperServiceTests.CreateOrder_Should_Successfully_Return_An_Order&lt;/TestId&gt;
     &lt;/TestAncestor&gt;
     &lt;ProjectFile&gt;6DACD84D-4D18-4594-B5C4-411A8ADC4299/d:RealDependencies/f:PaperServiceTests.cs&lt;/ProjectFile&gt;
     &lt;ProjectFile&gt;6DACD84D-4D18-4594-B5C4-411A8ADC4299/d:StubbingFramework/f:MoqPaperServiceTests.cs&lt;/ProjectFile&gt;
     &lt;ProjectFile&gt;D9796C3A-02D6-4A3A-AF25-47C1FBD3998D/f:CreateOrderTest.cs&lt;/ProjectFile&gt;
+    &lt;Project Location="/Users/nelsonverissimo/Nelson/Denmark/Computer Science Degree/2nd Year/Subjects/Programming II/W39/Assignment/3rd-Semester-Assignment/server/ServiceTests" Presentation="&amp;lt;server&amp;gt;\&amp;lt;Tests&amp;gt;\&amp;lt;ServiceTests&amp;gt;" /&gt;
   &lt;/Or&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d02e6bfa_002D9154_002D4c1c_002Db0d3_002Ddb5e1f50708f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreateOrderTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::D9796C3A-02D6-4A3A-AF25-47C1FBD3998D::net8.0::xunittests.CreateOrderTest&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::D9796C3A-02D6-4A3A-AF25-47C1FBD3998D::net8.0::xunittests.CustomerOrderHistoryTest.GetCustomerOrders_ReturnsOrdersWithEntriesAndProducts&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
+	</wpf:ResourceDictionary>
