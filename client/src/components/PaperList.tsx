@@ -7,37 +7,20 @@ import {http} from "../http";
 import {PaperDto} from "../Api.ts";
 import {CartAtom} from '../atoms/CartAtom'
 import {TotalCountAtom} from "../atoms/TotalCountAtom.tsx";
-import {SelectedPriceRangeAtom, SelectedPropertyAtom, SortFieldAtom, SortOrderAtom} from "../atoms/FilterSortAtoms.tsx";
 import {useInitializeData} from "../useInitializeData.ts";
 import { SharedPapersAtom } from "../atoms/SharedPapersAtom.tsx";
+import {IsFilterActive} from "../atoms/FilterSortAtoms.tsx";
 
 
 
 export default function PaperList() {
     const [sharedPapers, setSharedPapers] = useAtom(SharedPapersAtom);
+    const [isFilterActive, setIsFilterActive] = useAtom(IsFilterActive);
     const [papers, setPapers] = useAtom(PapersAtom);
     const [totalCount] = useAtom(TotalCountAtom);
     const [cartItems, setCartItems] = useAtom(CartAtom);
     const [startAt, setStartAt] = useState(0);
     const limit = 10;
-
-    const [selectedProperty] = useAtom(SelectedPropertyAtom);
-    const [selectedPriceRange] = useAtom(SelectedPriceRangeAtom);
-    const [sortField] = useAtom(SortFieldAtom);
-    const [sortOrder] = useAtom(SortOrderAtom);
-
-    // Fetch papers with start and limit index, filtered and sorted if provided criteria
-    const fetchFilteredPapers = () => {
-        const query = {
-            limit,
-            startAt,
-            sortField,
-            sortOrder,
-            selectedPriceRange,
-            selectedProperty,
-        };
-
-    };
 
     // Fetch papers with start and limit index
     const fetchPapers = (startAt: number) => {
@@ -123,12 +106,14 @@ export default function PaperList() {
                     ))}
                 </div>
             )}
+            {papers.length <= totalCount && !isFilterActive && (
             <div className="flex flex-col items-center mt-6">
                 <button onClick={handleLoadMore} className="text-black border-b-2 border-transparent hover:border-black transition-all duration-300 mb-4">
                     Load More
                 </button>
-                <p>{papers.length} of {totalCount}</p>
+                    <p>{papers.length} of {totalCount}</p>
             </div>
+            )}
         </div>
     );
 }

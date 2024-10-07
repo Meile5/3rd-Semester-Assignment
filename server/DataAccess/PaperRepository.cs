@@ -105,4 +105,19 @@ public class PaperRepository : IPaperRepository
             .ToListAsync();
         return results;
     }
+    
+    public List<Property> GetAllProperties()
+    {
+        // Fetch all unique properties from the database
+        var properties = _context.Properties
+            .Select(p => new Property()
+            {
+                Id = p.Id,
+                PropertyName = p.PropertyName
+            })
+            .Distinct()
+            .ToList();
+
+        return properties;
+    }
 }

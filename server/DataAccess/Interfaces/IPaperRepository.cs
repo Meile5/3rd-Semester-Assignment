@@ -18,5 +18,6 @@ public interface IPaperRepository
      int GetTotalPapersCount();
 
      Task<List<Paper>> SearchItemsAsync(string query);
+     List<Property> GetAllProperties();
 
 }

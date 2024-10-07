@@ -79,6 +79,14 @@ namespace API.Controllers
 
             return Ok(results);
         }
+        
+        [HttpGet]
+        [Route("properties")]
+        public ActionResult<List<PropertyDto>> GetAllProperties()
+        {
+            var properties = _service.GetAllProperties();
+            return Ok(properties);
+        }
 
     }
 }

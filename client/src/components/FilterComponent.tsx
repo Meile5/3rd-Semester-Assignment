@@ -1,15 +1,29 @@
 import React, { useRef, useState, useEffect } from 'react';
 import '../resources/styles/Buttons.css';
 import {http} from "../http";
-import {SelectedPriceRangeAtom, SelectedPropertyAtom} from "../atoms/FilterSortAtoms.tsx";
+import {FilterSortPapersAtom, IsFilterActive, SelectedPriceRangeAtom, SelectedPropertyAtom} from "../atoms/FilterSortAtoms.tsx";
 import {useAtom} from "jotai";
+import {SharedPapersAtom} from "../atoms/SharedPapersAtom.tsx";
+import {TotalCountAtom} from "../atoms/TotalCountAtom.tsx";
+import {PapersAtom} from "../atoms/PapersAtom.tsx";
+import {PropertyDto} from "../Api.ts";
 
 const FilterComponent: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [availableProperties, setAvailableProperties] = useState<string[]>([]);
-    const [selectedProperty, setSelectedProperty] = useAtom(SelectedPropertyAtom);
-    const [selectedPriceRange, setSelectedPriceRange] = useAtom(SelectedPriceRangeAtom);
+    const [availableProperties, setAvailableProperties] = useState<PropertyDto[]>([]);
+    const [propertieSelected, setSelectedProperty] = useAtom(SelectedPropertyAtom);
+    const [priceRange, setSelectedPriceRange] = useAtom(SelectedPriceRangeAtom);
+    const [filterSortItems, setFilterSortItems] = useAtom(FilterSortPapersAtom);
+    const [sharedPapers, setSharedPapers] = useAtom(SharedPapersAtom);
+    const [totalCount] = useAtom(TotalCountAtom);
+    const [papers] = useAtom(PapersAtom);
+    const [isFilterActive, setIsFilterActive] = useAtom(IsFilterActive);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const limit = totalCount;
+    const startAt = 0;
+    const sortField = "name";
+    const sortOrder = "asc";
+
 
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -19,12 +33,12 @@ const FilterComponent: React.FC = () => {
     };
 
     useEffect(() => {
-        /*
+
         // Fetch available properties for the filter dropdown
-        http.api.paperGetProperties().then((response) => {
+        http.api.paperGetAllProperties().then((response) => {
             setAvailableProperties(response.data); // Set properties to populate the filter options
         });
-         */
+
 
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
@@ -36,19 +50,70 @@ const FilterComponent: React.FC = () => {
         setIsOpen(!isOpen);
     };
 
-    const handlePropertySelect = (property: string) => {
+    const handlePropertySelect = async (property: string) => {
         setSelectedProperty(property);
-        setSelectedPriceRange(null); // Reset price range when property is selected
+        setSelectedPriceRange(""); // Reset price range when property is selected
+
+        const query = {
+            limit,
+            startAt,
+            sortField,
+            sortOrder,
+            priceRange: "",
+            propertieSelected: property,
+        };
+
+        try {
+            const response = await http.api.paperGetFilteredPapers(query);
+            setSharedPapers(response.data); // Set the filtered items based on the API response
+        } catch (e) {
+            console.error(e);
+        }
+        setIsFilterActive(true);
         setIsOpen(false);
     };
 
-    const handlePriceRangeSelect = (priceRange: string) => {
+    const handlePriceRangeSelect = async (priceRange: string) => {
         setSelectedPriceRange(priceRange);
+        setSelectedProperty("");
+
+        const query = {
+            limit,
+            startAt,
+            sortField,
+            sortOrder,
+            priceRange,
+            propertieSelected: "",
+        };
+
+        try {
+            const response = await http.api.paperGetFilteredPapers(query);
+            setSharedPapers(response.data);
+        } catch (e) {
+            console.error(e);
+        }
+        setIsFilterActive(true);
         setIsOpen(false);
+    };
+
+    const handleBackToList = () => {
+        setSharedPapers(papers);
+        setFilterSortItems([]);
+        setSelectedProperty("");
+        setSelectedPriceRange("");
+        setIsFilterActive(false);
     };
 
     return (
         <div ref={dropdownRef} className="relative">
+                {isFilterActive && (
+                    <button
+                        className="mr-2 text-red-500 hover:text-red-700"
+                        onClick={handleBackToList}
+                    >
+                        Clear
+                    </button>
+                )}
             <button
                 className="text-black border-b-2 border-transparent hover:border-black transition-all duration-300 cursor-pointer"
                 onClick={toggleDropdown}
@@ -57,15 +122,19 @@ const FilterComponent: React.FC = () => {
             </button>
             {isOpen && (
                 <ul className="menu dropdown-content absolute bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                    <h3 className="font-bold mb-2">Filter by Property</h3>
-                    <ul className="mb-4">
-                        {availableProperties.map((property, index) => (
-                            <li key={index} className="cursor-pointer hover:bg-gray-100 p-1"
-                                onClick={() => handlePropertySelect(property)}>
-                                {property}
-                            </li>
-                        ))}
-                    </ul>
+                    {availableProperties.length > 0 && (
+                        <>
+                            <h3 className="font-bold mb-2">Filter by Property</h3>
+                            <ul className="mb-4">
+                                {availableProperties.map((property, index) => (
+                                    <li key={index} className="cursor-pointer hover:bg-gray-100 p-1"
+                                        onClick={() => handlePropertySelect(property.propertyName as string)}>
+                                        {JSON.stringify(property.propertyName)}
+                                    </li>
+                                ))}
+                            </ul>
+                        </>
+                    )}
 
                     <h3 className="font-bold mb-2">Filter by Price Range</h3>
                     <ul>

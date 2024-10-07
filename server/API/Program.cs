@@ -19,7 +19,6 @@ public class Program
         builder.Services.AddDbContext<PaperContext>(( serviceProvider, options)=>
         {
             var appOptions = serviceProvider.GetRequiredService<IOptions<AppOptions>>().Value;
-            Console.WriteLine(appOptions.DbConnectionString);
             options.UseNpgsql(appOptions.DbConnectionString);
         });
 
