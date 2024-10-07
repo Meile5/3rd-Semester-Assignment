@@ -5,7 +5,6 @@ public class CreateOrderDto
     public DateOnly? DeliveryDate { get; set; }
     public double TotalAmount { get; set; }
     public int? CustomerId { get; set; }
-    
     public List<CreateOrderEntryDto> OrderEntries { get; set; } = new List<CreateOrderEntryDto>();
     
     public Order ToOrder()

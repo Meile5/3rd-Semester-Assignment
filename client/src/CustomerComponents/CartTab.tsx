@@ -1,6 +1,6 @@
 ﻿import React from "react";
 import { Link } from "react-router-dom";
-import CartTabBase from './CartTabBase'; 
+import CartTabBase from './CartTabBase.tsx';
 
 const CartTab: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
     return (

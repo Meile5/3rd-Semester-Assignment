@@ -6,7 +6,7 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=32e37fee_002Dc8a2_002D42c9_002Dbbac_002Dd8c03851e968/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from CreateOrderTest.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;ProjectFile&gt;D9796C3A-02D6-4A3A-AF25-47C1FBD3998D/f:CreateOrderTest.cs&lt;/ProjectFile&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9bc1f72f_002Ddc7c_002D468a_002Db7de_002D9763475220f3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreateOrder_ReturnsOrder" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9bc1f72f_002Ddc7c_002D468a_002Db7de_002D9763475220f3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="CreateOrder_ReturnsOrder" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;Or&gt;
     &lt;TestAncestor&gt;
       &lt;TestId&gt;xUnit::D9796C3A-02D6-4A3A-AF25-47C1FBD3998D::net8.0::xunittests.CreateOrderTest.CreateOrder_ReturnsOrder&lt;/TestId&gt;
@@ -18,8 +18,9 @@
     &lt;ProjectFile&gt;D9796C3A-02D6-4A3A-AF25-47C1FBD3998D/f:CreateOrderTest.cs&lt;/ProjectFile&gt;
   &lt;/Or&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d02e6bfa_002D9154_002D4c1c_002Db0d3_002Ddb5e1f50708f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="CreateOrderTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d02e6bfa_002D9154_002D4c1c_002Db0d3_002Ddb5e1f50708f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreateOrderTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::D9796C3A-02D6-4A3A-AF25-47C1FBD3998D::net8.0::xunittests.CreateOrderTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::D9796C3A-02D6-4A3A-AF25-47C1FBD3998D::net8.0::xunittests.CustomerOrderHistoryTest.GetCustomerOrders_ReturnsOrdersWithEntriesAndProducts&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

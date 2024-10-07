@@ -40,16 +40,19 @@ const SortComponent: React.FC = () => {
     const sortPapersFrontend = (field: string, order: string) => {
         const sortedPapers = [...sharedPapers].sort((a, b) => {
             if (field === 'price') {
-                return order === 'asc' ? a.price - b.price : b.price - a.price;
+                const priceA = a.price ?? 0;  // Fallback to 0 if price is undefined
+                const priceB = b.price ?? 0;
+                return order === 'asc' ? priceA - priceB : priceB - priceA;
             }
             if (field === 'name') {
+                const nameA = a.name ?? '';  // Fallback to empty string if name is undefined
+                const nameB = b.name ?? '';
                 return order === 'asc'
-                    ? a.name.localeCompare(b.name)
-                    : b.name.localeCompare(a.name);
+                    ? nameA.localeCompare(nameB)
+                    : nameB.localeCompare(nameA);
             }
             return 0;
         });
-        console.log(sortedPapers);
         setSharedPapers(sortedPapers);  // Update sorted papers in shared state
     };
 

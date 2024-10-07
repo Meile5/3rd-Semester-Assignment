@@ -1,5 +1,5 @@
 ﻿import React, {useState} from 'react';
-import PaperList from './PaperList';
+import PaperList from './PaperList.tsx';
 import book from '../resources/images/book.jpg';
 
 const CustomerPage: React.FC = () => {

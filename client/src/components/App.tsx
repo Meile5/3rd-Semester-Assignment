@@ -5,10 +5,10 @@ import {DevTools} from "jotai-devtools";
 import {useAtom} from "jotai";
 import {ThemeAtom} from "../atoms/ThemeAtom.tsx";
 import Home from "./Home.tsx";
-import CustomerPage from "./CustomerPage.tsx";
-import CustomerHeader from "./CustomerHeader.tsx";
-import CheckoutPage from "./CheckoutPage.tsx";
-import OrderHistoryPage from "./OrderHistoryPage.tsx";
+import CustomerPage from "../CustomerComponents/CustomerPage.tsx";
+import CustomerHeader from "../CustomerComponents/CustomerHeader.tsx";
+import CheckoutPage from "../CustomerComponents/CheckoutPage.tsx";
+import OrderHistoryPage from "../CustomerComponents/OrderHistoryPage.tsx";
 import Footer from "./Footer.tsx";
 
 

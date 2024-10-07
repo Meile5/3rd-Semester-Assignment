@@ -3,9 +3,9 @@ import {useAtom} from "jotai";
 // @ts-ignore
 import image1 from "../resources/images/image1.jpeg";
 import React, {useEffect, useState} from 'react';
-import {http} from "../http";
+import {http} from "../http.ts";
 import {PaperDto} from "../Api.ts";
-import {CartAtom} from '../atoms/CartAtom'
+import {CartAtom} from '../atoms/CartAtom.tsx'
 import {TotalCountAtom} from "../atoms/TotalCountAtom.tsx";
 import {useInitializeData} from "../useInitializeData.ts";
 import { SharedPapersAtom } from "../atoms/SharedPapersAtom.tsx";

@@ -1,8 +1,8 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { useAtom } from 'jotai';
-import { CartAtom } from '../atoms/CartAtom';
-import { LoggedCustomerAtom } from '../atoms/LoggedCustomerAtom';
-import CartTabBase from './CartTabBase';
+import { CartAtom } from '../atoms/CartAtom.tsx';
+import { LoggedCustomerAtom } from '../atoms/LoggedCustomerAtom.tsx';
+import CartTabBase from './CartTabBase.tsx';
 import {http} from "../http.ts";
 import { CreateOrderDto} from '../Api.ts'
 import { OrderHistoryAtom } from '../atoms/OrderHistoryAtom.tsx';
@@ -62,7 +62,7 @@ const CheckoutPage = () => {
     return (
         <div className="flex h-screen h-[calc(100vh-144px)] ">
             <form onSubmit={handleSubmit} className="flex w-full">
-                {/* Customer Information Section */}
+                {/* CustomerComponents Information Section */}
                 <div className="flex flex-col items-center w-1/2">
                     <div className="p-6 w-full ml-60 max-w-md mt-2">
                         <h1 className="text-2xl font-bold mb-11">Checkout</h1>

@@ -1,11 +1,11 @@
 ﻿import React, { useState } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { CartAtom } from '../atoms/CartAtom';
-import CartTab from './CartTab';
-import Filter from './FilterComponent';
-import Search from './../sharedComponents/SearchComponent';
-import Sort from './SortComponent';
+import { CartAtom } from '../atoms/CartAtom.tsx';
+import CartTab from './CartTab.tsx';
+import Filter from '../sharedComponents/FilterComponent.tsx';
+import Search from '../sharedComponents/SearchComponent.tsx';
+import Sort from '../sharedComponents/SortComponent.tsx';
 import '../resources/styles/Buttons.css';
 // @ts-ignore
 import logo from '../resources/images/logo.png';

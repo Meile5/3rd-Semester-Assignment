@@ -31,9 +31,9 @@ public class CustomerOrderHistoryTest
         var customer = TestObjects.CreateCustomer();
         
         _setup.DbContextInstance.Papers.AddRange(papers);
+        _setup.DbContextInstance.Customers.Add(customer); 
         _setup.DbContextInstance.Orders.AddRange(orders); 
         _setup.DbContextInstance.OrderEntries.AddRange(ordersEntries); 
-        _setup.DbContextInstance.Customers.Add(customer); 
         _setup.DbContextInstance.SaveChanges();
 
         // Act

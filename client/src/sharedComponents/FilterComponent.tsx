@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import '../resources/styles/Buttons.css';
-import {http} from "../http";
+import {http} from "../http.ts";
 import {FilterSortPapersAtom, IsFilterActive, SelectedPriceRangeAtom, SelectedPropertyAtom} from "../atoms/FilterSortAtoms.tsx";
 import {useAtom} from "jotai";
 import {SharedPapersAtom} from "../atoms/SharedPapersAtom.tsx";

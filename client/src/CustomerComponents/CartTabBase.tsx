@@ -1,6 +1,6 @@
 ﻿import React from "react";
 import { useAtom } from "jotai";
-import { CartAtom } from '../atoms/CartAtom';
+import { CartAtom } from '../atoms/CartAtom.tsx';
 
 const CartTabBase: React.FC<{ isOpen?: boolean; onClose?: () => void }> = ({ isOpen, onClose }) => {
     const [cartItems, setCartItems] = useAtom(CartAtom);

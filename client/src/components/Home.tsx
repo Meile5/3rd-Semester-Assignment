@@ -41,11 +41,11 @@ export default function Home() {
                 </h1>
             </div>
 
-            {/* Cards for Admin and Customer */}
+            {/* Cards for AdminComponents and CustomerComponents */}
             <div className="flex mt-20 justify-evenly mb-32">
                 <div className="card bg-base-100 w-96 shadow-xl">
                     <figure className="px-10 pt-10">
-                        <UserCircleIcon className="w-20 h-20 text-gray-500"/> {/* Admin Icon */}
+                        <UserCircleIcon className="w-20 h-20 text-gray-500"/> {/* AdminComponents Icon */}
                     </figure>
                     <div className="card-body items-center text-center">
                         <h2 className="card-title">Admin</h2>
@@ -57,7 +57,7 @@ export default function Home() {
                     onClick={handleCustomerClick} // Open modal on click
                 >
                     <figure className="px-10 pt-10">
-                        <UserCircleIcon className="w-20 h-20 text-gray-500"/> {/* Customer Icon */}
+                        <UserCircleIcon className="w-20 h-20 text-gray-500"/> {/* CustomerComponents Icon */}
                     </figure>
                     <div className="card-body items-center text-center">
                         <h2 className="card-title">Customer</h2>
