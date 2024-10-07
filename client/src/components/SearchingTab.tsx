@@ -3,7 +3,7 @@ import React from 'react';
 import { useAtom } from 'jotai';
 import {useNavigate} from "react-router-dom";
 import Filter from './FilterComponent';
-import Search from './SearchComponent';
+import Search from './../sharedComponents/SearchComponent.tsx';
 import Sort from './SortComponent';
 
 

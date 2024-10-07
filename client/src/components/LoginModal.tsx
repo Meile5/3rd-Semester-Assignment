@@ -61,6 +61,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                         className="input input-bordered w-full mb-2"
                     />
 
+
                     {/* Flex container to align buttons on the same line */}
                     <div className="flex justify-between mt-4">
                         <button
