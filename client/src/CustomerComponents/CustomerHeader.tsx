@@ -1,5 +1,5 @@
 ﻿import React, { useState } from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link, NavLink, useNavigate} from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { CartAtom } from '../atoms/CartAtom.tsx';
 import CartTab from './CartTab.tsx';
@@ -39,19 +39,23 @@ const Header: React.FC = () => {
                 {/* Second Row: Buttons and Components */}
                 <div className="flex justify-between items-center h-12 px-4 -mt-8 mb-2">
                     {/* Left Side: Products and Order History */}
-                    <div className="flex space-x-2 items-center">
-                        <Link
+                    <div className="flex ml-20 space-x-7 items-center">
+                        <NavLink
                             to="/papers"
-                            className="text-black border-b-2 border-transparent hover:border-black transition-all duration-300 text-center whitespace-nowrap pr-1 pl-1"
+                            className={({ isActive }) =>
+                                `text-black font-semibold border-b-2 transition-all duration-300 text-center whitespace-nowrap pr-1 pl-1 ${isActive ? 'border-black' : 'border-transparent'}`
+                            }
                         >
                             Products
-                        </Link>
-                        <Link
+                        </NavLink>
+                        <NavLink
                             to="/order-history"
-                            className="text-black border-b-2 border-transparent hover:border-black transition-all duration-300 text-center whitespace-nowrap pr-1 pl-1"
+                            className={({ isActive }) =>
+                                `text-black font-semibold border-b-2 border-transparent hover:border-black transition-all duration-300 text-center whitespace-nowrap pr-1 pl-1 ${isActive ? 'border-black' : 'border-transparent'}`
+                            }
                         >
                             Order History
-                        </Link>
+                        </NavLink>
                     </div>
 
                     {/* Right Side: Filter, Sort, Search, Shopping Cart */}

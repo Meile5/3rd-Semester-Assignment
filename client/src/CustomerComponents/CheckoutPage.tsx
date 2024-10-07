@@ -6,12 +6,14 @@ import CartTabBase from './CartTabBase.tsx';
 import {http} from "../http.ts";
 import { CreateOrderDto} from '../Api.ts'
 import { OrderHistoryAtom } from '../atoms/OrderHistoryAtom.tsx';
-import toast from "react-hot-toast";
+import toast, {Toaster} from "react-hot-toast";
 import {useNavigate} from 'react-router-dom';
+
+
 
 const CheckoutPage = () => {
     const [loggedCustomer, setLoggedCustomer] = useAtom(LoggedCustomerAtom);
-    const [cartItems] = useAtom(CartAtom);
+    const [cartItems, setCartItems] = useAtom(CartAtom);
     const [deliveryDate, setDeliveryDate] = useState('');
     const [History, setHistory] = useAtom(OrderHistoryAtom);
 
@@ -22,7 +24,7 @@ const CheckoutPage = () => {
         const { name, value } = e.target;
 
         if (name === 'deliveryDate') {
-            
+
             setDeliveryDate(value);
         } else {
             setLoggedCustomer({
@@ -33,7 +35,7 @@ const CheckoutPage = () => {
     };
 
     const handleSubmit = async (e) => {
-     
+        e.preventDefault();
         const orderData: CreateOrderDto = {
             customerId: loggedCustomer.id,
             deliveryDate: deliveryDate,
@@ -42,25 +44,31 @@ const CheckoutPage = () => {
                 productId: item.id,
                 quantity: item.quantity,
             })),
-            
+
         };
-        
+
         try {
-            
+
             const response = await http.api.paperCreateOrder(orderData);
-            if(response) {
+            console.log("API Response:", response);
+            if (response && response.data) {
                 setHistory((prevHistory) => [...prevHistory, response.data]);
+                setCartItems([]);
+                toast.success('Thank you for ordering');
+                setTimeout(() => {
+                    navigate("/papers");
+                }, 1000);
             }
-            toast.success('Thank you for ordering');
-            navigate("/papers")
-           
+
         } catch (error) {
             console.error('Error submitting order:', error);
+            toast.error('Failed to process the order. Please try again.');
         }
     };
     const total_amount = cartItems.reduce((sum, item) => sum + (item.price ?? 0) * item.quantity, 0);
     return (
-        <div className="flex h-screen h-[calc(100vh-144px)] ">
+        <div className="flex  h-[calc(100vh-144px)] ">
+            <Toaster position="top-center" />
             <form onSubmit={handleSubmit} className="flex w-full">
                 {/* CustomerComponents Information Section */}
                 <div className="flex flex-col items-center w-1/2">
@@ -170,9 +178,9 @@ const CheckoutPage = () => {
                         <button
                             className="w-full bg-black text-white py-2 rounded-none border border-transparent hover:bg-white hover:text-black hover:border-black transition-colors duration-300 text-center"
                             type="submit"
-                        >   
+                        >
                             Submit Order
-                      
+
                         </button>
                     </div>
                 </div>
