@@ -23,14 +23,43 @@ public class PaperRepository : IPaperRepository
         return papers;
     }
     
+    public List<Paper> GetFilteredPapers(string? sortName, string? sortOrder, string? priceRange, string? propertieSelected)
+    {
+        var query = _context.Papers.Include(p => p.Properties).AsQueryable();
+
+        // Filter by price range if provided
+        if (!string.IsNullOrEmpty(priceRange))
+        {
+            var range = priceRange.Split('-').Select(double.Parse).ToArray();
+            query = query.Where(p => p.Price >= range[0] && p.Price <= range[1]);
+        }
+
+        // Filter by properties selected if provided
+        if (!string.IsNullOrEmpty(propertieSelected))
+        {
+            query = query.Where(p => p.Properties.Any(prop => prop.PropertyName == propertieSelected));
+        }
+
+        // Apply sorting if requested
+        if (!string.IsNullOrEmpty(sortName))
+        {
+            if (sortName == "name")
+            {
+                query = sortOrder == "asc" ? query.OrderBy(p => p.Name) : query.OrderByDescending(p => p.Name);
+            }
+            else if (sortName == "price")
+            {
+                query = sortOrder == "asc" ? query.OrderBy(p => p.Price) : query.OrderByDescending(p => p.Price);
+            }
+        }
+
+        return query.ToList();
+    }
+
+    
     public int GetTotalPapersCount()
     {
         return _context.Papers.Count(); // Get total count of papers
-    }
-
-    public List<Order> GetAllOrders()
-    {
-        throw new NotImplementedException();
     }
 
     public List<Order> GetCustomerOrders(int customerId)
@@ -75,5 +104,20 @@ public class PaperRepository : IPaperRepository
             .Take(5) 
             .ToListAsync();
         return results;
+    }
+    
+    public List<Property> GetAllProperties()
+    {
+        // Fetch all unique properties from the database
+        var properties = _context.Properties
+            .Select(p => new Property()
+            {
+                Id = p.Id,
+                PropertyName = p.PropertyName
+            })
+            .Distinct()
+            .ToList();
+
+        return properties;
     }
 }

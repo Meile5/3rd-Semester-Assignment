@@ -9,11 +9,13 @@ import {CartAtom} from '../atoms/CartAtom'
 import {TotalCountAtom} from "../atoms/TotalCountAtom.tsx";
 import {useInitializeData} from "../useInitializeData.ts";
 import { SharedPapersAtom } from "../atoms/SharedPapersAtom.tsx";
+import {IsFilterActive} from "../atoms/FilterSortAtoms.tsx";
 
 
 
 export default function PaperList() {
     const [sharedPapers, setSharedPapers] = useAtom(SharedPapersAtom);
+    const [isFilterActive, setIsFilterActive] = useAtom(IsFilterActive);
     const [papers, setPapers] = useAtom(PapersAtom);
     const [totalCount] = useAtom(TotalCountAtom);
     const [cartItems, setCartItems] = useAtom(CartAtom);
@@ -22,10 +24,10 @@ export default function PaperList() {
 
     // Fetch papers with start and limit index
     const fetchPapers = (startAt: number) => {
-         http.api.paperGetAllPapers({ limit, startAt })
+        http.api.paperGetAllPapers({ limit, startAt })
             .then((response) => {
                 setPapers((prevPapers) => [...prevPapers, ...response.data]);
-                setSharedPapers((prevSharedPapers) => [...prevSharedPapers, ...response.data]); 
+                setSharedPapers((prevSharedPapers) => [...prevSharedPapers, ...response.data]);
             });
     };
 
@@ -104,12 +106,14 @@ export default function PaperList() {
                     ))}
                 </div>
             )}
+            {papers.length <= totalCount && !isFilterActive && (
             <div className="flex flex-col items-center mt-6">
                 <button onClick={handleLoadMore} className="text-black border-b-2 border-transparent hover:border-black transition-all duration-300 mb-4">
                     Load More
                 </button>
-                <p>{papers.length} of {totalCount}</p>
+                    <p>{papers.length} of {totalCount}</p>
             </div>
+            )}
         </div>
     );
 }

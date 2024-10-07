@@ -29,6 +29,21 @@ namespace API.Controllers
         }
         
         [HttpGet]
+        [Route("filtered-papers")]
+        public ActionResult<List<PaperDto>> GetFilteredPapers(
+            int limit = 10, 
+            int startAt = 0, 
+            string? sortField = null, 
+            string? sortOrder = null, 
+            string? priceRange = null, 
+            string? propertieSelected = null)
+        {
+            var papers = _service.GetFilteredPapers(limit, startAt, sortField, sortOrder, priceRange, propertieSelected);
+            return Ok(papers);
+        }
+
+        
+        [HttpGet]
         [Route("")]
         public ActionResult<int> GetTotalPapersCount() 
         {
@@ -63,6 +78,14 @@ namespace API.Controllers
             var results = await _service.SearchItemsAsync(query);
 
             return Ok(results);
+        }
+        
+        [HttpGet]
+        [Route("properties")]
+        public ActionResult<List<PropertyDto>> GetAllProperties()
+        {
+            var properties = _service.GetAllProperties();
+            return Ok(properties);
         }
 
     }

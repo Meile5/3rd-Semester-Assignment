@@ -12,12 +12,15 @@ namespace Service;
 public interface IPaperService
 {
     public List<PaperDto> GetAllPapers(int limit, int startAt);
-    //public List<Order> GetAllOrders();
     public Task<OrderResponseDto> CreateOrder(CreateOrderDto createOrderDto);
+
+    public List<PaperDto> GetFilteredPapers(int limit, int startAt, string? sortField, string? sortOrder,
+        string? priceRange, string? propertieSelected);
 
     public List<OrderDto> GetCustomerOrders(int id);
     public int GetTotalPapersCount();
     public Task<List<PaperDto>> SearchItemsAsync(string query);
+    public List<PropertyDto> GetAllProperties();
 
 }
 
@@ -37,6 +40,19 @@ public List<PaperDto> GetAllPapers(int limit, int startAt)
             .Select(PaperDto.FromEntity) // Map to DTO
             .ToList();
     }
+
+    public List<PaperDto> GetFilteredPapers(int limit, int startAt, string? sortField, string? sortOrder, string? priceRange, string? propertieSelected)
+    {
+        var papers = paperRepository.GetFilteredPapers(sortField, sortOrder, priceRange, propertieSelected);
+    
+        // Apply pagination (skip and limit)
+        return papers
+            .Skip(startAt)
+            .Take(limit)
+            .Select(PaperDto.FromEntity) // Convert to DTO
+            .ToList();
+    }
+
 
     public int GetTotalPapersCount() 
     {
@@ -91,6 +107,12 @@ public List<PaperDto> GetAllPapers(int limit, int startAt)
        
         return results.Select(PaperDto.FromEntity).ToList();
         
+    }
+    
+    public List<PropertyDto> GetAllProperties()
+    {
+        var results = paperRepository.GetAllProperties();
+        return results.Select(PropertyDto.FromEntity).ToList();
     }
 
 }

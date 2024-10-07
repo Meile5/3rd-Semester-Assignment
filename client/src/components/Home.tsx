@@ -27,8 +27,6 @@ export default function Home() {
 
     }, []);
 
-    //useInitializeData();
-
     return (
         <div>
             {/* Top image with overlay text */}
