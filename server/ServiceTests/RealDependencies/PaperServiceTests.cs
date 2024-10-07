@@ -2,6 +2,7 @@ using DataAccess;
 using DataAccess.Interfaces;
 using DataAccess.Models;
 using Microsoft.Extensions.Logging.Abstractions;
+using NSubstitute;
 using PgCtx;
 using SharedTestDependencies;
 using Service;
@@ -40,65 +41,34 @@ namespace ServiceTests.RealDependencies
 
         }
 
-        /*  [Fact]
+         [Fact]
       public void CreateNewOrder_Successfully_CreatesNewOrder()
          {
-             var customer = new Customer
-             {
-                 Id = 1,
-                 Name = "Test Customer",
-                 Email = "test@example.com"
-             };
-
-             var customer = new Customer
-             {
-                 Id = 1,
-                 Name = "Test Customer",
-                 Email = "test@example.com"
-             };
-
+             var customer = TestObjects.CreateCustomer();
+             var product1 = TestObjects.CreatePaper();  
+             var product2 = TestObjects.CreatePaper();
+             
              _pgCtxSetup.DbContextInstance.Customers.Add(customer);
+             _pgCtxSetup.DbContextInstance.Papers.AddRange(product1, product2);
              _pgCtxSetup.DbContextInstance.SaveChanges();
-             var createOrderDto = new CreateOrderDto
-             {
-                 DeliveryDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(1)),
-                 TotalAmount = 150.0,
-                 CustomerId = 1,
-                 OrderEntries = new List<CreateOrderEntryDto>
-                 {
-                     new CreateOrderEntryDto { ProductId = 1, Quantity = 5 },
-                     new CreateOrderEntryDto { ProductId = 2, Quantity = 3 }
-                 }
-             };
-
-             var expectedOrder = new Order
-             {
-                 Id = 1,
-                 DeliveryDate = createOrderDto.DeliveryDate,
-                 TotalAmount = createOrderDto.TotalAmount,
-                 CustomerId = createOrderDto.CustomerId,
-                 OrderEntries = createOrderDto.OrderEntries.Select(e => new OrderEntry
-                 {
-                     ProductId = e.ProductId,
-                     Quantity = e.Quantity
-                 }).ToList()
-             };
-
-             _pgCtxSetup.DbContextInstance.Orders.Add(expectedOrder);
-             _pgCtxSetup.DbContextInstance.SaveChanges();
-
+             
+             var createOrderDto = TestObjects.CreateOrderDto();
+             createOrderDto.CustomerId = customer.Id; 
+             createOrderDto.OrderEntries[0].ProductId = product1.Id; 
+             createOrderDto.OrderEntries[1].ProductId = product2.Id;
 
              var result = _paperService.CreateOrder(createOrderDto).Result;
 
              Assert.NotNull(result);
-             Assert.Equal(expectedOrder.Id, result.Id);
-             Assert.Equal(expectedOrder.TotalAmount, result.TotalAmount);
-             Assert.Equal(expectedOrder.CustomerId, result.CustomerId);
-             Assert.Equal(expectedOrder.OrderEntries.Count, result.OrderEntries.Count);
+             Assert.Equal(createOrderDto.CustomerId, result.CustomerId);
+             Assert.Equal(createOrderDto.TotalAmount, result.TotalAmount);
+             Assert.Equal(createOrderDto.DeliveryDate, result.DeliveryDate);
+             Assert.Equal(createOrderDto.OrderEntries.Count, result.OrderEntries.Count);
+            
          }
 
 
-   }*/
+   }
 
-    }
+    
 }

@@ -26,7 +26,7 @@ public class TestObjects
             .RuleFor(o => o.TotalAmount, f => f.Random.Double(10, 1000))
             .RuleFor(o => o.OrderEntries, f => new Faker<CreateOrderEntryDto>()
                 .RuleFor(oe => oe.ProductId, f => f.Random.Int(1, 50)) 
-                .RuleFor(oe => oe.Quantity, f => f.Random.Int(50, 100)) 
+                .RuleFor(oe => oe.Quantity, f => f.Random.Int(2, 5)) 
                 .Generate(2)); 
     }
     
@@ -35,7 +35,7 @@ public class TestObjects
         return new Faker <Paper>()
             .RuleFor(p => p.Id, f => f.Random.Int(1,100))
             .RuleFor(p => p.Name, f => f.Commerce.ProductName()) 
-            .RuleFor(p => p.Stock, f => f.Random.Int(0, 100)) 
+            .RuleFor(p => p.Stock, f => f.Random.Int(7, 100)) 
             .RuleFor(p => p.Price, f => f.Random.Double(1.0, 100.0)) 
             .RuleFor(p => p.Properties, f => new Faker<Property>()
                     .RuleFor(p => p.Id, f => f.Random.Int(1,100))
