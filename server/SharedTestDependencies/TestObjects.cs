@@ -18,6 +18,17 @@ public class TestObjects
                 .RuleFor(oe => oe.Quantity, f => f.Random.Int(50, 100)) 
                 .Generate(2)); 
     }
+    public static CreateOrderDto CreateOrderDto()
+    {
+        return new Faker<CreateOrderDto>()
+            .RuleFor(o => o.CustomerId, f => f.Random.Int(1,100))
+            .RuleFor(o => o.DeliveryDate, f => DateOnly.FromDateTime(f.Date.Future()))
+            .RuleFor(o => o.TotalAmount, f => f.Random.Double(10, 1000))
+            .RuleFor(o => o.OrderEntries, f => new Faker<CreateOrderEntryDto>()
+                .RuleFor(oe => oe.ProductId, f => f.Random.Int(1, 50)) 
+                .RuleFor(oe => oe.Quantity, f => f.Random.Int(50, 100)) 
+                .Generate(2)); 
+    }
     
     public static Paper CreatePaper()
     {
