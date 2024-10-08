@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {UserCircleIcon} from "@heroicons/react/24/outline";
 import LoginModal from "./LoginModal.tsx"; // Import the login modal
 import {useAtom} from "jotai";
@@ -42,24 +42,28 @@ export default function Home() {
             </div>
 
             {/* Cards for AdminComponents and CustomerComponents */}
-            <div className="flex mt-20 justify-evenly mb-32">
-                <div className="card bg-base-100 w-96 shadow-xl">
-                    <figure className="px-10 pt-10">
-                        <UserCircleIcon className="w-20 h-20 text-gray-500"/> {/* AdminComponents Icon */}
-                    </figure>
-                    <div className="card-body items-center text-center">
-                        <h2 className="card-title">Admin</h2>
-                    </div>
-                </div>
 
-                <div
-                    className="card bg-base-100 w-96 shadow-xl"
-                    onClick={handleCustomerClick} // Open modal on click
-                >
-                    <figure className="px-10 pt-10">
-                        <UserCircleIcon className="w-20 h-20 text-gray-500"/> {/* CustomerComponents Icon */}
-                    </figure>
-                    <div className="card-body items-center text-center">
+
+               <div className="flex mt-20 justify-evenly mb-32">
+                   <Link to="/admin" >
+                       <div className="card bg-base-100 w-96 shadow-xl hover:drop-shadow-xl">
+                           <figure className="px-10 pt-10">
+                               <UserCircleIcon className="w-20 h-20 text-gray-500"/> {/* AdminComponents Icon */}
+                           </figure>
+                           <div className="card-body items-center text-center">
+                               <h2 className="card-title">Admin</h2>
+                           </div>
+                       </div>
+                   </Link>
+
+                   <div
+                       className="card bg-base-100 w-96 shadow-xl hover:drop-shadow-xl"
+                       onClick={handleCustomerClick} // Open modal on click
+                   >
+                       <figure className="px-10 pt-10">
+                           <UserCircleIcon className="w-20 h-20 text-gray-500"/> {/* CustomerComponents Icon */}
+                       </figure>
+                       <div className="card-body items-center text-center">
                         <h2 className="card-title">Customer</h2>
                     </div>
                 </div>

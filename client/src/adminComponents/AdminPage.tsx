@@ -2,6 +2,10 @@ import React, {useState} from 'react';
 import PaperList from './PaperListAdmin.tsx';
 import book from '../resources/images/book.jpg';
 
+function PaperListAdmin() {
+    return null;
+}
+
 const AdminPage: React.FC = () => {
 
     return (
@@ -15,7 +19,7 @@ const AdminPage: React.FC = () => {
                     className="w-full h-auto max-h-[55vh] object-cover m-0 p-0"
                 />
             </div>
-            <PaperList/>
+            <PaperListAdmin/>
         </div>
     );
 
