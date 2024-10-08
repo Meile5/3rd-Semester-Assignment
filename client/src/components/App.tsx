@@ -10,6 +10,8 @@ import CustomerHeader from "../CustomerComponents/CustomerHeader.tsx";
 import CheckoutPage from "../CustomerComponents/CheckoutPage.tsx";
 import OrderHistoryPage from "../CustomerComponents/OrderHistoryPage.tsx";
 import Footer from "./Footer.tsx";
+import AdminHeader from "../adminComponents/AdminHeader.tsx";
+import AdminPage from "../adminComponents/AdminPage.tsx";
 
 
 const App = () => {
@@ -42,6 +44,12 @@ const App = () => {
                         <>
                             <CustomerHeader />
                             <OrderHistoryPage />
+                        </>
+                    } />
+                    <Route path="/admin" element={
+                        <>
+                            <AdminHeader/>
+                            <AdminPage />
                         </>
                     } />
                 </Routes>
