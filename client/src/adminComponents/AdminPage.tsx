@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
-import PaperListAdmin from '../adminComponents/PaperListAdmin';
 import book from '../resources/images/book.jpg';
+
+function PaperListAdmin() {
+    return null;
+}
 
 const AdminPage: React.FC = () => {
 
