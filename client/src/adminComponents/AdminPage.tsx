@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import PaperList from './PaperListAdmin.tsx';
 import book from '../resources/images/book.jpg';
 
 function PaperListAdmin() {
