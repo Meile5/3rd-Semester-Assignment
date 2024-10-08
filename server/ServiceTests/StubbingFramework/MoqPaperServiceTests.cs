@@ -31,7 +31,6 @@ namespace ServiceTests.StubbingFramework
         }
 
         
-        // Test is Failing
         [Fact]
         public async void CreateNewOrder_Successfully_CreatesNewOrder()
         {

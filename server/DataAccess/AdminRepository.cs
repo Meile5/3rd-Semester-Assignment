@@ -25,5 +25,23 @@ public class AdminRepository : IAdminRepository
         return orders;
     }
     
+    public async Task AddPaperAsync(Paper paper)
+    {
+        _context.Papers.Add(paper);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task AddPropertyAsync(Property property)
+    {
+        _context.Properties.Add(property);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<Property?> GetPropertyByNameAsync(string propertyName)
+    {
+        return await _context.Properties.FirstOrDefaultAsync(p => p.PropertyName == propertyName);
+    }
+
+    
     
 }

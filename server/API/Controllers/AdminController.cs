@@ -27,6 +27,13 @@ namespace API.Controllers
             return Ok(orders); 
         }
         
+        [HttpPost]
+        [Route("create-paper")]
+        public async Task<ActionResult<PaperDto>> CreatePaper([FromBody] PaperDto paperDto)
+        {
+                await _service.CreatePaperAsync(paperDto);
+                return Ok(paperDto);
+        }
        
 
     }

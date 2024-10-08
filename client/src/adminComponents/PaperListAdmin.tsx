@@ -93,12 +93,17 @@ export default function PaperListAdmin() {
                     ))}
                 </div>
             )}
-            {papers.length <= totalCount && !isFilterActive && (
+            {papers.length < totalCount && !isFilterActive && (
                 <div className="flex flex-col items-center mt-6">
-                    <button onClick={handleLoadMore} className="text-black border-b-2 border-transparent hover:border-black transition-all duration-300 mb-4">
+                    <button onClick={handleLoadMore}
+                            className="text-black border-b-2 border-transparent hover:border-black transition-all duration-300 mb-4">
                         Load More
                     </button>
-                    <p>{papers.length} of {totalCount}</p>
+                    {sharedPapers.length >= papers.length && !isFilterActive && sharedPapers.length >= totalCount ? (
+                        <p>{sharedPapers.length} of {sharedPapers.length}</p>
+                    ) : (
+                        <p>{papers.length} of {totalCount}</p>
+                    )}
                 </div>
             )}
         </div>
