@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import toast from "react-hot-toast";
 import {http} from "../http.ts";
 import {PropertyDto} from "../Api.ts";
+import {useAtom} from "jotai/index";
+import {SharedPapersAtom} from "../atoms/SharedPapersAtom.tsx";
 
 interface CreatePaperModalProps {
     isOpen: boolean;
@@ -11,29 +13,27 @@ interface CreatePaperModalProps {
 export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalProps) {
     const [formData, setFormData] = useState<{
         name: string;
-        price: string;
-        stock: string;
+        price: number;
+        stock: number;
         discontinued: boolean;
-        properties: string[];
+        properties: PropertyDto[];
     }>({
         name: "",
-        price: "",
-        stock: "",
+        price: 0,
+        stock: 0,
         discontinued: false,
         properties: []
     });
 
-    const [selectedProperties, setSelectedProperties] = useState<string[]>([]);
+    const [sharedPapers, setSharedPapers] = useAtom(SharedPapersAtom);
+    const [selectedProperties, setSelectedProperties] = useState<PropertyDto[]>([]);
     const [availableProperties, setAvailableProperties] = useState<PropertyDto[]>([]);
     const [newProperty, setNewProperty] = useState("");
 
     useEffect(() => {
-
-        // Fetch available properties for the filter dropdown
         http.api.paperGetAllProperties().then((response) => {
-            setAvailableProperties(response.data); // Set properties to populate the filter options
+            setAvailableProperties(response.data);
         });
-
     }, []);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,13 +45,15 @@ export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalPr
     };
 
     const handlePropertyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const selected = Array.from(e.target.selectedOptions, option => option.value);
-        const uniqueSelected = [...new Set([...selectedProperties, ...selected])];
+        const selectedNames = Array.from(e.target.selectedOptions, option => option.value);
+        const selectedProps = availableProperties.filter(property => selectedNames.includes(property.id?.toString() as string));
+
+        const uniqueSelected = [...new Set([...selectedProperties, ...selectedProps])];
 
         setSelectedProperties(uniqueSelected);
         setFormData({
             ...formData,
-            properties: uniqueSelected // Sync properties with formData
+            properties: uniqueSelected // Sync properties with formData as PropertyDto[]
         });
     };
 
@@ -60,19 +62,25 @@ export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalPr
     };
 
     const handleAddNewProperty = () => {
-        if (newProperty && !selectedProperties.includes(newProperty)) {
-            const updatedProperties = [...selectedProperties, newProperty];
+        if (newProperty && !selectedProperties.some(prop => prop.propertyName === newProperty)) {
+            const newProp: PropertyDto = { propertyName: newProperty }; // Generate a temporary name for the new property
+            const updatedProperties = [...selectedProperties, newProp];
             setSelectedProperties(updatedProperties);
             setFormData({
                 ...formData,
-                properties: updatedProperties // Sync with formData
+                properties: updatedProperties // Sync with formData as PropertyDto[]
             });
             setNewProperty(""); // Clear the input field after adding
         }
     };
 
-    const handleRemoveProperty = (property: string) => {
-        setSelectedProperties(selectedProperties.filter(p => p !== property));
+    const handleRemoveProperty = (propertyId: number | undefined) => {
+        const updatedProperties = selectedProperties.filter(p => p.id !== propertyId);
+        setSelectedProperties(updatedProperties);
+        setFormData({
+            ...formData,
+            properties: updatedProperties // Sync with formData as PropertyDto[]
+        });
     };
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -80,12 +88,13 @@ export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalPr
 
         const newPaperData = {
             ...formData,
-            properties: selectedProperties // Add the selected properties to the form data
+            properties: selectedProperties // Ensure properties are passed as PropertyDto[]
         };
 
-        http.api.createPaper(newPaperData).then(() => {
-            toast.success(`Paper "${formData.name}" created successfully with properties!`);
-            onClose(); // Close the modal after submission
+        http.api.adminCreatePaper(newPaperData).then(response => {
+            setSharedPapers((prevSharedPapers) => [...prevSharedPapers, response.data]);
+            toast.success(`Paper "${formData.name}" created successfully!`);
+            onClose();
         }).catch(err => {
             toast.error("Failed to create paper. Please try again.");
         });
@@ -141,14 +150,14 @@ export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalPr
                         <label className="block mb-2 font-bold">Select Properties:</label>
                         <select
                             multiple
-                            value={selectedProperties}
+                            value={selectedProperties.map(prop => prop.propertyName) as string[]} // Use property names for selection
                             onChange={handlePropertyChange}
                             className="input input-bordered w-full h-20 mb-2 focus:outline-none focus:ring-2 focus:ring-black"
                         >
                             {availableProperties.map(property => (
                                 <option
                                     key={property.id}
-                                    value={property.propertyName}
+                                    value={property.id} // Value is the property ID
                                     className="hover:bg-gray-100 focus:bg-transparent"
                                 >
                                     {property.propertyName}
@@ -180,11 +189,11 @@ export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalPr
                             {selectedProperties.length > 0 ? (
                                 <ul>
                                     {selectedProperties.map(property => (
-                                        <li key={property} className="flex justify-between">
-                                            <span>{property}</span>
+                                        <li key={property.id} className="flex justify-between">
+                                            <span>{property.propertyName}</span>
                                             <button
                                                 type="button"
-                                                onClick={() => handleRemoveProperty(property)}
+                                                onClick={() => handleRemoveProperty(property.id)} // Remove by ID
                                                 className="text-red-500 hover:underline"
                                             >
                                                 Remove

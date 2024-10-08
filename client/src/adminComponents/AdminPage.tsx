@@ -3,6 +3,7 @@ import book from '../resources/images/book.jpg';
 import {DocumentPlusIcon} from "@heroicons/react/24/outline";
 import PaperListAdmin from "./PaperListAdmin.tsx";
 import CreatePaperModal from "./CreatePaperModal";
+import {useNavigate} from "react-router-dom";
 
 const AdminPage: React.FC = () => {
 
@@ -10,6 +11,7 @@ const AdminPage: React.FC = () => {
 
     const openCreateModal = () => setCreateModalOpen(true);
     const closeCreateModal = () => setCreateModalOpen(false);
+
 
     return (
         <div className="m-0 p-0 mb-10">
@@ -23,8 +25,8 @@ const AdminPage: React.FC = () => {
                 />
             </div>
             {/* Button with Plus Icon to add a new paper */}
-            <div className="flex justify-items-start items-center mt-10 ml-10 space-x-2" onClick={openCreateModal}>
-                <DocumentPlusIcon className="w-10 h-10" />
+            <div className="flex justify-items-start items-center mt-10 ml-10 space-x-2">
+                <DocumentPlusIcon className="w-10 h-10" onClick={openCreateModal}/>
                 <span>Add Paper</span>
             </div>
 

@@ -27,4 +27,21 @@ public class PaperDto
             }).ToList()
         };
     }
+    
+    public Paper ToEntity(PaperDto paper)
+    {
+        return new Paper
+        {
+            Id = paper.Id,
+            Name = paper.Name,
+            Price = paper.Price,
+            Stock = paper.Stock,
+            Discontinued = paper.Discontinued,
+            Properties = paper.Properties.Select(prop => new Property
+            {
+                Id = prop.Id,
+                PropertyName = prop.PropertyName
+            }).ToList()
+        };
+    }
 }
