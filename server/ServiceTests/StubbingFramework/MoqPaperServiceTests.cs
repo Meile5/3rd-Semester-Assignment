@@ -4,6 +4,7 @@ using DataAccess.Models;
 using FluentValidation;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
+using PgCtx;
 using Service;
 using Service.Validators;
 using Xunit;
@@ -15,6 +16,7 @@ namespace ServiceTests.StubbingFramework
     {
         private readonly IPaperService _paperService;
         private readonly Mock<IPaperRepository> _mockRepo;
+        public PgCtxSetup<PaperContext> setup = new();
 
         private readonly ITestOutputHelper _outputHelper;
 
@@ -25,10 +27,10 @@ namespace ServiceTests.StubbingFramework
             var mockContext = It.IsAny<PaperContext>();
             Console.WriteLine(mockContext);
             _paperService = new PaperService(NullLogger<PaperService>.Instance, _mockRepo.Object,
-                new CreateOrderValidator(), mockContext);
+                new CreateOrderValidator(), setup.DbContextInstance);
         }
 
-        /*
+        
         // Test is Failing
         [Fact]
         public async void CreateNewOrder_Successfully_CreatesNewOrder()
@@ -73,7 +75,6 @@ namespace ServiceTests.StubbingFramework
             Assert.Equal(expectedOrder.CustomerId, result.CustomerId);
             Assert.Equal(expectedOrder.OrderEntries.Count, result.OrderEntries.Count);
         }
-        */
 
 
         [Fact]

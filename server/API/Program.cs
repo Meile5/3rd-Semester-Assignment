@@ -2,9 +2,12 @@ using System.Text.Json;
 using API.Middleware;
 using DataAccess;
 using DataAccess.Interfaces;
+using DataAccess.Models;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Service;
+using Service.Validators;
 
 namespace API;
 
@@ -23,6 +26,9 @@ public class Program
 
               builder.Services.AddScoped<IPaperService, PaperService>();
               builder.Services.AddScoped<IAdminService, AdminService>();
+              
+              builder.Services.AddScoped<IValidator<CreateOrderDto>, CreateOrderValidator>();
+
 
     
         builder.Services.AddScoped<IPaperRepository, PaperRepository > ();
