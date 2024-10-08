@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {UserCircleIcon} from "@heroicons/react/24/outline";
-import LoginModal from "./LoginModal.tsx"; // Import the login modal
+import {UserCircleIcon, IdentificationIcon, ShoppingCartIcon} from "@heroicons/react/24/outline";
+import LoginModal from "./LoginModal.tsx";
 import {useAtom} from "jotai";
 import {LoggedCustomerAtom} from "../atoms/LoggedCustomerAtom.tsx";
 
@@ -61,7 +61,7 @@ export default function Home() {
                        onClick={handleCustomerClick} // Open modal on click
                    >
                        <figure className="px-10 pt-10">
-                           <UserCircleIcon className="w-20 h-20 text-gray-500"/> {/* CustomerComponents Icon */}
+                           <ShoppingCartIcon className="w-20 h-20 text-gray-500"/> {/* CustomerComponents Icon */}
                        </figure>
                        <div className="card-body items-center text-center">
                         <h2 className="card-title">Customer</h2>
