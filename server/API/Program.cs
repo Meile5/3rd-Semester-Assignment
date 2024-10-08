@@ -2,7 +2,6 @@ using System.Text.Json;
 using API.Middleware;
 using DataAccess;
 using DataAccess.Interfaces;
-using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Service;
@@ -23,9 +22,11 @@ public class Program
         });
 
               builder.Services.AddScoped<IPaperService, PaperService>();
+              builder.Services.AddScoped<IAdminService, AdminService>();
 
     
         builder.Services.AddScoped<IPaperRepository, PaperRepository > ();
+        builder.Services.AddScoped<IAdminRepository, AdminRepository > ();
         builder.Services.AddControllers().AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;

@@ -28,7 +28,7 @@ public interface IPaperService
 public class PaperService(
         ILogger<PaperService> logger,
         IPaperRepository paperRepository,
-        IValidator<CreateOrderDto> createOrderValidator,
+       // IValidator<CreateOrderDto> createOrderValidator,
         PaperContext context
         ) : IPaperService
 {
@@ -88,7 +88,7 @@ public List<PaperDto> GetAllPapers(int limit, int startAt)
                 await transaction.CommitAsync();
                 return OrderResponseDto.FromOrder(insertedOrder);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Rollback the transaction if any error occurs
                 await transaction.RollbackAsync();
