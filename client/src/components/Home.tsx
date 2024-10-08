@@ -41,14 +41,14 @@ export default function Home() {
                 </h1>
             </div>
 
-            {/* Cards for AdminComponents and CustomerComponents */}
+            {/* Cards for adminComponents and CustomerComponents */}
 
 
                <div className="flex mt-20 justify-evenly mb-32">
                    <Link to="/admin" >
                        <div className="card bg-base-100 w-96 shadow-xl hover:drop-shadow-xl">
                            <figure className="px-10 pt-10">
-                               <UserCircleIcon className="w-20 h-20 text-gray-500"/> {/* AdminComponents Icon */}
+                               <UserCircleIcon className="w-20 h-20 text-gray-500"/> {/* adminComponents Icon */}
                            </figure>
                            <div className="card-body items-center text-center">
                                <h2 className="card-title">Admin</h2>
