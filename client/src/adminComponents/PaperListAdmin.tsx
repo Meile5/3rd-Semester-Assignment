@@ -13,7 +13,7 @@ import {IsFilterActive} from "../atoms/FilterSortAtoms.tsx";
 
 
 
-export default function PaperList() {
+export default function PaperListAdmin() {
     const [sharedPapers, setSharedPapers] = useAtom(SharedPapersAtom);
     const [isFilterActive, setIsFilterActive] = useAtom(IsFilterActive);
     const [papers, setPapers] = useAtom(PapersAtom);

@@ -9,24 +9,6 @@
  * ---------------------------------------------------------------
  */
 
-export interface PaperDto {
-    /** @format int32 */
-    id?: number;
-    name?: string;
-    /** @format double */
-    price?: number;
-    discontinued?: boolean;
-    /** @format int32 */
-    stock?: number;
-    properties?: PropertyDto[];
-}
-
-export interface PropertyDto {
-    /** @format int32 */
-    id?: number;
-    propertyName?: string;
-}
-
 export interface OrderDto {
     /** @format int32 */
     id?: number;
@@ -52,6 +34,24 @@ export interface OrderEntryDto {
     /** @format int32 */
     orderId?: number | null;
     product?: PaperDto | null;
+}
+
+export interface PaperDto {
+    /** @format int32 */
+    id?: number;
+    name?: string;
+    /** @format double */
+    price?: number;
+    discontinued?: boolean;
+    /** @format int32 */
+    stock?: number;
+    properties?: PropertyDto[];
+}
+
+export interface PropertyDto {
+    /** @format int32 */
+    id?: number;
+    propertyName?: string;
 }
 
 export interface OrderResponseDto {
@@ -316,6 +316,21 @@ export class HttpClient<SecurityDataType = unknown> {
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
     api = {
+        /**
+         * No description
+         *
+         * @tags Admin
+         * @name AdminGetAllOrders
+         * @request GET:/api/Admin/orders-history-allCustomers
+         */
+        adminGetAllOrders: (params: RequestParams = {}) =>
+            this.request<OrderDto[], any>({
+                path: `/api/Admin/orders-history-allCustomers`,
+                method: "GET",
+                format: "json",
+                ...params,
+            }),
+
         /**
          * No description
          *
