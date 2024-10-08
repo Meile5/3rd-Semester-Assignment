@@ -30,7 +30,7 @@ const OrderHistoryPage: React.FC = () => {
             ) : (
                 Array.isArray(orders) && orders.map((order, index) => (
                     <div onClick={e => setIsToggled(index)} key={order.id}
-                         className="collapse collapse-arrow bg-base-200 mb-4">
+                         className="collapse collapse-arrow bg-[#e4e4e7] mb-4">
                         <input type="radio" name="my-accordion-2" checked={isToggled == index}/>
                         <div className="collapse-title text-xl font-medium">
                             {/* Order info separated by a pipe */}
