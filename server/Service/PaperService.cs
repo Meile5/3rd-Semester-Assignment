@@ -28,7 +28,7 @@ public interface IPaperService
 public class PaperService(
         ILogger<PaperService> logger,
         IPaperRepository paperRepository,
-       // IValidator<CreateOrderDto> createOrderValidator,
+        IValidator<CreateOrderDto> createOrderValidator,
         PaperContext context
         ) : IPaperService
 {
