@@ -7,6 +7,7 @@ public class PaperDto
     public string Name { get; set; } = null!;
     public double Price { get; set; }
     public bool Discontinued { get; set; }
+    public int Stock { get; set; }
     public List<PropertyDto> Properties { get; set; } = new List<PropertyDto>();
     
     // Static method to map from entity to DTO
@@ -17,6 +18,7 @@ public class PaperDto
             Id = paper.Id,
             Name = paper.Name,
             Price = paper.Price,
+            Stock = paper.Stock,
             Discontinued = paper.Discontinued,
             Properties = paper.Properties.Select(prop => new PropertyDto
             {

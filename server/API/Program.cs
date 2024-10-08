@@ -2,10 +2,13 @@ using System.Text.Json;
 using API.Middleware;
 using DataAccess;
 using DataAccess.Interfaces;
+using DataAccess.Models;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Service;
+using Service.Validators;
 
 namespace API;
 
@@ -21,6 +24,9 @@ public class Program
             var appOptions = serviceProvider.GetRequiredService<IOptions<AppOptions>>().Value;
             options.UseNpgsql(appOptions.DbConnectionString);
         });
+        
+        builder.Services.AddScoped<IValidator<CreateOrderDto>, CreateOrderValidator>();
+
 
               builder.Services.AddScoped<IPaperService, PaperService>();
 

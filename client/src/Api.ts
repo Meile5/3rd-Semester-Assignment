@@ -16,6 +16,8 @@ export interface PaperDto {
     /** @format double */
     price?: number;
     discontinued?: boolean;
+    /** @format int32 */
+    stock?: number;
     properties?: PropertyDto[];
 }
 
