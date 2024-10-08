@@ -10,8 +10,8 @@ import CustomerHeader from "../CustomerComponents/CustomerHeader.tsx";
 import CheckoutPage from "../CustomerComponents/CheckoutPage.tsx";
 import OrderHistoryPage from "../CustomerComponents/OrderHistoryPage.tsx";
 import Footer from "./Footer.tsx";
-import AdminHeader from "../adminComponents/AdminHeader.tsx";
-import AdminPage from "../adminComponents/AdminPage.tsx";
+import AdminHeader from "../AdminComponents/AdminHeader.tsx";
+import AdminPage from "../AdminComponents/AdminPage.tsx";
 
 
 const App = () => {
