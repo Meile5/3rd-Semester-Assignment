@@ -18,7 +18,6 @@ export default function PaperList() {
     const [isFilterActive, setIsFilterActive] = useAtom(IsFilterActive);
     const [papers, setPapers] = useAtom(PapersAtom);
     const [totalCount] = useAtom(TotalCountAtom);
-    const [cartItems, setCartItems] = useAtom(CartAtom);
     const [startAt, setStartAt] = useState(0);
     const limit = 10;
 
@@ -48,21 +47,6 @@ export default function PaperList() {
         setStartAt((prevStartAt) => prevStartAt + limit);
     };
 
-    const handleAddToCart = (paper: PaperDto) => {
-        setCartItems((currentItems) => {
-            const existingItem = currentItems.find(item => item.id === paper.id);
-
-            if (existingItem) {
-                // Update the quantity if the item is already in the cart
-                return currentItems.map(item =>
-                    item.id === paper.id ? { ...item, quantity: item.quantity + 1 } : item
-                );
-            }
-
-            // Add new item to the cart
-            return [...currentItems, { id: paper.id, name: paper.name, quantity: 1, price: paper.price }];
-        });
-    };
 
     return (
         <div>
@@ -95,7 +79,6 @@ export default function PaperList() {
                                     <div className="w-full mt-auto">
                                         <button
                                             className="btn btn-outline btn-black w-full p-2 rounded-md hover:bg-black hover:text-white transition-colors"
-                                            onClick={() => handleAddToCart(paper)}
                                         >
                                             Add to Cart
                                         </button>
