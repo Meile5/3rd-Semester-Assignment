@@ -1,34 +1,34 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import {http} from "../http.ts";
-import {PropertyDto} from "../Api.ts";
-import {useAtom} from "jotai/index";
-import {SharedPapersAtom} from "../atoms/SharedPapersAtom.tsx";
+import { http } from "../http.ts";
+import {PaperDto, PropertyDto} from "../Api.ts";
+import { useAtom } from "jotai/index";
+import { SharedPapersAtom } from "../atoms/SharedPapersAtom.tsx";
 
-interface CreatePaperModalProps {
+interface EditPaperModalProps {
     isOpen: boolean;
     onClose: () => void;
+    paper?: PaperDto;
 }
 
-export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalProps) {
+export default function EditPaperModal({ isOpen, onClose, paper }: EditPaperModalProps) {
     const [formData, setFormData] = useState<{
         name: string;
-        price?: number;
-        stock?: number;
+        price: number;
+        stock: number;
         discontinued: boolean;
         properties: PropertyDto[];
     }>({
-        name: "",
-        price: undefined,
-        stock: undefined,
-        discontinued: false,
-        properties: []
+        name: paper?.name || "",
+        price: paper?.price || 0,
+        stock: paper?.stock || 0,
+        discontinued: paper?.discontinued || false,
+        properties: paper?.properties || []
     });
 
-
     const [sharedPapers, setSharedPapers] = useAtom(SharedPapersAtom);
-    const [selectedProperties, setSelectedProperties] = useState<PropertyDto[]>([]);
     const [availableProperties, setAvailableProperties] = useState<PropertyDto[]>([]);
+    const [selectedProperties, setSelectedProperties] = useState<PropertyDto[]>([]);
     const [newProperty, setNewProperty] = useState("");
 
     useEffect(() => {
@@ -37,24 +37,33 @@ export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalPr
         });
     }, []);
 
+    useEffect(() => {
+        if (paper) {
+            setFormData({
+                name: paper.name || "",
+                price: paper.price || 0,
+                stock: paper.stock || 0,
+                discontinued: paper.discontinued || false,
+                properties: paper.properties || [],
+            });
+            setSelectedProperties(paper.properties || []);
+        }
+    }, [paper]);
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, type, checked } = e.target;
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            [name]: type === "checkbox" ? checked : value === "" ? undefined : Number(value),
-        }));
-    };
-    const handlePropertyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedNames = Array.from(e.target.selectedOptions, option => option.value);
-        const selectedProps = availableProperties.filter(property => selectedNames.includes(property.id?.toString() as string));
-
-        const uniqueSelected = [...new Set([...selectedProperties, ...selectedProps])];
-
-        setSelectedProperties(uniqueSelected);
         setFormData({
             ...formData,
-            properties: uniqueSelected // Sync properties with formData as PropertyDto[]
+            [name]: type === "checkbox" ? checked : value,
         });
+    };
+
+    const handlePropertyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedIds = Array.from(e.target.selectedOptions, option => option.value);
+        const selectedProps = availableProperties.filter(property => selectedIds.includes(property.id?.toString() as string));
+
+        setSelectedProperties(selectedProps);
+        setFormData({ ...formData, properties: selectedProps });
     };
 
     const handleNewPropertyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,47 +75,42 @@ export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalPr
             const newProp: PropertyDto = { propertyName: newProperty };
             const updatedProperties = [...selectedProperties, newProp];
             setSelectedProperties(updatedProperties);
-            setFormData({
-                ...formData,
-                properties: updatedProperties
-            });
+            setFormData({ ...formData, properties: updatedProperties });
             setNewProperty("");
         }
     };
 
-    const handleRemoveProperty = (propertyId: number | undefined) => {
-        const updatedProperties = selectedProperties.filter(p => p.id !== propertyId);
+    const handleRemoveProperty = (propertyName: string) => {
+        const updatedProperties = selectedProperties.filter(p => p.propertyName !== propertyName);
         setSelectedProperties(updatedProperties);
-        setFormData({
-            ...formData,
-            properties: updatedProperties
-        });
+        setFormData({ ...formData, properties: updatedProperties });
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        const newPaperData = {
-            ...formData,
-            properties: selectedProperties // Ensure properties are passed as PropertyDto[]
-        };
+        if (!paper) {
+            toast.error("No paper selected for editing.");
+            return;
+        }
 
-        http.api.adminCreatePaper(newPaperData).then(response => {
-            setSharedPapers((prevSharedPapers) => [...prevSharedPapers, response.data]);
-            toast.success(`Paper "${formData.name}" created successfully!`);
-            onClose();
-        }).catch(err => {
-            console.log(err.message);
-            toast.error("Failed to create paper. Please try again.");
-        });
+        http.api.adminEditPaper({ ...formData, id: paper.id })
+            .then(response => {
+                setSharedPapers(prev => prev.map(p => (p.id === paper.id ? response.data : p)));
+                toast.success(`Paper "${formData.name}" updated successfully!`);
+                onClose();
+            })
+            .catch(err => {
+                toast.error("Failed to update paper. Please try again.");
+            });
     };
 
-    if (!isOpen) return null;
+    if (!isOpen || !paper) return null;
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-white p-8 rounded shadow-md w-96">
-                <h2 className="text-2xl mb-4">Create New Paper</h2>
+                <h2 className="text-2xl mb-4">Edit Paper</h2>
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"
@@ -121,17 +125,16 @@ export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalPr
                         type="number"
                         name="price"
                         placeholder="Price"
-                        value={formData.price ?? ""}
+                        value={formData.price}
                         onChange={handleInputChange}
                         required
                         className="input input-bordered w-full mb-2"
                     />
-
                     <input
                         type="number"
                         name="stock"
                         placeholder="Stock"
-                        value={formData.stock ?? ""}
+                        value={formData.stock}
                         onChange={handleInputChange}
                         required
                         className="input input-bordered w-full mb-2"
@@ -152,16 +155,12 @@ export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalPr
                         <label className="block mb-2 font-bold">Select Properties:</label>
                         <select
                             multiple
-                            value={selectedProperties.map(prop => prop.propertyName) as string[]}
+                            value={selectedProperties.map(prop => prop.propertyName as string)}
                             onChange={handlePropertyChange}
-                            className="input input-bordered w-full h-20 mb-2 focus:outline-none focus:ring-2 focus:ring-black"
+                            className="input input-bordered w-full h-20 mb-2"
                         >
                             {availableProperties.map(property => (
-                                <option
-                                    key={property.id}
-                                    value={property.id}
-                                    className="hover:bg-gray-100 focus:bg-transparent"
-                                >
+                                <option key={property.id} value={property.id}>
                                     {property.propertyName}
                                 </option>
                             ))}
@@ -184,29 +183,29 @@ export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalPr
                                 Add
                             </button>
                         </div>
+                    </div>
 
-                        {/* Display Selected Properties */}
-                        <div className="mt-4">
-                            <h4 className="mb-4 font-bold">Selected Properties:</h4>
-                            {selectedProperties.length > 0 ? (
-                                <ul>
-                                    {selectedProperties.map(property => (
-                                        <li key={property.id} className="flex justify-between">
-                                            <span>{property.propertyName}</span>
-                                            <button
-                                                type="button"
-                                                onClick={() => handleRemoveProperty(property.id)}
-                                                className="text-red-500 hover:underline"
-                                            >
-                                                Remove
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            ) : (
-                                <p>No properties selected yet.</p>
-                            )}
-                        </div>
+                    {/* Display Selected Properties */}
+                    <div className="mt-4">
+                        <h4 className="mb-4 font-bold">Selected Properties:</h4>
+                        {selectedProperties.length > 0 ? (
+                            <ul>
+                                {selectedProperties.map(property => (
+                                    <li key={property.propertyName} className="flex justify-between">
+                                        <span>{property.propertyName}</span>
+                                        <button
+                                            type="button"
+                                            onClick={() => handleRemoveProperty(property.propertyName as string)}
+                                            className="text-red-500 hover:underline"
+                                        >
+                                            Remove
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p>No properties selected yet.</p>
+                        )}
                     </div>
 
                     <div className="flex justify-between mt-8">
@@ -214,7 +213,7 @@ export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalPr
                             type="submit"
                             className="bg-black text-white py-2 px-2 rounded-none border border-transparent hover:bg-white hover:text-black hover:border-black transition-colors duration-300"
                         >
-                            Create Paper
+                            Save Changes
                         </button>
                         <button
                             type="button"

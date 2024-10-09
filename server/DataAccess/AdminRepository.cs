@@ -56,6 +56,20 @@ public class AdminRepository : IAdminRepository
 
         return true; 
     }
+    
+    public async Task<Paper?> GetPaperByIdAsync(int id)
+    {
+        return await _context.Papers
+            .Include(p => p.Properties)
+            .FirstOrDefaultAsync(p => p.Id == id);
+    }
+
+    public async Task UpdatePaperAsync(Paper paper)
+    {
+        _context.Papers.Update(paper);
+        await _context.SaveChangesAsync();
+    }
+
 
     
     
