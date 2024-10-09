@@ -12,6 +12,7 @@ public interface IAdminService
     public List<OrderDto> GetAllOrders();
     public Task<PaperDto> CreatePaperAsync(PaperDto paperDto);
     public bool UpdateOrderStatus(int orderId, string newStatus);
+    public Task<PaperDto?> EditPaperAsync(PaperDto paperDto);
 
 }
 
@@ -74,6 +75,57 @@ public class AdminService(
         var success = adminRepository.UpdateOrderStatus(orderId, newStatus);
         return success;
     }
+    
+    public async Task<PaperDto?> EditPaperAsync(PaperDto paperDto)
+    {
+        using (var transaction = await context.Database.BeginTransactionAsync())
+        {
+            try
+            {
+                // Fetch the existing paper by ID
+                var existingPaper = await adminRepository.GetPaperByIdAsync(paperDto.Id);
+                if (existingPaper == null)
+                {
+                    return null; // Paper not found
+                }
+
+                // Update the paper details
+                existingPaper.Name = paperDto.Name;
+                existingPaper.Price = paperDto.Price;
+                existingPaper.Stock = paperDto.Stock;
+                existingPaper.Discontinued = paperDto.Discontinued;
+
+                // Update properties: add new ones and remove those not in the list
+                var updatedProperties = new List<Property>();
+                foreach (var propertyDto in paperDto.Properties)
+                {
+                    var existingProperty = await adminRepository.GetPropertyByNameAsync(propertyDto.PropertyName);
+                    if (existingProperty == null)
+                    {
+                        // Create new property if it doesn't exist
+                        existingProperty = new Property { PropertyName = propertyDto.PropertyName };
+                        await adminRepository.AddPropertyAsync(existingProperty);
+                    }
+
+                    updatedProperties.Add(existingProperty);
+                }
+
+                existingPaper.Properties = updatedProperties;
+
+                // Save changes
+                await adminRepository.UpdatePaperAsync(existingPaper);
+                await transaction.CommitAsync();
+
+                return PaperDto.FromEntity(existingPaper);
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw; // Log or handle exception as needed
+            }
+        }
+    }
+
 
     
     

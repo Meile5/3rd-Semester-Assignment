@@ -48,6 +48,24 @@ namespace API.Controllers
             
             return Ok(); 
         }
+        
+        [HttpPut]
+        [Route("edit-paper")]
+        public async Task<ActionResult<PaperDto>> EditPaper([FromBody] PaperDto paperDto)
+        {
+            if (paperDto.Id == 0)
+            {
+                return BadRequest("Invalid paper data.");
+            }
+
+            var updatedPaper = await _service.EditPaperAsync(paperDto);
+            if (updatedPaper == null)
+            {
+                return NotFound("Paper not found.");
+            }
+
+            return Ok(updatedPaper);
+        }
        
 
     }

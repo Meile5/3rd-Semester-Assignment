@@ -373,6 +373,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         /**
          * No description
          *
+         * @tags Admin
+         * @name AdminEditPaper
+         * @request PUT:/api/Admin/edit-paper
+         */
+        adminEditPaper: (data: PaperDto, params: RequestParams = {}) =>
+            this.request<PaperDto, any>({
+                path: `/api/Admin/edit-paper`,
+                method: "PUT",
+                body: data,
+                type: ContentType.Json,
+                format: "json",
+                ...params,
+            }),
+
+        /**
+         * No description
+         *
          * @tags Paper
          * @name PaperGetAllPapers
          * @request GET:/api/Paper/papers
