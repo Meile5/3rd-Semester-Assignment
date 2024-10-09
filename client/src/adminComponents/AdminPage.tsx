@@ -26,8 +26,8 @@ const AdminPage: React.FC = () => {
 
             </div>
             {/* Button with Plus Icon to add a new paper */}
-            <div className="flex justify-items-start items-center mt-10 ml-10 space-x-2">
-                <DocumentPlusIcon className="w-10 h-10" onClick={openCreateModal}/>
+            <div className="flex justify-items-start items-center mt-10 ml-10 space-x-3">
+                <DocumentPlusIcon className="w-10 h-10 cursor-pointer hover:shadow-lg hover:shadow-gray-500 transition-shadow duration-200" onClick={openCreateModal}/>
                 <span>Add Paper</span>
             </div>
 
