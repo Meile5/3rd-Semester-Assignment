@@ -11,6 +11,7 @@ public interface IAdminService
 { 
     public List<OrderDto> GetAllOrders();
     public Task<PaperDto> CreatePaperAsync(PaperDto paperDto);
+    public bool UpdateOrderStatus(int orderId, string newStatus);
 
 }
 
@@ -63,8 +64,15 @@ public class AdminService(
                 throw;
             }
         }
+        
 
 
+    }
+    
+    public bool UpdateOrderStatus(int orderId, string newStatus)
+    {
+        var success = adminRepository.UpdateOrderStatus(orderId, newStatus);
+        return success;
     }
 
     
