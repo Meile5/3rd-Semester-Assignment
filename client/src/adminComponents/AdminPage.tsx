@@ -23,6 +23,7 @@ const AdminPage: React.FC = () => {
                     alt="Nordic Paper"
                     className="w-full h-auto max-h-[55vh] object-cover m-0 p-0"
                 />
+
             </div>
             {/* Button with Plus Icon to add a new paper */}
             <div className="flex justify-items-start items-center mt-10 ml-10 space-x-2">
