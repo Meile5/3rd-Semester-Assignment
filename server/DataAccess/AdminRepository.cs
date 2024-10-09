@@ -41,6 +41,21 @@ public class AdminRepository : IAdminRepository
     {
         return await _context.Properties.FirstOrDefaultAsync(p => p.PropertyName == propertyName);
     }
+    
+    public bool UpdateOrderStatus(int orderId, string newStatus)
+    {
+        var order = _context.Orders.SingleOrDefault(o => o.Id == orderId);
+
+        if (order == null)
+        {
+            return false; 
+        }
+
+        order.Status = newStatus;
+        _context.SaveChanges();
+
+        return true; 
+    }
 
     
     

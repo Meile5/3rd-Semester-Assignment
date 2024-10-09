@@ -8,5 +8,6 @@ public interface IAdminRepository
     Task AddPaperAsync(Paper paper);
     Task AddPropertyAsync(Property property);
     Task<Property?> GetPropertyByNameAsync(string propertyName);
+    bool UpdateOrderStatus(int orderId, string newStatus);
 
 }

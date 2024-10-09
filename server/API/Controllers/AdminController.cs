@@ -34,6 +34,20 @@ namespace API.Controllers
                 await _service.CreatePaperAsync(paperDto);
                 return Ok(paperDto);
         }
+        
+        [HttpPut]
+        [Route("updateStatus")]
+        public ActionResult UpdateOrderStatus([FromQuery] int orderId, [FromQuery] string newStatus) 
+        {
+            if (string.IsNullOrEmpty(newStatus) || orderId <= 0)
+            {
+                return BadRequest("Invalid order status update request.");
+            }
+            
+            var success = _service.UpdateOrderStatus(orderId, newStatus);
+            
+            return Ok(); 
+        }
        
 
     }
