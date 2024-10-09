@@ -49,6 +49,7 @@ export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalPr
         const selectedProps = availableProperties.filter(property => selectedNames.includes(property.id?.toString() as string));
 
         const uniqueSelected = [...new Set([...selectedProperties, ...selectedProps])];
+        console.log(selectedNames);
 
         setSelectedProperties(uniqueSelected);
         setFormData({
