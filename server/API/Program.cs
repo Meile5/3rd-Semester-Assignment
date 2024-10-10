@@ -4,6 +4,7 @@ using DataAccess;
 using DataAccess.Interfaces;
 using DataAccess.Models;
 using FluentValidation;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Service;
@@ -42,6 +43,13 @@ public class Program
 
         var app = builder.Build();
 
+        app.UseForwardedHeaders(
+            new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            }
+        );
+
         var options = app.Services.GetRequiredService<IOptions<AppOptions>>().Value;
 
         app.UseHttpsRedirection();
@@ -61,7 +69,9 @@ public class Program
         app.MapControllers();
 
 
-        app.Run();
+        var port = Environment.GetEnvironmentVariable("PORT") ?? "5555";
+        var url = $"http://0.0.0.0:{port}";
+        app.Run(url);
     }
     
 }

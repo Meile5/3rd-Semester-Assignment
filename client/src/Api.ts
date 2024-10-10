@@ -158,7 +158,7 @@ export class HttpClient<SecurityDataType = unknown> {
         referrerPolicy: "no-referrer",
     };
 
-    constructor(apiConfig: ApiConfig<SecurityDataType> = {}) {
+    constructor(apiConfig?: { headers: { Prefer: string }; baseURL: string }) {
         Object.assign(this, apiConfig);
     }
 
