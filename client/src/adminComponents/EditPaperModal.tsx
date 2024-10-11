@@ -80,8 +80,8 @@ export default function EditPaperModal({ isOpen, onClose, paper }: EditPaperModa
         }
     };
 
-    const handleRemoveProperty = (propertyName: string) => {
-        const updatedProperties = selectedProperties.filter(p => p.propertyName !== propertyName);
+    const handleRemoveProperty = (propertyId: number | undefined) => {
+        const updatedProperties = selectedProperties.filter(p => p.id !== propertyId);
         setSelectedProperties(updatedProperties);
         setFormData({ ...formData, properties: updatedProperties });
     };
@@ -195,7 +195,7 @@ export default function EditPaperModal({ isOpen, onClose, paper }: EditPaperModa
                                         <span>{property.propertyName}</span>
                                         <button
                                             type="button"
-                                            onClick={() => handleRemoveProperty(property.propertyName as string)}
+                                            onClick={() => handleRemoveProperty(property.id)}
                                             className="text-red-500 hover:underline"
                                         >
                                             Remove
