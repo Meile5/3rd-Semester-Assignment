@@ -24,7 +24,7 @@ export default function PaperList() {
 
     // Fetch papers with start and limit index
     const fetchPapers = (startAt: number) => {
-        http.api.paperGetAllPapers({ limit, startAt })
+        http.api.paperGetCustomersPapers({ limit, startAt })
             .then((response) => {
                 setPapers((prevPapers) => [...prevPapers, ...response.data]);
                 setSharedPapers((prevSharedPapers) => [...prevSharedPapers, ...response.data]);

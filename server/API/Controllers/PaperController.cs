@@ -28,6 +28,14 @@ namespace API.Controllers
         }
         
         [HttpGet]
+        [Route("customers-papers")]
+        public ActionResult<List<PaperDto>> GetCustomersPapers(int limit = 10, int startAt = 0) 
+        {
+            var papers = _service.GetCustomersPapers(limit, startAt);
+            return Ok(papers); 
+        }
+        
+        [HttpGet]
         [Route("filtered-papers")]
         public ActionResult<List<PaperDto>> GetFilteredPapers(
             int limit = 10, 

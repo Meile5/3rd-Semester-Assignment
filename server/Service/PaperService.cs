@@ -22,6 +22,7 @@ public interface IPaperService
     public int GetTotalPapersCount();
     public Task<List<PaperDto>> SearchItemsAsync(string query);
     public List<PropertyDto> GetAllProperties();
+    public List<PaperDto> GetCustomersPapers(int limit, int startAt);
 
 }
 
@@ -40,6 +41,16 @@ public List<PaperDto> GetAllPapers(int limit, int startAt)
             .Skip(startAt) // Skip based on startAt
             .Take(limit) // Take the limit
             .Select(PaperDto.FromEntity) // Map to DTO
+            .ToList();
+    }
+
+    public List<PaperDto> GetCustomersPapers(int limit, int startAt) 
+    {
+        var papers = paperRepository.GetCustomersPapers();
+        return papers.OrderBy(p => p.Id) 
+            .Skip(startAt) 
+            .Take(limit) 
+            .Select(PaperDto.FromEntity) 
             .ToList();
     }
 

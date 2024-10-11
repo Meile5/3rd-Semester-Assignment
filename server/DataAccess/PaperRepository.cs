@@ -55,6 +55,16 @@ public class PaperRepository : IPaperRepository
 
         return query.ToList();
     }
+    
+    public List<Paper> GetCustomersPapers()
+    {
+        var papers = _context.Papers
+            .Include(p => p.Properties)
+            .Where(p => p.Discontinued == false)
+            .ToList();
+    
+        return papers;
+    }
 
     
     public int GetTotalPapersCount()
