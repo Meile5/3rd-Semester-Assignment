@@ -82,11 +82,10 @@ public class AdminService(
         {
             try
             {
-                // Fetch the existing paper by ID
                 var existingPaper = await adminRepository.GetPaperByIdAsync(paperDto.Id);
                 if (existingPaper == null)
                 {
-                    return null; // Paper not found
+                    return null; 
                 }
 
                 // Update the paper details

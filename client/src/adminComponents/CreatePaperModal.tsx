@@ -51,16 +51,11 @@ export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalPr
     };
 
     const handlePropertyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedNames = Array.from(e.target.selectedOptions, option => option.value);
-        const selectedProps = availableProperties.filter(property => selectedNames.includes(property.id?.toString() as string));
+        const selectedIds = Array.from(e.target.selectedOptions, option => option.value);
+        const selectedProps = availableProperties.filter(property => selectedIds.includes(property.id?.toString() as string));
 
-        const uniqueSelected = [...new Set([...selectedProperties, ...selectedProps])];
-
-        setSelectedProperties(uniqueSelected);
-        setFormData({
-            ...formData,
-            properties: uniqueSelected // Sync properties with formData as PropertyDto[]
-        });
+        setSelectedProperties(selectedProps);
+        setFormData({...formData, properties: selectedProps});
     };
 
     const handleNewPropertyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,10 +67,7 @@ export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalPr
             const newProp: PropertyDto = { propertyName: newProperty };
             const updatedProperties = [...selectedProperties, newProp];
             setSelectedProperties(updatedProperties);
-            setFormData({
-                ...formData,
-                properties: updatedProperties
-            });
+            setFormData({...formData, properties: updatedProperties});
             setNewProperty("");
         }
     };
@@ -83,10 +75,7 @@ export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalPr
     const handleRemoveProperty = (propertyId: number | undefined) => {
         const updatedProperties = selectedProperties.filter(p => p.id !== propertyId);
         setSelectedProperties(updatedProperties);
-        setFormData({
-            ...formData,
-            properties: updatedProperties
-        });
+        setFormData({...formData, properties: updatedProperties});
     };
 
     const handleSubmit = (e: React.FormEvent) => {
