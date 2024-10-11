@@ -22,16 +22,12 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Check credentials
         if (formData.name === loggedCustomer.name && formData.email === loggedCustomer.email) {
-            // Show success toast
             toast.success(`Welcome, ${loggedCustomer.name}! You have successfully logged in.`);
 
-            // Close the modal and navigate to the customer page
             onClose();
             navigate("/papers");
         } else {
-            // Show error toast
             toast.error("Invalid credentials. Please try again.");
         }
     };

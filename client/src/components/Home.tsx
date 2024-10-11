@@ -16,7 +16,7 @@ export default function Home() {
     const [loggedCustomer] = useAtom(LoggedCustomerAtom);
 
     const handleCustomerClick = () => {
-        setIsModalOpen(true); // Open the modal when the customer card is clicked
+        setIsModalOpen(true);
     };
 
     const closeModal = () => {
@@ -42,13 +42,11 @@ export default function Home() {
             </div>
 
             {/* Cards for adminComponents and CustomerComponents */}
-
-
                <div className="flex mt-20 justify-evenly mb-32">
                    <Link to="/admin" >
                        <div className="card bg-base-100 w-96 shadow-xl hover:drop-shadow-xl">
                            <figure className="px-10 pt-10">
-                               <UserCircleIcon className="w-20 h-20 text-gray-500"/> {/* adminComponents Icon */}
+                               <UserCircleIcon className="w-20 h-20 text-gray-500"/>
                            </figure>
                            <div className="card-body items-center text-center">
                                <h2 className="card-title">Admin</h2>
@@ -58,10 +56,10 @@ export default function Home() {
 
                    <div
                        className="card bg-base-100 w-96 shadow-xl hover:drop-shadow-xl"
-                       onClick={handleCustomerClick} // Open modal on click
+                       onClick={handleCustomerClick}
                    >
                        <figure className="px-10 pt-10">
-                           <ShoppingCartIcon className="w-20 h-20 text-gray-500"/> {/* CustomerComponents Icon */}
+                           <ShoppingCartIcon className="w-20 h-20 text-gray-500"/>
                        </figure>
                        <div className="card-body items-center text-center">
                         <h2 className="card-title">Customer</h2>

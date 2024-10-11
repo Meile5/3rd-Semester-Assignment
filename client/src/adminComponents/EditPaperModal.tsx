@@ -67,7 +67,7 @@ export default function EditPaperModal({ isOpen, onClose, paper }: EditPaperModa
         setSelectedProperties(uniqueSelected);
         setFormData({
             ...formData,
-            properties: uniqueSelected // Sync properties with formData as PropertyDto[]
+            properties: uniqueSelected
         });
     };
 

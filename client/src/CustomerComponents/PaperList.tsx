@@ -6,7 +6,7 @@ import React, {useEffect, useState} from 'react';
 import {http} from "../http.ts";
 import {PaperDto} from "../Api.ts";
 import {CartAtom} from '../atoms/CartAtom.tsx'
-import {TotalCountAtom} from "../atoms/TotalCountAtom.tsx";
+import {TotalCountCustomersAtom} from "../atoms/TotalCountAtom.tsx";
 import {useInitializeData} from "../useInitializeData.ts";
 import { SharedPapersAtom } from "../atoms/SharedPapersAtom.tsx";
 import {IsFilterActive} from "../atoms/FilterSortAtoms.tsx";
@@ -17,7 +17,7 @@ export default function PaperList() {
     const [sharedPapers, setSharedPapers] = useAtom(SharedPapersAtom);
     const [isFilterActive, setIsFilterActive] = useAtom(IsFilterActive);
     const [papers, setPapers] = useAtom(PapersAtom);
-    const [totalCount] = useAtom(TotalCountAtom);
+    const [totalCount] = useAtom(TotalCountCustomersAtom);
     const [cartItems, setCartItems] = useAtom(CartAtom);
     const [startAt, setStartAt] = useState(0);
     const limit = 10;

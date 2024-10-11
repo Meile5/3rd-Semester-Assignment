@@ -120,7 +120,7 @@ public class AdminService(
             catch (Exception)
             {
                 await transaction.RollbackAsync();
-                throw; // Log or handle exception as needed
+                throw; 
             }
         }
     }
