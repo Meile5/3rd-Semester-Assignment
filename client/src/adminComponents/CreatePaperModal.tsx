@@ -45,8 +45,8 @@ export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalPr
             [name]: type === "checkbox"
                 ? checked
                 : type === "number"
-                    ? value === "" ? undefined : Number(value)  // Only convert to number for number inputs
-                    : value,  // Keep as string for other inputs
+                    ? value === "" ? undefined : Number(value)
+                    : value,
         }));
     };
 
@@ -59,7 +59,7 @@ export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalPr
         setSelectedProperties(uniqueSelected);
         setFormData({
             ...formData,
-            properties: uniqueSelected // Sync properties with formData as PropertyDto[]
+            properties: uniqueSelected
         });
     };
 
@@ -88,7 +88,7 @@ export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalPr
 
         const newPaperData = {
             ...formData,
-            properties: selectedProperties // Ensure properties are passed as PropertyDto[]
+            properties: selectedProperties
         };
 
         http.api.adminCreatePaper(newPaperData).then(response => {

@@ -74,6 +74,7 @@ namespace API.Controllers
           return Ok(result);
           
        }
+        
         [HttpGet]
         [Route("search")]
         public async Task<ActionResult <List<PaperDto>> > SearchItems([FromQuery] string query)
@@ -93,6 +94,14 @@ namespace API.Controllers
         {
             var properties = _service.GetAllProperties();
             return Ok(properties);
+        }
+        
+        [HttpGet]
+        [Route("")]
+        public ActionResult<int> GetTotalPapersCountCustomers() 
+        {
+            var totalCount = _service.GetTotalPapersCountCustomers();
+            return Ok(totalCount);
         }
 
     }

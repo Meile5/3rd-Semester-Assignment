@@ -8,11 +8,10 @@ interface LoggedCustomer {
     email: string,
 }
 
-// Initialize the atom with mock data
 export const LoggedCustomerAtom = atom<LoggedCustomer>({
     id: 1,
     name: "John Doe",
     address: "123 Main St, Springfield",
-    phone: "12345678",
+    phone: "+1-555-123-4567",
     email: "john.doe@easv.com",
 });

@@ -49,4 +49,9 @@ public class StubPaperRepository : IPaperRepository
     {
         throw new NotImplementedException();
     }
+
+    public int GetTotalPapersCountCustomers()
+    {
+        throw new NotImplementedException();
+    }
 }
