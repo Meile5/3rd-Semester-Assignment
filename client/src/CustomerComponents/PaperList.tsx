@@ -77,11 +77,11 @@ export default function PaperList() {
                                 }}
                             >
                                 <div
-                                    className="absolute inset-8 bg-white flex flex-col justify-between items-start p-5">
+                                    className="absolute inset-8 bg-white flex flex-col justify-between items-start p-5 overflow-hidden">
                                     <h2 className="card-title mb-6">{paper.name}</h2>
-                                    <p className="mb-8">Properties</p>
+                                    <p className="mb-1 font-bold">Properties</p>
                                     {paper.properties && paper.properties.length > 0 ? (
-                                        <ul className="list-disc list-inside mb-4">
+                                        <ul className="list-disc list-inside mb-5 overflow-y-auto max-h-20">
                                             {paper.properties.map((property, index) => (
                                                 <li key={index}>
                                                     {property.propertyName}
@@ -89,7 +89,7 @@ export default function PaperList() {
                                             ))}
                                         </ul>
                                     ) : (
-                                        <p>No properties available.</p>
+                                        <p className="mb-5">No properties available.</p>
                                     )}
                                     <p className="text-lg font-semibold mb-4">{paper.price} €</p>
                                     <div className="w-full mt-auto">

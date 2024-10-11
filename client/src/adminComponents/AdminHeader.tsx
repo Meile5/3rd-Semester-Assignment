@@ -34,7 +34,7 @@ const Header: React.FC = () => {
                         <NavLink
                             to="/admin"
                             className={({ isActive }) =>
-                                `text-black font-semibold border-b-2 transition-all duration-300 text-center whitespace-nowrap pr-1 pl-1 ${isActive ? 'border-black' : 'border-transparent'}`
+                                `text-black font-semibold border-b-2 transition-all duration-300 text-center hover:border-black whitespace-nowrap pr-1 pl-1 ${isActive ? 'border-black' : 'border-transparent'}`
                             }
                         >
                             Products
@@ -42,7 +42,7 @@ const Header: React.FC = () => {
                         <NavLink
                             to="/adminHistory"
                             className={({ isActive }) =>
-                                `text-black font-semibold border-b-2 border-transparent hover:border-black transition-all duration-300 text-center whitespace-nowrap pr-1 pl-1 ${isActive ? 'border-black' : 'border-transparent'}`
+                                `text-black font-semibold border-b-2 transition-all duration-300 text-center hover:border-black whitespace-nowrap pr-1 pl-1 ${isActive ? 'border-black' : 'border-transparent'}`
                             }
                         >
                             Order History
