@@ -1,7 +1,7 @@
 import {PapersAtom} from "../atoms/PapersAtom.tsx"
 import {useAtom} from "jotai";
 // @ts-ignore
-import image1 from "../resources/images/image1.jpeg";
+import image1 from "../resources/images/paper.jpg";
 import React, {useEffect, useState} from 'react';
 import {http} from "../http.ts";
 import {PaperDto} from "../Api.ts";
