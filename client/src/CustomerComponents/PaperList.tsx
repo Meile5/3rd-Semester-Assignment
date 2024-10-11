@@ -77,11 +77,19 @@ export default function PaperList() {
                                 }}
                             >
                                 <div
-                                    className="absolute inset-8 bg-white flex flex-col justify-between items-start p-5 overflow-hidden">
+                                    className="absolute inset-8 bg-white flex flex-col justify-between items-start p-5 overflow-hidden"
+                                >
                                     <h2 className="card-title mb-6">{paper.name}</h2>
                                     <p className="mb-1 font-bold">Properties</p>
                                     {paper.properties && paper.properties.length > 0 ? (
-                                        <ul className="list-disc list-inside mb-5 overflow-y-auto max-h-20">
+                                        <ul
+                                            style={{
+                                                overflowY: 'scroll',
+                                                maxHeight: '80px',
+                                                scrollbarWidth: 'none',
+                                            }}
+                                            className="list-disc list-inside mb-5"
+                                        >
                                             {paper.properties.map((property, index) => (
                                                 <li key={index}>
                                                     {property.propertyName}
@@ -91,8 +99,8 @@ export default function PaperList() {
                                     ) : (
                                         <p className="mb-5">No properties available.</p>
                                     )}
-                                    <p className="text-lg font-semibold mb-4">{paper.price} €</p>
                                     <div className="w-full mt-auto">
+                                        <p className="text-lg font-semibold mb-4">{paper.price} €</p>
                                         <button
                                             className="btn btn-outline btn-black w-full p-2 rounded-md hover:bg-black hover:text-white transition-colors"
                                             onClick={() => handleAddToCart(paper)}
@@ -107,13 +115,17 @@ export default function PaperList() {
                 </div>
             )}
             {papers.length <= totalCount && !isFilterActive && (
-            <div className="flex flex-col items-center mt-6">
-                <button onClick={handleLoadMore} className="text-black border-b-2 border-transparent hover:border-black transition-all duration-300 mb-4">
-                    Load More
-                </button>
+                <div className="flex flex-col items-center mt-6">
+                    <button
+                        onClick={handleLoadMore}
+                        className="text-black border-b-2 border-transparent hover:border-black transition-all duration-300 mb-4"
+                    >
+                        Load More
+                    </button>
                     <p>{papers.length} of {totalCount}</p>
-            </div>
+                </div>
             )}
         </div>
+
     );
 }
