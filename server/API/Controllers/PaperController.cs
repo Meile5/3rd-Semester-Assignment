@@ -97,7 +97,7 @@ namespace API.Controllers
         }
         
         [HttpGet]
-        [Route("")]
+        [Route("papers-count-customers")]
         public ActionResult<int> GetTotalPapersCountCustomers() 
         {
             var totalCount = _service.GetTotalPapersCountCustomers();
