@@ -39,11 +39,17 @@ export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalPr
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, type, checked } = e.target;
+
         setFormData(prevFormData => ({
             ...prevFormData,
-            [name]: type === "checkbox" ? checked : value === "" ? undefined : Number(value),
+            [name]: type === "checkbox"
+                ? checked
+                : type === "number"
+                    ? value === "" ? undefined : Number(value)  // Only convert to number for number inputs
+                    : value,  // Keep as string for other inputs
         }));
     };
+
     const handlePropertyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedNames = Array.from(e.target.selectedOptions, option => option.value);
         const selectedProps = availableProperties.filter(property => selectedNames.includes(property.id?.toString() as string));
