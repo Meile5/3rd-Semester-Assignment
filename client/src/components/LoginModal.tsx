@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { LoggedCustomerAtom } from "../atoms/LoggedCustomerAtom.tsx";
 import toast from "react-hot-toast";
 
+
 interface LoginModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -72,10 +73,13 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                         </button>
                         <button
                             type="button"
-                            className="bg-black text-white py-2 rounded-none border border-transparent hover:bg-white hover:text-black hover:border-black transition-colors duration-300 text-center whitespace-nowrap pr-1 pl-1"
                             onClick={onClose}
                         >
-                            Close
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" className="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
+                            </svg>
+
                         </button>
                     </div>
                 </form>
