@@ -18,5 +18,5 @@ App URL https://nordicpaperstore.web.app/
 
 John Doe
 
-john.doe@example.com
+john.doe@easv.com
 
