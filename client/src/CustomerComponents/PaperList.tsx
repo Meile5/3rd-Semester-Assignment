@@ -28,6 +28,7 @@ export default function PaperList() {
                 setPapers((prevPapers) => [...prevPapers, ...response.data]);
                 setSharedPapers((prevSharedPapers) => [...prevSharedPapers, ...response.data]);
             });
+        console.log(totalCount);
     };
 
     useInitializeData();
