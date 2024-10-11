@@ -432,7 +432,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
        */
       paperGetTotalPapersCountCustomers: (params: RequestParams = {}) =>
           this.request<number, any>({
-              path: `/api/Paper`,
+              path: `/api/papers-count-customers`,
               method: "GET",
               format: "json",
               ...params,

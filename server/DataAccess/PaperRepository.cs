@@ -74,7 +74,7 @@ public class PaperRepository : IPaperRepository
     
     public int GetTotalPapersCountCustomers()
     {
-        return _context.Papers.Count(p => p.Discontinued == false); // Get total count of papers
+        return _context.Papers.Count(p => p.Discontinued == false); 
     }
 
     public List<Order> GetCustomerOrders(int customerId)
