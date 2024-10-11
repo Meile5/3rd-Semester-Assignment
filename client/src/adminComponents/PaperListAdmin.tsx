@@ -72,7 +72,14 @@ export default function PaperListAdmin() {
                                 <h2 className="card-title mb-6">{paper.name}</h2>
                                 <p className="mb-1 font-bold">Properties</p>
                                 {paper.properties && paper.properties.length > 0 ? (
-                                    <ul className="list-disc list-inside mb-5 overflow-y-auto max-h-20">
+                                    <ul
+                                        style={{
+                                            overflowY: 'scroll',
+                                            maxHeight: '80px',
+                                            scrollbarWidth: 'none',
+                                        }}
+                                        className="list-disc list-inside mb-5"
+                                    >
                                         {paper.properties.map((property, index) => (
                                             <li key={index}>
                                                 {property.propertyName}

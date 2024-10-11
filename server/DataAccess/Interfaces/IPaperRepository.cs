@@ -19,5 +19,6 @@ public interface IPaperRepository
 
      Task<List<Paper>> SearchItemsAsync(string query);
      List<Property> GetAllProperties();
+     List<Paper> GetCustomersPapers();
 
 }

@@ -54,8 +54,13 @@ export default function CreatePaperModal({ isOpen, onClose }: CreatePaperModalPr
         const selectedIds = Array.from(e.target.selectedOptions, option => option.value);
         const selectedProps = availableProperties.filter(property => selectedIds.includes(property.id?.toString() as string));
 
-        setSelectedProperties(selectedProps);
-        setFormData({...formData, properties: selectedProps});
+        const uniqueSelected = [...new Set([...selectedProperties, ...selectedProps])];
+
+        setSelectedProperties(uniqueSelected);
+        setFormData({
+            ...formData,
+            properties: uniqueSelected // Sync properties with formData as PropertyDto[]
+        });
     };
 
     const handleNewPropertyChange = (e: React.ChangeEvent<HTMLInputElement>) => {

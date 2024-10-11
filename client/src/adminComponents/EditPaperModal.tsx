@@ -62,8 +62,13 @@ export default function EditPaperModal({ isOpen, onClose, paper }: EditPaperModa
         const selectedIds = Array.from(e.target.selectedOptions, option => option.value);
         const selectedProps = availableProperties.filter(property => selectedIds.includes(property.id?.toString() as string));
 
-        setSelectedProperties(selectedProps);
-        setFormData({ ...formData, properties: selectedProps });
+        const uniqueSelected = [...new Set([...selectedProperties, ...selectedProps])];
+
+        setSelectedProperties(uniqueSelected);
+        setFormData({
+            ...formData,
+            properties: uniqueSelected // Sync properties with formData as PropertyDto[]
+        });
     };
 
     const handleNewPropertyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -112,6 +117,7 @@ export default function EditPaperModal({ isOpen, onClose, paper }: EditPaperModa
             <div className="bg-white p-8 rounded shadow-md w-96">
                 <h2 className="text-2xl mb-4">Edit Paper</h2>
                 <form onSubmit={handleSubmit}>
+                    <label className="block mb-2 font-bold">Paper Name:</label>
                     <input
                         type="text"
                         name="name"
@@ -121,6 +127,7 @@ export default function EditPaperModal({ isOpen, onClose, paper }: EditPaperModa
                         required
                         className="input input-bordered w-full mb-2"
                     />
+                    <label className="block mb-2 font-bold">Price:</label>
                     <input
                         type="number"
                         name="price"
@@ -130,6 +137,7 @@ export default function EditPaperModal({ isOpen, onClose, paper }: EditPaperModa
                         required
                         className="input input-bordered w-full mb-2"
                     />
+                    <label className="block mb-2 font-bold">Items in Stock:</label>
                     <input
                         type="number"
                         name="stock"
@@ -157,10 +165,14 @@ export default function EditPaperModal({ isOpen, onClose, paper }: EditPaperModa
                             multiple
                             value={selectedProperties.map(prop => prop.propertyName as string)}
                             onChange={handlePropertyChange}
-                            className="input input-bordered w-full h-20 mb-2"
+                            className="input input-bordered w-full h-20 mb-2 focus:outline-none focus:ring-2 focus:ring-black"
                         >
                             {availableProperties.map(property => (
-                                <option key={property.id} value={property.id}>
+                                <option
+                                    key={property.id}
+                                    value={property.id}
+                                    className="hover:bg-gray-100 focus:bg-transparent"
+                                >
                                     {property.propertyName}
                                 </option>
                             ))}
@@ -191,7 +203,7 @@ export default function EditPaperModal({ isOpen, onClose, paper }: EditPaperModa
                         {selectedProperties.length > 0 ? (
                             <ul>
                                 {selectedProperties.map(property => (
-                                    <li key={property.propertyName} className="flex justify-between">
+                                    <li key={property.id} className="flex justify-between">
                                         <span>{property.propertyName}</span>
                                         <button
                                             type="button"
