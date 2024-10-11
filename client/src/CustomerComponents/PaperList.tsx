@@ -22,7 +22,6 @@ export default function PaperList() {
     const [startAt, setStartAt] = useState(0);
     const limit = 10;
 
-    // Fetch papers with start and limit index
     const fetchPapers = (startAt: number) => {
         http.api.paperGetCustomersPapers({ limit, startAt })
             .then((response) => {

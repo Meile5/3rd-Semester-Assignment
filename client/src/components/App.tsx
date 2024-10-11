@@ -1,4 +1,4 @@
-import {Route, Routes, useLocation} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import React, {useEffect} from "react";
 import {Toaster} from "react-hot-toast";
 import {DevTools} from "jotai-devtools";
@@ -13,7 +13,6 @@ import Footer from "./Footer.tsx";
 import AdminHeader from "../adminComponents/AdminHeader.tsx";
 import AdminPage from "../adminComponents/AdminPage.tsx";
 import OrderHistoryAdmin from "../adminComponents/OrderHistoryAdmin.tsx";
-import CreatePaperModal from "../adminComponents/CreatePaperModal.tsx";
 
 
 const App = () => {
@@ -31,7 +30,7 @@ const App = () => {
             <div className="flex-grow"> {/* Takes up remaining space */}
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/papers" element={
+                    <Route path="/customers-papers" element={
                         <>
                             <CustomerHeader />
                             <CustomerPage />
