@@ -201,7 +201,14 @@ export default function EditPaperModal({ isOpen, onClose, paper }: EditPaperModa
                     <div className="mt-4">
                         <h4 className="mb-4 font-bold">Selected Properties:</h4>
                         {selectedProperties.length > 0 ? (
-                            <ul>
+                            <ul
+                                style={{
+                                    overflowY: 'scroll',
+                                    maxHeight: '80px',
+                                    scrollbarWidth: 'none',
+                                }}
+                                className="list-disc list-inside mb-5"
+                            >
                                 {selectedProperties.map(property => (
                                     <li key={property.id} className="flex justify-between">
                                         <span>{property.propertyName}</span>
