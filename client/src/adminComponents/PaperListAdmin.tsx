@@ -31,7 +31,6 @@ export default function PaperListAdmin() {
                 setPapers((prevPapers) => [...prevPapers, ...response.data]);
                 setSharedPapers((prevSharedPapers) => [...prevSharedPapers, ...response.data]);
             });
-        console.log("Number: " + totalCount);
     };
 
     useInitializeData();
