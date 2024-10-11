@@ -44,4 +44,9 @@ public class StubPaperRepository : IPaperRepository
     {
         throw new NotImplementedException();
     }
+
+    public List<Paper> GetCustomersPapers()
+    {
+        throw new NotImplementedException();
+    }
 }
