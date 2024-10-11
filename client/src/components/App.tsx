@@ -25,12 +25,12 @@ const App = () => {
     }, [theme]);
 
     return (
-        <div className="flex flex-col min-h-screen"> {/* Ensures the full viewport height */}
+        <div className="flex flex-col min-h-screen">
             <Toaster position={"bottom-center"} />
-            <div className="flex-grow"> {/* Takes up remaining space */}
+            <div className="flex-grow">
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/customers-papers" element={
+                    <Route path="/papers" element={
                         <>
                             <CustomerHeader />
                             <CustomerPage />
@@ -62,7 +62,7 @@ const App = () => {
                     } />
                 </Routes>
             </div>
-            <Footer /> {/* Footer stays at the bottom */}
+            <Footer />
             <DevTools />
         </div>
     );
