@@ -18,12 +18,4 @@ export function useInitializeData() {
         });
     }, []);
 
-    useEffect(() => {
-        http.api.paperGetTotalPapersCountCustomers().then((response) => {
-            setTotalCountCustomers(response.data);
-        }).catch(e => {
-            console.log(e);
-        });
-    }, []);
-
 }
